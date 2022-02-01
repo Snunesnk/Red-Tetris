@@ -1,0 +1,28 @@
+{
+    "name": "red-tetris",
+    "version": "0.0.1",
+    "description": "my first socket.io app",
+    "scripts": {
+        "srv-dev": "node src/server/index.js && webpack --watch",
+        "client-dev": "webpack --watch"
+    },
+    "dependencies": {
+        "@babel/preset-env": "^7.16.11",
+        "express": "^4.17.2",
+        "socket.io": "^4.4.1"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "babel-core": "^6.26.3",
+        "babel-loader": "^8.2.3",
+        "babel-preset-env": "^1.7.0",
+        "css-loader": "^6.5.1",
+        "node-sass": "^7.0.1",
+        "postcss-loader": "^6.2.1",
+        "sass-loader": "^12.4.0",
+        "style-loader": "^3.3.1",
+        "webpack": "^5.68.0",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.7.3"
+    }
+}
