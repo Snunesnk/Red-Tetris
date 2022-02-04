@@ -1,6 +1,16 @@
-require("./assets/styles.scss");
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import App from './containers/app';
+import { incrementAsync } from './reducers/storeReducer';
 
-console.log("This is a test");
-var socket = io();
-let a = "This is another test";
-console.log(a);
+const rootElement = document.getElementById('root');
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById("tetris")
+);
+
+store.dispatch(incrementAsync())

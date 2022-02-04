@@ -3,15 +3,22 @@
     "version": "0.0.1",
     "description": "my first socket.io app",
     "scripts": {
-        "srv-dev": "node src/server/index.js && webpack --watch",
-        "client-dev": "webpack --watch"
+        "srv-dev": "nodemon src/server/index.js && webpack --watch",
+        "cli-dev": "webpack --watch"
     },
     "dependencies": {
         "@babel/preset-env": "^7.16.11",
+        "@reduxjs/toolkit": "^1.7.1",
         "express": "^4.17.2",
-        "socket.io": "^4.4.1"
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.6",
+        "redux-thunk": "^2.4.1",
+        "socket.io": "^4.4.1",
+        "socket.io-client": "^4.4.1",
+        "styled-components": "^5.3.3"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.16.7",
         "autoprefixer": "^10.4.2",
         "babel-core": "^6.26.3",
         "babel-loader": "^8.2.3",
