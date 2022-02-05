@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import {
+    WHITE_TEXT_COLOR,
+    RED_TEXT_COLOR
+} from "../../constants/colors";
 
-export const Title = styled.div`
-    width: 50%;
-    height: 50%;
-    background-color: red;
-    color: white;
+export const AppContainer = styled.div`
+width: 100%;
+height: 100%;
 `

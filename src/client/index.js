@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import App from './containers/app';
-import { incrementAsync } from './reducers/storeReducer';
+import { App } from './containers/app/index';
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
@@ -12,5 +11,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById("tetris")
 );
-
-store.dispatch(incrementAsync())
