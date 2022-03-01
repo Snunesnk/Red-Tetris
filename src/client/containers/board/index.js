@@ -1,8 +1,17 @@
 import React from "react";
-import { GridContainer, Grid } from "./styles";
+import { Board } from "./styles";
+import { LineComponent } from "../BoardLine/index";
 
-export const Board = () => (
-    <GridContainer>
-        <Grid></Grid>
-    </GridContainer>
-);
+export class BoardComponent extends React.Component {
+    render() {
+        let lines = Array.from({length: 20}, _ => (
+            <LineComponent></LineComponent>
+        ));
+
+        return (
+            <Board>
+                {lines}
+            </Board>
+        );
+    }
+}

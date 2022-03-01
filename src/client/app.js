@@ -1,5 +1,7 @@
-import { incrementAsync } from "./reducers/storeReducer";
+import { incrementAsync } from "./Reducers/storeReducer";
 import store from "./store";
+
+console.log("this is a test");
 
 const { io } = require("socket.io-client");
 require("./assets/styles.scss");
