@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {
     WHITE_COLOR,
     RED_COLOR
-} from "../../constants/colors";
+} from "../../Constants/colors";
 
 export const TitleContainer = styled.div`
 width: 100%;

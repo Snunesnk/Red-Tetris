@@ -1,17 +1,15 @@
 import React from "react";
-import { Board } from "./styles";
+import { BoardStyle } from "./styles";
 import { LineComponent } from "../BoardLine/index";
 
-export class BoardComponent extends React.Component {
-    render() {
-        let lines = Array.from({length: 20}, _ => (
-            <LineComponent></LineComponent>
-        ));
+export const BoardComponent = () => {
+    let lines = Array.from({ length: 20 }, (_, i) => (
+        <LineComponent data_y_pos={i} key={'line_' + i}/>
+    ));
 
-        return (
-            <Board>
-                {lines}
-            </Board>
-        );
-    }
+    return (
+        <div style={BoardStyle}>
+            {lines}
+        </div>
+    );
 }

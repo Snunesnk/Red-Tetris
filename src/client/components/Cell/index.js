@@ -1,13 +1,13 @@
 import React from "react";
 import {
-    Cell,
-    InnerCell
+    CellStyle,
+    InnerCellStyle
 } from "./styles";
 
 export const CellComponent = ({
-    text
+    x_pos
 }) => (
-    <Cell>
-        <InnerCell></InnerCell>
-    </Cell>
+    <div style={CellStyle} data-x-pos={x_pos} >
+        <div style={InnerCellStyle}></div>
+    </div>
 );
