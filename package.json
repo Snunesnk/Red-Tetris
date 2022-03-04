@@ -7,7 +7,6 @@
         "cli-dev": "webpack --watch"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "^1.7.1",
         "express": "^4.17.2",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
@@ -21,6 +20,7 @@
         "@babel/core": "^7.17.5",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
+        "@reduxjs/toolkit": "^1.8.0",
         "autoprefixer": "^10.4.2",
         "babel-loader": "^8.2.3",
         "css-loader": "^6.5.1",
