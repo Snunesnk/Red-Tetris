@@ -29,12 +29,12 @@ export const DEFAULT_MAP = [
 ];
 
 export const TETRIS_COLORS = [
-    "rgb(232, 230, 227)", // WHITE
-    "#00FFFF", // LIGHT BLUE
-    "#1500FF", // DARK BLUE
-    "#FFA902", // ORANGE
-    "#FEFF00", // YELLOW
-    "#00FF00", // GREEN
-    "#9900FF", // PURPLE
-    "#FE0000" // RED
+    "rgb(232, 230, 227)", // WHITE => empty cell
+    "#00FFFF", // LIGHT BLUE => I cell
+    "#1500FF", // DARK BLUE => J cell
+    "#FFA902", // ORANGE => L cell
+    "#FEFF00", // YELLOW => O cell
+    "#00FF00", // GREEN => S cell
+    "#9900FF", // PURPLE => T cell
+    "#FE0000" // RED => Z cell
 ]
