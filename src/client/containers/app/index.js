@@ -1,11 +1,20 @@
 import React from "react";
-import { TitleComponent } from "../../components/Title/index";
-import { Board } from "../board/index"
-import { AppContainer } from "./styles";
+import { TitleComponent } from "../../Components/Title/index";
+import { BoardComponent } from "../Board/index"
+import {
+    AppContainerStyle,
+    TitleContainerStyle,
+    BoardContainerStyle
+} from "./styles";
 
 export const App = () => (
-    <AppContainer>
-        <TitleComponent text={"Red Tetris"}></TitleComponent>
-        <Board></Board>
-    </AppContainer>
+    <div style={AppContainerStyle}>
+        <div style={TitleContainerStyle}>
+            <TitleComponent text={"Red Tetris"}></TitleComponent>
+        </div>
+        <div style={BoardContainerStyle}>
+            <BoardComponent></BoardComponent>
+        </div >
+        <div style={{width: '33%'}}></div>
+    </div >
 );

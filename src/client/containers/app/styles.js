@@ -1,10 +1,13 @@
-import styled from "styled-components";
-import {
-    WHITE_TEXT_COLOR,
-    RED_TEXT_COLOR
-} from "../../constants/colors";
+export const AppContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center'
+}
 
-export const AppContainer = styled.div`
-width: 100%;
-height: 100%;
-`
+
+export const TitleContainerStyle = {
+    width: '33%'
+}
+
+export const BoardContainerStyle = {
+    width: '33%'
+}
