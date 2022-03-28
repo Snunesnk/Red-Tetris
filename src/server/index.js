@@ -51,8 +51,9 @@ app.get("/bundle.js", (req, res) => {
   res.sendFile(path.resolve("public/bundle.js"));
 });
 
-httpServer.listen(3000, () => {
-  console.log("Listening on *:3000");
+const PORT = 3042;
+httpServer.listen(3042, () => {
+    console.log('Listening on *:' + PORT);
 });
 
 const Games = [new Game("firstGame")];
