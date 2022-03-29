@@ -1,4 +1,4 @@
-export default function mapReducer(state = {}, action) {
+function mapReducer(state = {}, action) {
     switch (action.type) {
         case "move/left":
             return {
@@ -19,3 +19,5 @@ export default function mapReducer(state = {}, action) {
             return state;
     }
 }
+
+export default mapReducer;
