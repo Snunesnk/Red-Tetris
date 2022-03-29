@@ -1,6 +1,7 @@
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const allMoves = require("./moves");
 
 const app = express();
 const httpServer = createServer(app);
@@ -17,6 +18,8 @@ io.on("connection", socket => {
     socket.on("message", (data) => { console.log(data); });
     // handle the event sent with socket.emit()  
     socket.on("salutations", (elem1, elem2, elem3) => { console.log(elem1, elem2, elem3); });
+
+    socket.on("Key code", key => { allMoves.moves(key); });
 
     socket.emit("my-test");
 
