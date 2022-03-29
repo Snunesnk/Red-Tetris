@@ -1,6 +1,7 @@
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const allMoves = require("./moves");
 
 const app = express();
 const httpServer = createServer(app);
@@ -33,6 +34,9 @@ io.on("connection", (socket) => {
   socket.on("salutations", (elem1, elem2, elem3) => {
     console.log(elem1, elem2, elem3);
   });
+  socket.on("Key code", (key) => {
+    allMoves.moves(key);
+  });
 
   socket.emit("my-test");
 
@@ -53,7 +57,7 @@ app.get("/bundle.js", (req, res) => {
 
 const PORT = 3042;
 httpServer.listen(3042, () => {
-    console.log('Listening on *:' + PORT);
+  console.log("Listening on *:" + PORT);
 });
 
 const Games = [new Game("firstGame")];
