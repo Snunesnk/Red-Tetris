@@ -7,6 +7,11 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
 
 let path = require('path');
+const Game = require('./game');
+
+function f(value) {
+    console.log(value.content); 
+}
 
 io.on("connection", socket => {
     // either with send()  
@@ -38,3 +43,6 @@ app.get('/bundle.js', (req, res) => {
 httpServer.listen(3000, () => {
     console.log('Listening on *:3000');
 });
+
+const firstGame = new Game;
+firstGame.pieces.map(f);

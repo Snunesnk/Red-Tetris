@@ -1,3 +1,9 @@
+const defaultMap = require('./const');
+
 class Player {
-  constructor() {}
+  constructor() {
+    map = defaultMap;
+  }
 }
+
+module.exports = Player;

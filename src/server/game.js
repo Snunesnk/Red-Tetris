@@ -1,9 +1,18 @@
-import Piece from "./piece";
-import Player from "./player";
+const Piece = require("./piece");
+const Player = require("./player");
 
 class Game {
     constructor() {
-        this.pieceList = [];
-        this.playerList = [];
+        this.pieces = [];
+        this.players = [];
+        this.addPieces(20);
+    }
+
+    addPieces(nb) {
+        for (let i = 0; i < nb; i++) {
+            this.pieces.push(new Piece);
+        }
     }
 }
+
+module.exports = Game;
