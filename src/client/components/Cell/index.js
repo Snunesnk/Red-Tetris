@@ -2,7 +2,7 @@ import React from "react";
 import { CellStyle, InnerCellStyle, setCellBackground } from "./styles";
 
 
-export const CellComponent = ({ color }) => {
+export const CellComponent = ({ color, x_pos, y_pos, dispatch }) => {
     // Don't know how to edit the background color after import
     const CellStyle = {
         minHeight: '15px',
@@ -14,7 +14,11 @@ export const CellComponent = ({ color }) => {
     }
 
     return (
-        <div style={CellStyle} >
+        <div
+            style={CellStyle}
+            onClick={() => dispatch({ type: "incr/clicked", pos: [x_pos, y_pos] })}
+            id={'cell_' + y_pos + '_' + x_pos}
+        >
             <div style={InnerCellStyle}></div>
         </div>
     );
