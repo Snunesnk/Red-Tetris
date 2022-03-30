@@ -12,7 +12,6 @@ justify-content: center;
 
 export const Title = styled.div`
 color: ${RED_COLOR};
-font-family: "Share Tech Mono", monospace;
 text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
 font-size: 3.2em;
 margin-top: 0.3em;

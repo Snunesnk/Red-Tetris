@@ -8,7 +8,7 @@ import emitSignal from "../../Socket/socketEmitters";
 
 
 const initialState = {
-    isGameStarted: true
+    isGameStarted: false
 }
 
 export const App = () => {

@@ -21,7 +21,7 @@ let config = {
   },
   devServer: {
     compress: true,
-    port: 8081,
+    port: 3042,
   },
 }
 

@@ -7,7 +7,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:8081",
+        origin: "http://localhost:3042",
         methods: ["GET", "POST"]
     }
 });
@@ -57,8 +57,8 @@ app.get("/bundle.js", (req, res) => {
     res.sendFile(path.resolve("public/bundle.js"));
 });
 
-const PORT = 3042;
-httpServer.listen(3042, () => {
+const PORT = 3000;
+httpServer.listen(3000, () => {
     console.log('Listening on *:' + PORT);
 });
 
