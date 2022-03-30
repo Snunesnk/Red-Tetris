@@ -30,7 +30,6 @@
         "node-sass": "^7.0.1",
         "nodemon": "^2.0.15",
         "postcss-loader": "^6.2.1",
-        "react-bootstrap": "^2.2.2",
         "react-hot-loader": "^4.13.0",
         "style-loader": "^2.0.0",
         "styled-components": "^5.3.5",
