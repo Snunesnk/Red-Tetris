@@ -5,7 +5,7 @@ class Piece {
     this.content = pieceList[Math.floor(Math.random() * pieceList.length)];
     this.rotate(Math.floor(Math.random() * 4));
   }
- 
+
   rotate(rotations) {
     if (!rotations) {
       return;

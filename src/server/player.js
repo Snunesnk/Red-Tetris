@@ -1,8 +1,10 @@
-const defaultMap = require('./const');
+const defaultMap = require("./const");
 
 class Player {
-  constructor() {
-    map = defaultMap;
+  constructor(socketId, name) {
+    this.socketId = socketId;
+    this.name = name;
+    this.map = defaultMap;
   }
 }
 
