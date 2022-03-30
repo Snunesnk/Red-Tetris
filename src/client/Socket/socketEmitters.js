@@ -10,7 +10,7 @@ const acceptedKeys = [
 
 function emitSignal(key) {
     if (acceptedKeys.indexOf(key) !== -1)
-        socket.emit("Key code", { keyCode: key });
+        socket.emit("move", { keyCode: key });
 }
 
 export default emitSignal;
