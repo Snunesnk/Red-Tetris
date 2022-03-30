@@ -8,7 +8,9 @@ import emitSignal from "../../Socket/socketEmitters";
 
 
 const initialState = {
-    isGameStarted: false
+    isGameStarted: false,
+    isPseudoEntered: false,
+    pseudo: ""
 }
 
 export const App = () => {
@@ -21,10 +23,16 @@ export const App = () => {
                     <TitleComponent text={"Red Tetris"}></TitleComponent>
                 </Grid>
 
-                {mode.isGameStarted == false && (
+                {mode.isGameStarted == false && mode.isPseudoEntered == false && (
                     <Grid item xs={12}>
-                        <LandingComponent></LandingComponent>
+                        <LandingComponent setMode={setMode}></LandingComponent>
                     </Grid>
+                )}
+
+                {mode.isGameStarted == false && mode.isPseudoEntered == true && (
+                    <div>
+                        COUCOU{mode.pseudo}
+                    </div>
                 )}
 
                 {mode.isGameStarted === true && (

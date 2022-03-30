@@ -15,7 +15,7 @@ import {
     LandingPaperStyle
 } from "./styles";
 
-export const LandingComponent = () => {
+export const LandingComponent = ({ setMode }) => {
     return (
         <Grid container id="landing-grid">
             <Grid item xs={12} style={{ width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
@@ -30,7 +30,14 @@ export const LandingComponent = () => {
                                     <TextField
                                         label="Enter your pseudo ..."
                                         variant="standard"
-                                        inputProps={{ style: LandingInputStyle }}
+                                        inputProps={{ style: LandingInputStyle, onChange: (e) => {
+                                            setMode((prev) => {
+                                                return {
+                                                    ...prev,
+                                                    pseudo: e.target.value
+                                                };
+                                            })
+                                        } }}
                                         InputLabelProps={{ style: LandingInputLabelStyle }}
                                         fullWidth
                                     >
@@ -43,6 +50,12 @@ export const LandingComponent = () => {
                                 <Button
                                     style={LandingButtonStyle}
                                     variant="contained"
+                                    onClick={() => setMode((prev) => {
+                                        return {
+                                            ...prev,
+                                            isPseudoEntered: true
+                                        };
+                                    })}
                                 >
                                     Next
                                 </Button>
