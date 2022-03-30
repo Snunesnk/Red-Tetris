@@ -5,7 +5,12 @@ const allMoves = require("./moves");
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
+const io = new Server(httpServer, {
+    cors: {
+        origin: "http://localhost:8081",
+        methods: ["GET", "POST"]
+    }
+});
 
 let path = require('path');
 
@@ -19,7 +24,7 @@ io.on("connection", socket => {
     // handle the event sent with socket.emit()  
     socket.on("salutations", (elem1, elem2, elem3) => { console.log(elem1, elem2, elem3); });
 
-    socket.on("Key code", key => { allMoves.moves(key); });
+    socket.on("move", key => { allMoves.moves(key); });
 
     socket.emit("my-test");
 

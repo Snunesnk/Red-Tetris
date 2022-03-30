@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {
-    WHITE_COLOR,
     RED_COLOR
 } from "../../constants";
 
@@ -15,5 +14,6 @@ export const Title = styled.div`
 color: ${RED_COLOR};
 font-family: "Share Tech Mono", monospace;
 text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
-font-size: 4.2em;
+font-size: 3.2em;
+margin-top: 0.3em;
 `
