@@ -1,9 +1,14 @@
 import React from "react";
+import { useState } from "react";
 import {
     Paper,
     Button,
     Grid,
 } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
 import {
     PseudoPaperStyle,
     GridContainerStyle,
@@ -13,8 +18,11 @@ import {
     JoinRoomBtnStyle,
     TableColStyle,
     TableRowStyle,
-    PaperRowStyle
+    PaperRowStyle,
+    DialogBtnContainerStyle,
+    DialogBtn
 } from "./styles";
+import { LandingInputLabelStyle, LandingInputStyle } from "../Landing/styles";
 
 const rows = [
     {
@@ -49,12 +57,31 @@ const rows = [
     }
 ]
 
-export const RoomSelectionComponent = ({ pseudo }) => {
+export const RoomSelectionComponent = ({ mode, setMode }) => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const JoinRoom = () => {
+        setMode((prev) => {
+            return {
+                ...prev,
+                isRoomSelected: true
+            }
+        });
+    }
+
     return (
         <Grid container style={GridContainerStyle}>
             <Grid item xs={7}>
                 <Paper style={PseudoPaperStyle} elevation={10}>
-                    <span>Welcome {pseudo} !</span>
+                    <span>Welcome {mode.pseudo} !</span>
                 </Paper>
             </Grid>
 
@@ -63,6 +90,7 @@ export const RoomSelectionComponent = ({ pseudo }) => {
                     <Button
                         variant="contained"
                         style={CreateRoomButtonStyle}
+                        onClick={handleClickOpen}
                     >
                         Create new room
                     </Button>
@@ -118,6 +146,7 @@ export const RoomSelectionComponent = ({ pseudo }) => {
                             <Button
                                 variant="contained"
                                 style={JoinRoomBtnStyle}
+                                onClick={JoinRoom}
                             >
                                 Join
                             </Button>
@@ -125,6 +154,39 @@ export const RoomSelectionComponent = ({ pseudo }) => {
                     </Grid>
                 </Grid>
             ))}
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth
+            >
+                <DialogContent>
+                    <TextField
+                        label="Enter room name"
+                        variant="standard"
+                        InputLabelProps={{ style: LandingInputLabelStyle }}
+                        inputProps={{ style: LandingInputStyle }}
+                        fullWidth
+                    >
+                    </TextField>
+                </DialogContent>
+                <DialogActions style={DialogBtnContainerStyle}>
+                    <Button
+                        variant="contained"
+                        style={DialogBtn}
+                        onClick={handleClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="contained"
+                        style={DialogBtn}
+                        onClick={() => {handleClose(); JoinRoom()}}
+                    >
+                        Continue
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Grid>
     )
 }

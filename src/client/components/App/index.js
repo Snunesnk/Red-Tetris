@@ -11,6 +11,7 @@ import emitSignal from "../../Socket/socketEmitters";
 const initialState = {
     isGameStarted: false,
     isPseudoEntered: true,
+    isRoomSelected: false,
     pseudo: "SNK - test"
 }
 
@@ -30,9 +31,9 @@ export const App = () => {
                     </Grid>
                 )}
 
-                {mode.isGameStarted == false && mode.isPseudoEntered == true && (
+                {mode.isGameStarted == false && mode.isPseudoEntered == true && mode.isRoomSelected == false && (
                     <Grid item xs={12}>
-                        <RoomSelectionComponent pseudo={mode.pseudo}></RoomSelectionComponent>
+                        <RoomSelectionComponent mode={mode} setMode={setMode}></RoomSelectionComponent>
                     </Grid>
                 )}
 

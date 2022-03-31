@@ -59,3 +59,13 @@ export const PaperRowStyle = {
     display: "flex",
     alignItems: "center"
 }
+
+export const DialogBtnContainerStyle = {
+    display: "flex",
+    justifyContent: "space-between"
+}
+
+export const DialogBtn = {
+    fontFamily: "BarcadeBrawl",
+    backgroundColor: RED_COLOR,
+}
