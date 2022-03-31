@@ -1,16 +1,11 @@
 const express = require("express");
 const { createServer } = require("http");
-const { Server } = require("socket.io");
-const allMoves = require("./moves");
+
+const initSocket = require("./Socket/socket");
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
-    cors: {
-        origin: "http://localhost:3042",
-        methods: ["GET", "POST"]
-    }
-});
+const io = initSocket(httpServer);
 
 let path = require("path");
 const Game = require("./game");
@@ -18,10 +13,6 @@ const Game = require("./game");
 function f(value) {
     console.log(value.content);
 }
-
-io.on("connection", (socket) => {
-    socket.on("move", key => { allMoves.moves(key); });
-});
 
 // On connexion to the page, returns the HTML code
 app.get("/", (req, res) => {
@@ -33,9 +24,10 @@ app.get("/bundle.js", (req, res) => {
     res.sendFile(path.resolve("public/bundle.js"));
 });
 
-const PORT = 3000;
-httpServer.listen(3000, () => {
-    console.log('Listening on *:' + PORT);
+
+const PORT = 3042;
+httpServer.listen(3042, () => {
+  console.log("Listening on *:" + PORT);
 });
 
 const Games = [new Game("firstGame")];

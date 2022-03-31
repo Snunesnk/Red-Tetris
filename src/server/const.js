@@ -59,4 +59,4 @@ const defaultMap = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-module.exports = pieceList, defaultMap;
+module.exports = { pieceList, defaultMap };

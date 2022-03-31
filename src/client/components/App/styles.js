@@ -1,11 +1,12 @@
-export const CenteredContainer = {
+export const AppContainerStyle = {
     display: 'flex',
-    justifyContent: 'center',
-    width: "100%"
+    justifyContent: 'center'
 }
 
-export const WidthThirdCentered = {
-    width: "33%",
-    display: "flex",
-    justifyContent: "center"
+export const TitleContainerStyle = {
+    width: '33%'
+}
+
+export const BoardContainerStyle = {
+    width: '33%'
 }
