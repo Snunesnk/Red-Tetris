@@ -3,21 +3,22 @@ import Grid from "@mui/material/Grid";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
-import { AppContainerStyle } from "./styles";
+import { RoomSelectionComponent } from "../RoomSelection";
+import { CenteredContainer } from "./styles";
 import emitSignal from "../../Socket/socketEmitters";
 
 
 const initialState = {
     isGameStarted: false,
-    isPseudoEntered: false,
-    pseudo: ""
+    isPseudoEntered: true,
+    pseudo: "SNK - test"
 }
 
 export const App = () => {
     const [mode, setMode] = useState(initialState);
 
     return (
-        <div id="app_div" style={AppContainerStyle} onKeyDown={(e) => emitSignal(e.key)} tabIndex="0">
+        <div id="app_div" style={CenteredContainer} onKeyDown={(e) => emitSignal(e.key)} tabIndex="0">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TitleComponent text={"Red Tetris"}></TitleComponent>
@@ -30,9 +31,9 @@ export const App = () => {
                 )}
 
                 {mode.isGameStarted == false && mode.isPseudoEntered == true && (
-                    <div>
-                        COUCOU{mode.pseudo}
-                    </div>
+                    <Grid item xs={12}>
+                        <RoomSelectionComponent pseudo={mode.pseudo}></RoomSelectionComponent>
+                    </Grid>
                 )}
 
                 {mode.isGameStarted === true && (

@@ -1,4 +1,4 @@
-export const AppContainerStyle = {
+export const CenteredContainer = {
     display: 'flex',
     justifyContent: 'center',
     width: "100%"
