@@ -1,4 +1,4 @@
-const pieceList = require("./const");
+const { pieceList } = require("./const");
 
 class Piece {
   constructor() {
