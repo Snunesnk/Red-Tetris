@@ -59,4 +59,6 @@ const defaultMap = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-module.exports = { pieceList, defaultMap };
+const Games = [];
+
+module.exports = { pieceList, defaultMap, Games };
