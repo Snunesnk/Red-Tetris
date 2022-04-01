@@ -38,3 +38,10 @@ export const LandingPaperStyle = {
     width: "33%",
     marginTop: "10em"
 }
+
+export const LandingGridStyle = {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center"
+}

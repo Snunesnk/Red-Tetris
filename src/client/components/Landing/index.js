@@ -12,13 +12,14 @@ import {
     LandingButtonStyle,
     LandingInputLabelStyle,
     LandingInputStyle,
-    LandingPaperStyle
+    LandingPaperStyle,
+    LandingGridStyle
 } from "./styles";
 
 export const LandingComponent = ({ setMode }) => {
     return (
         <Grid container id="landing-grid">
-            <Grid item xs={12} style={{ width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
+            <Grid item xs={12} style={LandingGridStyle}>
                 <Paper
                     component="form"
                     style={LandingPaperStyle}

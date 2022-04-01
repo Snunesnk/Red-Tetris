@@ -12,10 +12,14 @@ let config = {
     rules: [{
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      loader: ['react-hot-loader/webpack', 'babel-loader']
+      loader: "react-hot-loader/webpack"
     }, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader']
+    }, {
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loader: "babel-loader"
     }
     ]
   },
