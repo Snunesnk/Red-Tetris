@@ -39,7 +39,6 @@ function roomName(state = "", action) {
 
         case "game:create":
             emitCreateGame(action.roomName);
-            return state;
 
         default:
             return state;
@@ -81,6 +80,9 @@ function appState(state = defaultAppState, action) {
                 ...state,
                 isGameStarted: true
             }
+
+        default:
+            return state;
     }
 }
 

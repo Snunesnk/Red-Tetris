@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import socket from "../socket";
 
-const dispatch = useDispatch();
-
 export function emitCreateGame(gameName) {
   socket.emit("game:create", { gameName });
 }
 
 export function onGameCreated(payload) {
+  const dispatch = useDispatch();
+
   // error: payload null if gameName is already taked
   console.log("hit -> game:created");
   if (payload) {

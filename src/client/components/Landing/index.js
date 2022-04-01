@@ -19,6 +19,7 @@ import {
 
 export const LandingComponent = () => {
     const dispatch = useDispatch();
+    let playerName = "";
 
     return (
         <Grid container id="landing-grid">
@@ -36,7 +37,7 @@ export const LandingComponent = () => {
                                         variant="standard"
                                         inputProps={{
                                             style: LandingInputStyle,
-                                            onChange: (e) => { dispatch({ type: "name:entered", playerName: e.target.value }) }
+                                            onChange: (e) => playerName = e.target.value
                                         }}
                                         InputLabelProps={{ style: LandingInputLabelStyle }}
                                         fullWidth
@@ -50,7 +51,7 @@ export const LandingComponent = () => {
                                 <Button
                                     style={LandingButtonStyle}
                                     variant="contained"
-                                    onClick={() => dispatch({ type: "state:nameEntered" })}
+                                    onClick={() => { dispatch({ type: "name:entered", playerName: playerName }); dispatch({ type: "state:pseudoEntered" }) }}
                                 >
                                     Next
                                 </Button>

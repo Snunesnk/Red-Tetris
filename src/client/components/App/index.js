@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
-import { WaitongRoomComponent } from "../WaitingRoom";
+import { WaitingRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
-import { emitMoveInGame } from "../../Socket/InGame/move";
 
-const onKeyDown = (e) => {
-    const dispatch = useDispatch();
-    const appState = useSelector(store => store.appState);
-
-    if (appState.isGameStarted)
-        dispatch({ type: "inGame:move", keyCode: e.key });
+function onKeyDown(e, isGameStarted) {
+    if (isGameStarted)
+        emitMoveInGame(e.key);
 }
 
-export const App = () => {
+export function App() {
     const appState = useSelector(state => state.appState);
 
     // Force focus so we can get the keys pressed
     useEffect(() => {
-        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keydown', (e) => onKeyDown(e, appState.isGameStarted));
     });
 
     return (
-        <div id="app_div" style={CenteredContainer}>
+        <div id="app_div" style={CenteredContainer} onKeyDown={onKeyDown}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TitleComponent text={"Red Tetris"}></TitleComponent>
