@@ -30,14 +30,16 @@ export const LandingComponent = ({ setMode }) => {
                                     <TextField
                                         label="Enter your pseudo ..."
                                         variant="standard"
-                                        inputProps={{ style: LandingInputStyle, onChange: (e) => {
-                                            setMode((prev) => {
-                                                return {
-                                                    ...prev,
-                                                    pseudo: e.target.value
-                                                };
-                                            })
-                                        } }}
+                                        inputProps={{
+                                            style: LandingInputStyle, onChange: (e) => {
+                                                setMode((prev) => {
+                                                    return {
+                                                        ...prev,
+                                                        pseudo: e.target.value
+                                                    };
+                                                })
+                                            }
+                                        }}
                                         InputLabelProps={{ style: LandingInputLabelStyle }}
                                         fullWidth
                                     >

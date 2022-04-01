@@ -18,9 +18,10 @@ import {
     JoinRoomBtnStyle,
     TableColStyle,
     TableRowStyle,
+    PaperHeaderRowStyle,
     PaperRowStyle,
     DialogBtnContainerStyle,
-    DialogBtn
+    DialogBtn,
 } from "./styles";
 import { LandingInputLabelStyle, LandingInputStyle } from "../Landing/styles";
 
@@ -68,22 +69,18 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
         setOpen(false);
     };
 
-    const JoinRoom = () => {
+    const JoinRoom = (roomName) => {
         setMode((prev) => {
             return {
                 ...prev,
-                isRoomSelected: true
+                isRoomSelected: true,
+                roomName: roomName
             }
         });
     }
 
     return (
         <Grid container style={GridContainerStyle}>
-            <Grid item xs={7}>
-                <Paper style={PseudoPaperStyle} elevation={10}>
-                    <span>Welcome {mode.pseudo} !</span>
-                </Paper>
-            </Grid>
 
             <Grid item xs={7}>
                 <div style={CenteredContainer}>
@@ -106,7 +103,7 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
             <Grid item xs={10} style={TableHeaderStyle}>
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={10}>
-                        <Paper style={PaperRowStyle}>
+                        <Paper style={PaperHeaderRowStyle}>
                             <Grid container>
                                 <Grid item xs={5} style={TableColStyle}>
                                     Room Name
@@ -142,11 +139,11 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                                 </Grid>
                             </Paper>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} style={TableColStyle}>
                             <Button
                                 variant="contained"
                                 style={JoinRoomBtnStyle}
-                                onClick={JoinRoom}
+                                onClick={() => JoinRoom(row.roomName)}
                             >
                                 Join
                             </Button>
@@ -165,28 +162,37 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                         label="Enter room name"
                         variant="standard"
                         InputLabelProps={{ style: LandingInputLabelStyle }}
-                        inputProps={{ style: LandingInputStyle }}
-                        fullWidth
+                        inputProps={{
+                            style: LandingInputStyle, onChange: (e) => {
+                                setMode((prev) => {
+                                    return {
+                                        ...prev,
+                                        roomName: e.target.value
+                                    };
+                                })
+                            }
+                        }}
+                    fullWidth
                     >
-                    </TextField>
-                </DialogContent>
-                <DialogActions style={DialogBtnContainerStyle}>
-                    <Button
-                        variant="contained"
-                        style={DialogBtn}
-                        onClick={handleClose}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        variant="contained"
-                        style={DialogBtn}
-                        onClick={() => {handleClose(); JoinRoom()}}
-                    >
-                        Continue
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </Grid>
+                </TextField>
+            </DialogContent>
+            <DialogActions style={DialogBtnContainerStyle}>
+                <Button
+                    variant="contained"
+                    style={DialogBtn}
+                    onClick={handleClose}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    variant="contained"
+                    style={DialogBtn}
+                    onClick={() => { handleClose(); JoinRoom(mode.roomName) }}
+                >
+                    Continue
+                </Button>
+            </DialogActions>
+        </Dialog>
+        </Grid >
     )
 }
