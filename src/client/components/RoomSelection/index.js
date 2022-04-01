@@ -146,7 +146,7 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                             <Button
                                 variant="contained"
                                 style={JoinRoomBtnStyle}
-                                onClick={() => { emitJoinGame(row.roomName, row.owner); JoinRoom(row.roomName) }}
+                                onClick={() => { emitJoinGame(row.roomName, mode.pseudo); JoinRoom(row.roomName) }}
                             >
                                 Join
                             </Button>
