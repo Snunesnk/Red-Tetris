@@ -7,6 +7,6 @@ export function emitCreateGame(gameName) {
 export function onGameCreated(payload) {
   // error: payload null if gameName is already taked
   console.log("hit -> game:created");
-  if (payload) console.log(payload.gameName);
+  if (payload) console.log(payload);
   else console.log("error");
 }
