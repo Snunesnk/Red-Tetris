@@ -29,8 +29,3 @@ const PORT = 3042;
 httpServer.listen(3042, () => {
   console.log("Listening on *:" + PORT);
 });
-
-const Games = [new Game("firstGame")];
-Games[0].pieces.map(f);
-
-module.exports = Game;
