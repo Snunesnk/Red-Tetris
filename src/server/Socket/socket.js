@@ -5,7 +5,10 @@ const moveInGame = require("./InGame/move");
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
-    /* options */
+    cors: {
+      origin: "http://localhost:3024",
+      methods: ["GET", "POST"]
+    }
   });
 
   io.on("connection", (socket) => {

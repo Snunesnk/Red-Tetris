@@ -1,5 +1,6 @@
 const express = require("express");
 const { createServer } = require("http");
+
 const initSocket = require("./Socket/socket");
 
 const app = express();
@@ -10,18 +11,19 @@ let path = require("path");
 const Game = require("./game");
 
 function f(value) {
-  console.log(value.content);
+    console.log(value.content);
 }
 
 // On connexion to the page, returns the HTML code
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/index.html"));
+    res.sendFile(path.resolve("public/index.html"));
 });
 
 // Return the bundle.js, containing all js files
 app.get("/bundle.js", (req, res) => {
-  res.sendFile(path.resolve("public/bundle.js"));
+    res.sendFile(path.resolve("public/bundle.js"));
 });
+
 
 const PORT = 3042;
 httpServer.listen(3042, () => {

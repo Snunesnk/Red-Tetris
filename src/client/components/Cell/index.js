@@ -9,8 +9,8 @@ export const CellComponent = ({ color, x_pos, y_pos, dispatch }) => {
         minWidth: '15px',
         padding: '0.1em',
         backgroundColor: color,
-        borderTop: '1px solid black',
-        borderLeft: '1px solid black'
+        borderTop: '1px solid white',
+        borderLeft: '1px solid white'
     }
 
     return (

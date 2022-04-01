@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
-import { BoardStyle, LineStyle } from './styles'
-import { CellComponent } from "../../Components/Cell/index";
+import { LineStyle } from './styles'
+import { CellComponent } from "../Cell/index";
 import { TETRIS_COLORS } from "../../constants";
 
 export const BoardComponent = () => {
@@ -12,7 +12,7 @@ export const BoardComponent = () => {
     const dispatch = useDispatch();
 
     return (
-        <div style={BoardStyle}>
+        <div>
             {
                 boardMap.map(y => {
                     y_pos++;
@@ -30,7 +30,6 @@ export const BoardComponent = () => {
                                             x_pos={x_pos}
                                             y_pos={y_pos}
                                             dispatch={dispatch}
-                                            id={'cell_' + y_pos + '_' + x_pos}
                                             color={TETRIS_COLORS[+x]}
                                         />
                                     )

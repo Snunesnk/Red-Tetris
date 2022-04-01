@@ -10,11 +10,23 @@ let config = {
   },
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      use: "babel-loader"
-    }]
-  }
+      loader: "react-hot-loader/webpack"
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
+    }, {
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loader: "babel-loader"
+    }
+    ]
+  },
+  devServer: {
+    compress: true,
+    port: 3024,
+  },
 }
 
 module.exports = config;
