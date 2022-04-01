@@ -25,6 +25,9 @@ import {
 } from "./styles";
 import { LandingInputLabelStyle, LandingInputStyle } from "../Landing/styles";
 
+import { emitJoinGame } from "../../Socket/Game/join";
+import { emitCreateGame } from "../../Socket/Game/create";
+
 const rows = [
     {
         roomName: "first room",
@@ -143,7 +146,7 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                             <Button
                                 variant="contained"
                                 style={JoinRoomBtnStyle}
-                                onClick={() => JoinRoom(row.roomName)}
+                                onClick={() => { emitJoinGame(row.roomName, row.owner); JoinRoom(row.roomName) }}
                             >
                                 Join
                             </Button>
@@ -172,27 +175,27 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                                 })
                             }
                         }}
-                    fullWidth
+                        fullWidth
                     >
-                </TextField>
-            </DialogContent>
-            <DialogActions style={DialogBtnContainerStyle}>
-                <Button
-                    variant="contained"
-                    style={DialogBtn}
-                    onClick={handleClose}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant="contained"
-                    style={DialogBtn}
-                    onClick={() => { handleClose(); JoinRoom(mode.roomName) }}
-                >
-                    Continue
-                </Button>
-            </DialogActions>
-        </Dialog>
+                    </TextField>
+                </DialogContent>
+                <DialogActions style={DialogBtnContainerStyle}>
+                    <Button
+                        variant="contained"
+                        style={DialogBtn}
+                        onClick={handleClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="contained"
+                        style={DialogBtn}
+                        onClick={() => { handleClose(); emitCreateGame(mode.roomName); JoinRoom(mode.roomName) }}
+                    >
+                        Continue
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Grid >
     )
 }

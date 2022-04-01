@@ -68,7 +68,7 @@ export const WaitongRoomComponent = ({ mode, setMode }) => {
                 <Grid container style={CenteredContainer}>
                     <Grid item xs={8}>
                         {players.map((player, i) => (
-                            <Paper style={PlayersPaperStyle}>
+                            <Paper style={PlayersPaperStyle} key={i}>
                                 <Grid container>
                                     <Grid item xs={7} style={{ textAlign: "center" }}>
                                         {player.name}

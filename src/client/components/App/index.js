@@ -6,22 +6,29 @@ import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitongRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
-import emitSignal from "../../Socket/socketEmitters";
+import { emitMoveInGame } from "../../Socket/InGame/move";
 
 
 const initialState = {
     isGameStarted: false,
-    isPseudoEntered: true,
+    isPseudoEntered: false,
     isRoomSelected: false,
-    pseudo: "SNK",
+    pseudo: "",
     roomName: ""
 }
 
 export const App = () => {
     const [mode, setMode] = useState(initialState);
 
+    const onKeyDown = (e) => {
+        if (mode.isGameStarted)
+            emitMoveInGame(e.key)
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+
     return (
-        <div id="app_div" style={CenteredContainer} onKeyDown={(e) => emitSignal(e.key)} tabIndex="0">
+        <div id="app_div" style={CenteredContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TitleComponent text={"Red Tetris"} mode={mode}></TitleComponent>
