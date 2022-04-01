@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
+import { useDispatch, useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
@@ -8,51 +9,48 @@ import { WaitongRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 
+const onKeyDown = (e) => {
+    const dispatch = useDispatch();
+    const appState = useSelector(store => store.appState);
 
-const initialState = {
-    isGameStarted: false,
-    isPseudoEntered: false,
-    isRoomSelected: false,
-    pseudo: "",
-    roomName: ""
+    if (appState.isGameStarted)
+        dispatch({ type: "inGame:move", keyCode: e.key });
 }
 
 export const App = () => {
-    const [mode, setMode] = useState(initialState);
+    const appState = useSelector(state => state.appState);
 
-    const onKeyDown = (e) => {
-        if (mode.isGameStarted)
-            emitMoveInGame(e.key)
-    }
-
-    document.addEventListener('keydown', onKeyDown);
+    // Force focus so we can get the keys pressed
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown);
+    });
 
     return (
         <div id="app_div" style={CenteredContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <TitleComponent text={"Red Tetris"} mode={mode}></TitleComponent>
+                    <TitleComponent text={"Red Tetris"}></TitleComponent>
                 </Grid>
 
-                {mode.isGameStarted == false && mode.isPseudoEntered == false && (
+                {appState.isGameStarted == false && appState.isPseudoEntered == false && (
                     <Grid item xs={12}>
-                        <LandingComponent setMode={setMode}></LandingComponent>
+                        <LandingComponent></LandingComponent>
                     </Grid>
                 )}
 
-                {mode.isGameStarted == false && mode.isPseudoEntered == true && mode.isRoomSelected == false && (
+                {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == false && (
                     <Grid item xs={12}>
-                        <RoomSelectionComponent mode={mode} setMode={setMode}></RoomSelectionComponent>
+                        <RoomSelectionComponent></RoomSelectionComponent>
                     </Grid>
                 )}
 
-                {mode.isGameStarted == false && mode.isPseudoEntered == true && mode.isRoomSelected == true && (
+                {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == true && (
                     <Grid item xs={12}>
-                        <WaitongRoomComponent mode={mode} setMode={setMode}></WaitongRoomComponent>
+                        <WaitingRoomComponent></WaitingRoomComponent>
                     </Grid>
                 )}
 
-                {mode.isGameStarted === true && (
+                {appState.isGameStarted === true && (
                     <Grid item xs={12}>
                         <BoardComponent></BoardComponent>
                     </Grid>

@@ -5,6 +5,7 @@ import {
     Grid,
     Paper
 } from "@mui/material";
+import { useDispatch } from "react-redux";
 import {
     MainInputStyle,
     MainInputContainerStyle,
@@ -16,7 +17,9 @@ import {
     LandingGridStyle
 } from "./styles";
 
-export const LandingComponent = ({ setMode }) => {
+export const LandingComponent = () => {
+    const dispatch = useDispatch();
+
     return (
         <Grid container id="landing-grid">
             <Grid item xs={12} style={LandingGridStyle}>
@@ -32,14 +35,8 @@ export const LandingComponent = ({ setMode }) => {
                                         label="Enter your pseudo ..."
                                         variant="standard"
                                         inputProps={{
-                                            style: LandingInputStyle, onChange: (e) => {
-                                                setMode((prev) => {
-                                                    return {
-                                                        ...prev,
-                                                        pseudo: e.target.value
-                                                    };
-                                                })
-                                            }
+                                            style: LandingInputStyle,
+                                            onChange: (e) => { dispatch({ type: "name:entered", playerName: e.target.value }) }
                                         }}
                                         InputLabelProps={{ style: LandingInputLabelStyle }}
                                         fullWidth
@@ -53,12 +50,7 @@ export const LandingComponent = ({ setMode }) => {
                                 <Button
                                     style={LandingButtonStyle}
                                     variant="contained"
-                                    onClick={() => setMode((prev) => {
-                                        return {
-                                            ...prev,
-                                            isPseudoEntered: true
-                                        };
-                                    })}
+                                    onClick={() => dispatch({ type: "state:nameEntered" })}
                                 >
                                     Next
                                 </Button>
@@ -66,7 +58,7 @@ export const LandingComponent = ({ setMode }) => {
                         </Grid>
                     </Grid >
                 </Paper>
-            </Grid>
-        </Grid>
+            </Grid >
+        </Grid >
     );
 }

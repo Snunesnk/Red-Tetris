@@ -1,11 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux';
+import store from '../../Store/store';
+import { useSelector, useDispatch } from 'react-redux'
 import { LineStyle } from './styles'
 import { CellComponent } from "../Cell/index";
 import { TETRIS_COLORS } from "../../constants";
 
 export const BoardComponent = () => {
+    console.log(store.getState());
     const boardMap = useSelector(state => (state.map));
     let y_pos = -1;
 

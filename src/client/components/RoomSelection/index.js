@@ -9,8 +9,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
+import { useDispatch, useSelector } from "react-redux";
 import {
-    PseudoPaperStyle,
     GridContainerStyle,
     CreateRoomButtonStyle,
     CenteredContainer,
@@ -61,7 +61,7 @@ const rows = [
     }
 ]
 
-export const RoomSelectionComponent = ({ mode, setMode }) => {
+export const RoomSelectionComponent = () => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -72,19 +72,12 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
         setOpen(false);
     };
 
-    const JoinRoom = (roomName) => {
-        setMode((prev) => {
-            return {
-                ...prev,
-                isRoomSelected: true,
-                roomName: roomName
-            }
-        });
-    }
+    const dispatch = useDispatch();
+    let newRoomName = "";
+    const playerName = useSelector(state => state.playerName);
 
     return (
         <Grid container style={GridContainerStyle}>
-
             <Grid item xs={7}>
                 <div style={CenteredContainer}>
                     <Button
@@ -146,7 +139,7 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                             <Button
                                 variant="contained"
                                 style={JoinRoomBtnStyle}
-                                onClick={() => { emitJoinGame(row.roomName, mode.pseudo); JoinRoom(row.roomName) }}
+                                onClick={() => { dispatch({ type: "game:joined", roomName: row.roomName, playerName: playerName }) }}
                             >
                                 Join
                             </Button>
@@ -166,14 +159,8 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                         variant="standard"
                         InputLabelProps={{ style: LandingInputLabelStyle }}
                         inputProps={{
-                            style: LandingInputStyle, onChange: (e) => {
-                                setMode((prev) => {
-                                    return {
-                                        ...prev,
-                                        roomName: e.target.value
-                                    };
-                                })
-                            }
+                            style: LandingInputStyle,
+                            onChange: (e) => { newRoomName = e.target.value }
                         }}
                         fullWidth
                     >
@@ -190,7 +177,7 @@ export const RoomSelectionComponent = ({ mode, setMode }) => {
                     <Button
                         variant="contained"
                         style={DialogBtn}
-                        onClick={() => { handleClose(); emitCreateGame(mode.roomName); JoinRoom(mode.roomName) }}
+                        onClick={() => { handleClose(); dispatch({ type: "game:create", roomName: newRoomName, playerName: playerName }) }}
                     >
                         Continue
                     </Button>
