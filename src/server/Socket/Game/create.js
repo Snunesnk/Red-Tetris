@@ -2,7 +2,7 @@ const { Games } = require("../../const");
 const Game = require("../../game");
 
 function createGame(payload, socket) {
-  console.log("hit => game:create");
+  console.log("server hit => game:create");
   console.log(payload);
   const found = Games.find(function (game) {
     if (game.name === payload.gameName) return true;

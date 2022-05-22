@@ -6,9 +6,9 @@ export function emitMoveInGame(move) {
   if (acceptedKeys.indexOf(move) !== -1) socket.emit("inGame:move", { move });
 }
 
-export function onInGameMoved(payload) {
+export function onInGameMoved(dispatch, payload) {
   // error: payload null if ...
-  console.log("hit -> inGame:moved");
+  console.log("client hit -> inGame:moved");
   if (payload) console.log(payload.move);
   else console.log("error");
 }

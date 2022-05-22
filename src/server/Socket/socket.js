@@ -3,6 +3,7 @@ const createGame = require("./Game/create");
 const joinGame = require("./Game/join");
 const listGames = require("./Game/list");
 const moveInGame = require("./InGame/move");
+const startGame = require("./Game/start");
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
@@ -21,6 +22,9 @@ function initSocket(httpServer) {
     });
     socket.on("game:list", () => {
       listGames(socket);
+    });
+    socket.on("game:start", (payload) => {
+      startGame(payload, socket);
     });
     socket.on("inGame:move", (payload) => {
       moveInGame(payload, socket);

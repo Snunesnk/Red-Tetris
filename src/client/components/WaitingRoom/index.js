@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Paper, Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     GridContainerStyle,
@@ -35,6 +35,7 @@ const players = [
 
 export const WaitingRoomComponent = () => {
     const dispatch = useDispatch();
+    const appState = useSelector(state => state.appState);
 
     return (
         <Grid container style={GridContainerStyle}>
@@ -84,7 +85,7 @@ export const WaitingRoomComponent = () => {
                         style={PlayButtonStyle}
                         size="large"
                         fullWidth
-                        onClick={() => dispatch({ type: "state:gameStarted" })}
+                        onClick={() => dispatch({ type: "game:start", roomName: appState.roomName })}
                     >
                         Start
                     </Button>

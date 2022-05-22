@@ -2,6 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { emitMoveInGame } from "../Socket/InGame/move";
 import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
+import { emitStartGame } from "../Socket/Game/start";
 import { DEFAULT_MAP } from "../constants";
 
 function move(state = {}, action) {
@@ -24,7 +25,6 @@ function map(state = DEFAULT_MAP, action) {
 
         case "incr/clicked":
             state[action.pos[1]][action.pos[0]] = state[action.pos[1]][action.pos[0]] % 7 + 1;
-
             return state
 
         default:
@@ -36,9 +36,16 @@ function roomName(state = "", action) {
     switch (action.type) {
         case "game:joined":
             emitJoinGame(action.roomName, action.playerName);
+            return state;
 
         case "game:create":
             emitCreateGame(action.roomName);
+            return state;
+
+        case "game:start":
+            emitStartGame(action.roomName);
+            return state;
+
 
         default:
             return state;
@@ -60,19 +67,25 @@ const defaultAppState = {
     isGameStarted: false,
     isPseudoEntered: false,
     isRoomSelected: false,
+    playerName: "",
+    roomName: ""
 }
 function appState(state = defaultAppState, action) {
     switch (action.type) {
         case "state:pseudoEntered":
             return {
                 ...state,
-                isPseudoEntered: true
+                isPseudoEntered: true,
+                playerName: action.playerName
             }
 
         case "state:roomSelected":
+            console.log("Gonna print action")
+            console.log(action);
             return {
                 ...state,
-                isRoomSelected: true
+                isRoomSelected: true,
+                roomName: action.roomName
             }
 
         case "state:gameStarted":
