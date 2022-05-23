@@ -74,7 +74,7 @@ export const RoomSelectionComponent = () => {
 
     const dispatch = useDispatch();
     let newRoomName = "";
-    const playerName = useSelector(state => state.playerName);
+    const playerName = useSelector(state => state.appState).playerName;
 
     return (
         <Grid container style={GridContainerStyle}>

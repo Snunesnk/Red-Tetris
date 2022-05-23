@@ -19,7 +19,7 @@ function joinGame(payload, socket) {
   socket.emit("game:joined", {
     gameName: payload.gameName,
     playerName: payload.playerName,
-    game: gameFound,
+    game: { ...gameFound, players: [] },
   });
 }
 

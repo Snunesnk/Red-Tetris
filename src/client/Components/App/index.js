@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
@@ -7,7 +7,7 @@ import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
-import emitMoveInGame from "./game";
+import emitMoveInGame from "../Board/game";
 
 function onKeyDown(e, isGameStarted) {
     if (isGameStarted)
@@ -17,10 +17,10 @@ function onKeyDown(e, isGameStarted) {
 export function App() {
     const appState = useSelector(state => state.appState);
 
-    // Force focus so we can get the keys pressed
     useEffect(() => {
+        // Force focus to get all keys pressed
         document.addEventListener('keydown', (e) => onKeyDown(e, appState.isGameStarted));
-    });
+    }, [appState]);
 
     return (
         <div id="app_div" style={CenteredContainer} onKeyDown={onKeyDown}>

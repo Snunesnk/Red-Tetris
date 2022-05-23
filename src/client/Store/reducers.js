@@ -1,4 +1,4 @@
-import { combineReducers } from "@reduxjs/toolkit";
+import { combineReducers, createNextState } from "@reduxjs/toolkit";
 import { emitMoveInGame } from "../Socket/InGame/move";
 import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
@@ -20,12 +20,15 @@ function map(state = DEFAULT_MAP, action) {
     console.log(action);
     console.log(state);
     switch (action.type) {
-        case "move/left":
+        case "piece/move":
             return state;
 
-        case "incr/clicked":
-            state[action.pos[1]][action.pos[0]] = state[action.pos[1]][action.pos[0]] % 7 + 1;
-            return state
+        // case "incr/clicked":
+        //     state[action.pos[1]][action.pos[0]] = state[action.pos[1]][action.pos[0]] % 7 + 1;
+        //     return state
+
+        case "piece/insert":
+            return state;
 
         default:
             return state;
@@ -39,13 +42,16 @@ function roomName(state = "", action) {
             return state;
 
         case "game:create":
-            emitCreateGame(action.roomName);
+            emitCreateGame(action.roomName, action.playerName);
             return state;
 
         case "game:start":
             emitStartGame(action.roomName, action.playerName);
             return state;
 
+        case "game:tetrisStart":
+            emitStartGame(action.roomName, action.playerName);
+            return state;
 
         default:
             return state;
@@ -54,8 +60,8 @@ function roomName(state = "", action) {
 
 const defaultAppState = {
     isGameStarted: false,
-    isPseudoEntered: false,
-    isRoomSelected: false,
+    isPseudoEntered: true,
+    isRoomSelected: true,
     playerName: "",
     roomName: ""
 }
@@ -69,8 +75,6 @@ function appState(state = defaultAppState, action) {
             }
 
         case "state:roomSelected":
-            console.log("Gonna print action")
-            console.log(action);
             return {
                 ...state,
                 isRoomSelected: true,
