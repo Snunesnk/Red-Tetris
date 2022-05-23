@@ -16,11 +16,15 @@ function startGame(payload, socket) {
     }
   }
 
-  socket.emit("game:started", {
+  const new_payload = {
     gameName: payload.gameName,
     playerName: payload.playerName,
     game: gameFound,
-  });
+  }
+  console.log(new_payload);
+
+
+  socket.emit("game:started", new_payload);
 }
 
 module.exports = startGame;

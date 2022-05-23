@@ -85,7 +85,7 @@ export const WaitingRoomComponent = () => {
                         style={PlayButtonStyle}
                         size="large"
                         fullWidth
-                        onClick={() => dispatch({ type: "game:start", roomName: appState.roomName })}
+                        onClick={() => { dispatch({ type: "game:start", roomName: appState.roomName, playerName: appState.playerName }) }}
                     >
                         Start
                     </Button>

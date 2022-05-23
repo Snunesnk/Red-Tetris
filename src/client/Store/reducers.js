@@ -43,20 +43,9 @@ function roomName(state = "", action) {
             return state;
 
         case "game:start":
-            emitStartGame(action.roomName);
+            emitStartGame(action.roomName, action.playerName);
             return state;
 
-
-        default:
-            return state;
-    }
-}
-
-function playerName(state = "", action) {
-    switch (action.type) {
-        case "name:entered":
-            state = action.playerName;
-            return state;
 
         default:
             return state;
@@ -102,7 +91,6 @@ function appState(state = defaultAppState, action) {
 const rootReducer = combineReducers({
     map,
     roomName,
-    playerName,
     appState,
     move
 });

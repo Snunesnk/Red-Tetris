@@ -7,6 +7,7 @@ import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
+import emitMoveInGame from "./game";
 
 function onKeyDown(e, isGameStarted) {
     if (isGameStarted)

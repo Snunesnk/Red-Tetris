@@ -10,7 +10,7 @@ import {
 
 export const TitleComponent = ({ text }) => {
     const appState = useSelector(state => state.appState);
-    const playerName = useSelector(state => state.playerName);
+    const playerName = useSelector(state => state.appState).playerName;
 
     return (
         <TitleContainer>

@@ -51,7 +51,7 @@ export const LandingComponent = () => {
                                 <Button
                                     style={LandingButtonStyle}
                                     variant="contained"
-                                    onClick={() => { dispatch({ type: "name:entered", playerName: playerName }); dispatch({ type: "state:pseudoEntered" }) }}
+                                    onClick={() => dispatch({ type: "state:pseudoEntered", playerName: playerName })}
                                 >
                                     Next
                                 </Button>
