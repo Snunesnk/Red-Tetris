@@ -9,6 +9,7 @@ class Player {
     this.lineCleared = 0;
     this.level = 0;
     this.isOver = false;
+    this.moveQueue = [];
 
     this.startDate;
   }
