@@ -3,6 +3,7 @@ import { emitMoveInGame } from "../Socket/InGame/move";
 import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
+import { emitStartTetris } from "../Socket/Game/tetris";
 import { DEFAULT_MAP } from "../constants";
 
 function move(state = {}, action) {
@@ -17,8 +18,6 @@ function move(state = {}, action) {
 }
 
 function map(state = DEFAULT_MAP, action) {
-    console.log(action);
-    console.log(state);
     switch (action.type) {
         case "piece/move":
             return state;
@@ -28,6 +27,10 @@ function map(state = DEFAULT_MAP, action) {
         //     return state
 
         case "piece/insert":
+            return state;
+
+        case "map:new":
+            state = action.map;
             return state;
 
         default:
@@ -50,7 +53,7 @@ function roomName(state = "", action) {
             return state;
 
         case "game:tetrisStart":
-            emitStartGame(action.roomName, action.playerName);
+            emitStartTetris(action.roomName, action.playerName);
             return state;
 
         default:
@@ -60,8 +63,8 @@ function roomName(state = "", action) {
 
 const defaultAppState = {
     isGameStarted: false,
-    isPseudoEntered: true,
-    isRoomSelected: true,
+    isPseudoEntered: false,
+    isRoomSelected: false,
     playerName: "",
     roomName: ""
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
@@ -9,17 +9,18 @@ import { WaitingRoomComponent } from "../WaitingRoom";
 import { CenteredContainer } from "./styles";
 import emitMoveInGame from "../Board/game";
 
-function onKeyDown(e, isGameStarted) {
+function onKeyDown(e, isGameStarted, dispatch) {
     if (isGameStarted)
-        emitMoveInGame(e.key);
+        dispatch({ type: "inGame:move", keyCode: e.key })
 }
 
 export function App() {
     const appState = useSelector(state => state.appState);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Force focus to get all keys pressed
-        document.addEventListener('keydown', (e) => onKeyDown(e, appState.isGameStarted));
+        document.addEventListener('keydown', (e) => onKeyDown(e, appState.isGameStarted, dispatch));
     }, [appState]);
 
     return (

@@ -2,8 +2,9 @@ const { pieceList } = require("./const");
 
 class Piece {
   constructor() {
-    this.content = pieceList[Math.floor(Math.random() * pieceList.length)];
-    this.rotate(Math.floor(Math.random() * 4));
+    this.type = Math.floor(Math.random() * pieceList.length);
+    this.content = pieceList[this.type];
+    // this.rotate(Math.floor(Math.random() * 4));
   }
 
   rotate(rotations) {

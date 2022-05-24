@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Modal, Box } from "@mui/material";
 import { Title } from '../Title/styles'
 import { ModalStyle } from './styles'
@@ -7,6 +7,8 @@ import { ModalStyle } from './styles'
 export const BoardModalComponent = () => {
     const [open, setOpen] = useState(true);
     const [message, setMessage] = useState("");
+    const appState = useSelector(state => state.appState);
+
 
     useEffect(() => {
         const baseTime = 1000;
@@ -16,7 +18,7 @@ export const BoardModalComponent = () => {
         setTimeout(() => { setMessage("Go !!"); }, baseTime * 3);
         setTimeout(() => {
             setOpen(false);
-            dispatch({ type: "game:tetrisStarted" })
+            dispatch({ type: "game:tetrisStart", roomName: appState.roomName, playerName: appState.playerName })
         }, baseTime * 4);
 
     }, []);

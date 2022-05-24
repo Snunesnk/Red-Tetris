@@ -3,6 +3,7 @@ import { onGameJoined } from "./Game/join";
 import { onGamesListed } from "./Game/list";
 import { onInGameMoved } from "./InGame/move";
 import { onGameStarted } from "./Game/start";
+import { onNewMap } from "./Game/tetris";
 
 
 export default function setListeners(socket, dispatch) {
@@ -26,4 +27,10 @@ export default function setListeners(socket, dispatch) {
   socket.on("inGame:moved", (payload) => {
     onInGameMoved(dispatch, payload);
   });
+
+  socket.on("map:new", (payload) => {
+    console.log("New map reiceived");
+    console.log(payload);
+    onNewMap(dispatch, payload);
+  })
 }
