@@ -1,29 +1,72 @@
-function moves(key) {
-    switch (key.keyCode) {
-        case "ArrowUp":
-            console.log("Rotate");
-            return;
+const { draw, placeLine, eraseLine } = require("./draw");
 
-        case "ArrowLeft":
-            console.log("Move left");
-            return;
+function moveLeft(player, piece) {
+    const offset = getLeftOffset(piece);
 
-        case "ArrowRight":
-            console.log("Move right");
-            return;
-
-        case "ArrowDown":
-            console.log("Move down");
-            return;
-
-        case " ":
-            console.log("Go down");
-            return;
-
-        default:
-            return;
-
+    if (player.currentPieceX > 0 - offset) {
+        draw(player, piece, eraseLine);
+        player.currentPieceX -= 1;
+        draw(player, piece, placeLine);
     }
 }
 
-module.exports = { moves };
+function moveRight(player, piece) {
+    const offset = getRightOffset(piece);
+
+    if (player.currentPieceX + piece[0].length < player.map[0].length + offset) {
+        draw(player, piece, eraseLine);
+        player.currentPieceX += 1;
+        draw(player, piece, placeLine);
+    }
+}
+
+function goDown(player, piece) {
+
+}
+
+function rotate(game, player, piece) {
+    draw(player, piece, eraseLine);
+    const prevRotation = player.currentPieceRotation;
+
+    player.currentPieceRotation = (player.currentPieceRotation + 1) % 4;
+
+    piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+
+    if (draw(player, piece, placeLine) != 0) {
+        player.currentPieceRotation = prevRotation;
+        piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+    }
+}
+
+// Maybe I can integrate them to the "piece" class
+function getLeftOffset(piece) {
+    let offset = 0;
+
+    for (let i = 0; i < piece[0].length - 1; i++) {
+        for (let j = 0; j < piece.length - 1; j++) {
+            if (piece[j][i] != 0)
+                return offset;
+        }
+
+        offset++;
+    }
+
+    return offset;
+}
+function getRightOffset(piece) {
+    let offset = 0;
+
+    for (let i = piece[0].length - 1; i >= 0; i--) {
+        for (let j = piece.length - 1; j >= 0; j--) {
+            if (piece[j][i] != 0)
+                return offset;
+        }
+
+        offset++;
+    }
+
+    return offset;
+}
+
+
+module.exports = { moveLeft, moveRight, goDown, rotate };

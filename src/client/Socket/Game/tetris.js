@@ -9,10 +9,12 @@ export function onNewMap(dispatch, payload) {
     // error: payload null if gameName is already taken
     console.log("client hit -> game:newMap");
     if (payload) {
-        console.log("New map");
-        console.log(payload);
         dispatch({ type: "map:new", map: payload.map });
     }
     else
         console.log("error");
+}
+
+export function onGameOver(dispatch) {
+    dispatch({ type: "state:gameOver" });
 }

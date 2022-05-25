@@ -23,6 +23,13 @@ class Player {
   addMove(move) {
     this.moveQueue.push(move);
   }
+
+  getNextPiece() {
+    this.currentPiece += 1;
+    this.currentPieceRotation = 0;
+    this.currentPieceY = -1;
+    this.currentPieceX = -1;
+  }
 }
 
 module.exports = Player;

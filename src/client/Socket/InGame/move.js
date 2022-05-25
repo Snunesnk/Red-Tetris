@@ -4,16 +4,16 @@ import { useSelect } from "@mui/base";
 
 const acceptedKeys = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft", " "];
 
-export function emitMoveInGame(move) {
+export function emitMoveInGame(move, state) {
   if (acceptedKeys.indexOf(move) !== -1) {
-    const state = useSelector(state => state.appState)
     socket.emit("inGame:move", { move: move, gameName: state.roomName, playerName: state.playerName });
   }
 }
 
-export function onInGameMoved(dispatch, payload) {
-  // error: payload null if ...
-  console.log("client hit -> inGame:moved");
-  if (payload) console.log(payload.move);
-  else console.log("error");
+export function onInGameMoved(payload) {
+  // // error: payload null if ...
+  // if (payload)
+  //   console.log(payload.move);
+  // else
+  //   console.log("error");
 }

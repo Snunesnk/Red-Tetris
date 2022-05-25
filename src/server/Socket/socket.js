@@ -4,7 +4,7 @@ const joinGame = require("./Game/join");
 const listGames = require("./Game/list");
 const moveInGame = require("./InGame/move");
 const startGame = require("./Game/start");
-const startTetris = require("./Game/tetris");
+const { startTetris } = require("./Game/tetris");
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {

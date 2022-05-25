@@ -65,6 +65,7 @@ const defaultAppState = {
     isGameStarted: false,
     isPseudoEntered: false,
     isRoomSelected: false,
+    isGameOver: false,
     playerName: "",
     roomName: ""
 }
@@ -88,6 +89,13 @@ function appState(state = defaultAppState, action) {
             return {
                 ...state,
                 isGameStarted: true
+            }
+
+        case "state:gameOver":
+            console.log("client hit => Game Over");
+            return {
+                ...state,
+                isGameOver: true
             }
 
         default:

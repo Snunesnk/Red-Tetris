@@ -210,4 +210,16 @@ const Games = [];
 
 const levels = [1000, 800, 600, 400, 200]
 
-module.exports = { pieceList, defaultMap, Games, levels };
+const PIECE_DREW = 0;
+const BOTTOM_EDGE_HIT = 1;
+const MOVE_NOT_PERMITTED = 2;
+
+module.exports = {
+  pieceList,
+  defaultMap,
+  Games,
+  levels,
+  PIECE_DREW,
+  BOTTOM_EDGE_HIT,
+  MOVE_NOT_PERMITTED
+};

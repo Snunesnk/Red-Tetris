@@ -15,4 +15,4 @@ function startTetris(payload, socket) {
     tetris(gameFound, playerFound, socket);
 }
 
-module.exports = startTetris;
+module.exports = { startTetris };
