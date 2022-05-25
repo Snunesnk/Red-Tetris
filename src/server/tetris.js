@@ -1,6 +1,6 @@
 const consts = require("./const");
 const { draw, placeLine, eraseLine } = require("./draw");
-const { moveLeft, moveRight, goDown, rotate } = require("./moves");
+const { moveLeft, moveRight, rotate } = require("./moves");
 
 let gravityApply = false;
 
@@ -46,7 +46,11 @@ function handleGame(game, player, socket) {
     }
 
     // Check for cleared lines
-    // player.lineCleared = checkLines(game, player);
+    const clearedLines = handleClearedLines(player);
+    if (clearedLines > 0) {
+        changed = true;
+        player.lineCleared += clearedLines;
+    }
 
     // Maybe for a bonus
     // calculateScore(obj, lines_cleared);
@@ -64,14 +68,27 @@ function handleGame(game, player, socket) {
 
 function handleNewPiece(player, piece) {
     // Init new coordinates to draw the piece
-    player.currentPieceY = 0;
     player.currentPieceX = 3;
+    player.currentPieceY = 0;
 
     // Check if there's still enough room for the piece
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         player.isOver = true;
+
+        // Display only the part of the new piece that should be visible
+        let height = 0;
+
+        for (let j = 0; j >= piece.length - 1; j--) {
+            if (!piece[j].every(val => val == 0))
+                height++;
+            else
+                break;
+        }
+
+        player.currentPieceY = 1 - height;
+
+        // One day I will manage to draw the last piece
     }
-    // let's see later if we need to draw the upcommong piece or not
     else
         draw(player, piece, placeLine);
 }
@@ -116,13 +133,33 @@ function handleMove(game, player, move, piece) {
             break;
 
         case " ":
-            goDown(player, piece)
+            while (player.currentPieceY != -1)
+                handleGravity(player, piece);
             break;
 
         case "ArrowUp":
             rotate(game, player, piece);
             break;
     }
+}
+
+function handleClearedLines(player) {
+    let clearedLines = 0;
+
+    for (let i = 0; i < player.map.length; i++) {
+        if (player.map[i].every(val => val != 0)) {
+            clearedLines += 1;
+            player.map.splice(i, 1);
+            player.map.unshift(consts.defaultMap[0]);
+        }
+    }
+
+    if (clearedLines > 0) {
+        console.log(player.map);
+        console.log("Length: " + player.map.length);
+    }
+
+    return clearedLines;
 }
 
 // Check if a piece at given coordinates will hit the bottom

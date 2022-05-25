@@ -20,10 +20,6 @@ function moveRight(player, piece) {
     }
 }
 
-function goDown(player, piece) {
-
-}
-
 function rotate(game, player, piece) {
     draw(player, piece, eraseLine);
     const prevRotation = player.currentPieceRotation;
@@ -31,6 +27,18 @@ function rotate(game, player, piece) {
     player.currentPieceRotation = (player.currentPieceRotation + 1) % 4;
 
     piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+
+    // I need to check if with the rotation some part of the piece are inside the walls or not,
+    // and if so I have to make them "bounce"
+    const leftOffset = getLeftOffset(piece);
+    const rightOffset = getRightOffset(piece);
+
+    if (player.currentPieceX + leftOffset < 0)
+        player.currentPieceX = 0;
+    if (player.currentPieceX + piece[0].length - rightOffset > player.map[0].length)
+        player.currentPieceX = player.map[0].length - piece[0].length
+
+    // Check also for the bottom of the map
 
     if (draw(player, piece, placeLine) != 0) {
         player.currentPieceRotation = prevRotation;
@@ -69,4 +77,4 @@ function getRightOffset(piece) {
 }
 
 
-module.exports = { moveLeft, moveRight, goDown, rotate };
+module.exports = { moveLeft, moveRight, rotate };
