@@ -2,8 +2,33 @@ const { draw, placeLine, eraseLine } = require("./draw");
 
 function moveLeft(player, piece) {
     const offset = getLeftOffset(piece);
+    let moveOk = true;
 
-    if (player.currentPieceX > 0 - offset) {
+    if (player.currentPieceX <= 0 - offset)
+        return;
+
+    // Find the first block on each line, then check if the place just before on the map
+    // is free or not 
+    piece.forEach((line, index) => {
+        const mapY = player.currentPieceY + index;
+
+        if (!moveOk || mapY >= player.map.length)
+            return;
+
+
+        let blockIndex = line.findIndex(elem => elem != 0);
+        if (blockIndex == -1) {
+            return;
+        }
+
+        const mapX = player.currentPieceX + blockIndex - 1;
+
+        // Check on the map
+        if (player.map[mapY][mapX] != 0)
+            moveOk = false;
+    });
+
+    if (moveOk) {
         draw(player, piece, eraseLine);
         player.currentPieceX -= 1;
         draw(player, piece, placeLine);
@@ -12,8 +37,36 @@ function moveLeft(player, piece) {
 
 function moveRight(player, piece) {
     const offset = getRightOffset(piece);
+    let moveOk = true;
 
-    if (player.currentPieceX + piece[0].length < player.map[0].length + offset) {
+    if (player.currentPieceX + piece[0].length - offset >= player.map[0].length) {
+        return;
+    }
+
+    // Find the first block on each line, then check if the place just after on the map
+    // is free or not 
+    piece.forEach((line, index) => {
+        const mapY = player.currentPieceY + index;
+
+        if (!moveOk || mapY >= player.map.length)
+            return;
+
+        let blockIndex = line.reverse().findIndex(elem => elem != 0);
+        line.reverse();
+        if (blockIndex == -1) {
+            return;
+        }
+
+        const mapX = player.currentPieceX + (3 - blockIndex) + 1;
+
+        // Check on the map
+        if (player.map[mapY][mapX] != 0) {
+            moveOk = false;
+        }
+
+    });
+
+    if (moveOk) {
         draw(player, piece, eraseLine);
         player.currentPieceX += 1;
         draw(player, piece, placeLine);

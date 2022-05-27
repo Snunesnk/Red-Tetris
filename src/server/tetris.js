@@ -2,20 +2,15 @@ const consts = require("./const");
 const { draw, placeLine, eraseLine } = require("./draw");
 const { moveLeft, moveRight, rotate } = require("./moves");
 
-let gravityApply = false;
-
-
 async function tetris(game, player, socket) {
-    const intervalGrav = setInterval(() => {
-        gravityApply = true;
-    }, consts.levels[player.level]);
+    player.increaseLevel();
 
     const intervalMov = setInterval(() => {
         handleGame(game, player, socket);
 
         if (player.isOver) {
             clearInterval(intervalMov);
-            clearInterval(intervalGrav);
+            clearInterval(player.gravityInterval);
 
             socket.emit("game:over");
         }
@@ -31,12 +26,12 @@ function handleGame(game, player, socket) {
     let changed = false;
     // Handle new piece at the same time than gravity,
     // because I need to disable gravity after both functions
-    if (gravityApply || player.currentPieceY == -1) {
+    if (player.gravityApply || player.currentPieceY == -1) {
         if (player.currentPieceY == -1)
             handleNewPiece(player, piece)
         else
             handleGravity(player, piece);
-        gravityApply = false;
+        player.gravityApply = false;
         changed = true;
     }
 
@@ -103,6 +98,10 @@ function handleGravity(player, piece) {
 
         // Check if line were cleared
         player.lineCleared += handleClearedLines(player);
+
+        // Increase level every 10 lines
+        if (player.lineCleared / 5 > player.level)
+            player.increaseLevel();
 
         player.getNextPiece();
     }

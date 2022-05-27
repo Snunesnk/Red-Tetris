@@ -13,6 +13,8 @@ class Player {
     this.level = 0;
     this.isOver = false;
     this.moveQueue = [];
+    this.gravityInterval;
+    this.gravityApply = false;
     this.startDate;
   }
 
@@ -29,6 +31,19 @@ class Player {
     this.currentPieceRotation = 0;
     this.currentPieceY = -1;
     this.currentPieceX = -1;
+  }
+
+  increaseLevel() {
+    if (this.level < consts.levels.length - 1) {
+      this.level++;
+    }
+
+    if (this.gravityInterval)
+      clearInterval(this.gravityInterval);
+
+    this.gravityInterval = setInterval(() => {
+      this.gravityApply = true;
+    }, consts.levels[this.level]);
   }
 }
 

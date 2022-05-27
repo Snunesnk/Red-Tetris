@@ -24,7 +24,6 @@ function placeLine(map, line, x, y) {
         if (map[y][x + i] != 0)
             return consts.MOVE_NOT_PERMITTED;
         else {
-            console.log("[" + y + "][" + (x + i) + "] drew");
             map[y][x + i] = line[i];
         }
     }

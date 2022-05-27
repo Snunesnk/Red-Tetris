@@ -208,7 +208,17 @@ const defaultMap = [
 
 const Games = [];
 
-const levels = [1000, 800, 600, 400, 200]
+const levels = [
+  1000,
+  900,
+  800,
+  700,
+  600,
+  500,
+  400,
+  300,
+  200
+]
 
 const PIECE_DREW = 0;
 const BOTTOM_EDGE_HIT = 1;
