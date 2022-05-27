@@ -21,16 +21,16 @@ async function tetris(game, player, socket) {
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
 // is applied 
 function handleGame(game, player, socket) {
-    const piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+    const piece = game.pieces[player.currentPiece];
 
     let changed = false;
     // Handle new piece at the same time than gravity,
     // because I need to disable gravity after both functions
     if (player.gravityApply || player.currentPieceY == -1) {
         if (player.currentPieceY == -1)
-            handleNewPiece(player, piece)
+            handleNewPiece(player, piece.content[player.currentPieceRotation])
         else
-            handleGravity(player, piece);
+            handleGravity(player, piece.content[player.currentPieceRotation]);
         player.gravityApply = false;
         changed = true;
     }
@@ -117,24 +117,24 @@ function handleGravity(player, piece) {
 function handleMove(game, player, move, piece) {
     switch (move) {
         case "ArrowLeft":
-            moveLeft(player, piece);
+            moveLeft(player, piece.content[player.currentPieceRotation]);
             break;
 
         case "ArrowRight":
-            moveRight(player, piece);
+            moveRight(player, piece.content[player.currentPieceRotation]);
             break;
 
         case "ArrowDown":
-            handleGravity(player, piece);
+            handleGravity(player, piece.content[player.currentPieceRotation]);
             break;
 
         case " ":
             while (player.currentPieceY != -1)
-                handleGravity(player, piece);
+                handleGravity(player, piece.content[player.currentPieceRotation]);
             break;
 
         case "ArrowUp":
-            rotate(game, player, piece);
+            rotate(game, player, piece, 0);
             break;
     }
 }

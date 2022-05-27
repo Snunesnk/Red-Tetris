@@ -1,4 +1,5 @@
 const { draw, placeLine, eraseLine } = require("./draw");
+const { NORMAL_ROTATION, I_ROTATION } = require("./const");
 
 function moveLeft(player, piece) {
     const offset = getLeftOffset(piece);
@@ -73,29 +74,52 @@ function moveRight(player, piece) {
     }
 }
 
-function rotate(game, player, piece) {
-    draw(player, piece, eraseLine);
+function rotate(game, player, piece, rotIndex) {
+    draw(player, piece.content[player.currentPieceRotation], eraseLine);
     const prevRotation = player.currentPieceRotation;
+    const prevX = player.currentPieceX;
+    const prevY = player.currentPieceY;
 
     player.currentPieceRotation = (player.currentPieceRotation + 1) % 4;
 
-    piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+    piece = game.pieces[player.currentPiece];
 
     // I need to check if with the rotation some part of the piece are inside the walls or not,
     // and if so I have to make them "bounce"
-    const leftOffset = getLeftOffset(piece);
-    const rightOffset = getRightOffset(piece);
+    const leftOffset = getLeftOffset(piece.content[player.currentPieceRotation]);
+    const rightOffset = getRightOffset(piece.content[player.currentPieceRotation]);
 
     if (player.currentPieceX + leftOffset < 0)
         player.currentPieceX = 0;
-    if (player.currentPieceX + piece[0].length - rightOffset > player.map[0].length)
+    if (player.currentPieceX + piece.content[player.currentPieceRotation][0].length - rightOffset > player.map[0].length)
         player.currentPieceX = player.map[0].length - piece[0].length
 
-    // Check also for the bottom of the map
+    // Perform the appropriate translation for this attempt
+    // I piece
+    if (piece.type == 0) {
+        player.currentPieceX += I_ROTATION[rotIndex].x;
+        player.currentPieceY += I_ROTATION[rotIndex].y;
+    }
+    // Other pieces
+    else {
+        player.currentPieceX += NORMAL_ROTATION[rotIndex].x;
+        player.currentPieceY += NORMAL_ROTATION[rotIndex].y;
+    }
 
-    if (draw(player, piece, placeLine) != 0) {
+    if (draw(player, piece.content[player.currentPieceRotation], placeLine) != 0) {
+        // Restore data
+        player.currentPieceX = prevX;
+        player.currentPieceY = prevY;
         player.currentPieceRotation = prevRotation;
-        piece = game.pieces[player.currentPiece].content[player.currentPieceRotation];
+        piece = game.pieces[player.currentPiece];
+
+        // If the drawing fails, two cases:
+        //  - All rotations have been tested, so the rotation is impossible
+        //  - One or more rotations are to be tested, so test them
+
+        // All rotations failed
+        if (rotIndex < 4)
+            rotate(game, player, piece, rotIndex + 1);
     }
 }
 

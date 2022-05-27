@@ -224,6 +224,52 @@ const PIECE_DREW = 0;
 const BOTTOM_EDGE_HIT = 1;
 const MOVE_NOT_PERMITTED = 2;
 
+const NORMAL_ROTATION = [
+  {
+    x: 0,
+    y: 0
+  },
+  {
+    x: -1,
+    y: 0
+  },
+  {
+    x: -1,
+    y: 1
+  },
+  {
+    x: 0,
+    y: -2
+  },
+  {
+    x: -1,
+    y: -2
+  }
+]
+
+const I_ROTATION = [
+  {
+    x: 0,
+    y: 0
+  },
+  {
+    x: -2,
+    y: 0
+  },
+  {
+    x: 1,
+    y: 0
+  },
+  {
+    x: -2,
+    y: -1
+  },
+  {
+    x: 1,
+    y: 2
+  }
+]
+
 module.exports = {
   pieceList,
   defaultMap,
@@ -231,5 +277,7 @@ module.exports = {
   levels,
   PIECE_DREW,
   BOTTOM_EDGE_HIT,
-  MOVE_NOT_PERMITTED
+  MOVE_NOT_PERMITTED,
+  NORMAL_ROTATION,
+  I_ROTATION
 };
