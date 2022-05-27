@@ -7,7 +7,7 @@ export function emitStartTetris(gameName, playerName) {
 
 export function onNewMap(dispatch, payload) {
     // error: payload null if gameName is already taken
-    console.log("client hit -> game:newMap");
+    // console.log("client hit -> game:newMap");
     if (payload) {
         dispatch({ type: "map:new", map: payload.map });
     }

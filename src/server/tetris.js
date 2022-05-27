@@ -45,20 +45,12 @@ function handleGame(game, player, socket) {
         changed = true;
     }
 
-    // Check for cleared lines
-    const clearedLines = handleClearedLines(player);
-    if (clearedLines > 0) {
-        changed = true;
-        player.lineCleared += clearedLines;
-    }
-
     // Maybe for a bonus
     // calculateScore(obj, lines_cleared);
 
     // player.isOver = isPlayerOver(game, player);
 
     if (changed) {
-        // console.log("Gonna send the map");
         socket.emit("map:new", { map: player.map });
 
         if (game.pieces.length - player.currentPiece < 3)
@@ -89,8 +81,9 @@ function handleNewPiece(player, piece) {
 
         // One day I will manage to draw the last piece
     }
-    else
+    else {
         draw(player, piece, placeLine);
+    }
 }
 
 function handleGravity(player, piece) {
@@ -107,6 +100,10 @@ function handleGravity(player, piece) {
     // for the calculations
     else {
         draw(player, piece, placeLine);
+
+        // Check if line were cleared
+        player.lineCleared += handleClearedLines(player);
+
         player.getNextPiece();
     }
 
@@ -150,13 +147,8 @@ function handleClearedLines(player) {
         if (player.map[i].every(val => val != 0)) {
             clearedLines += 1;
             player.map.splice(i, 1);
-            player.map.unshift(consts.defaultMap[0]);
+            player.map.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
         }
-    }
-
-    if (clearedLines > 0) {
-        console.log(player.map);
-        console.log("Length: " + player.map.length);
     }
 
     return clearedLines;
@@ -165,7 +157,18 @@ function handleClearedLines(player) {
 // Check if a piece at given coordinates will hit the bottom
 function hasHitBottom(map, piece, y, x) {
     let pieceHeight = piece.length;
-    const emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
+    let emptyLine = 0;
+
+    piece.forEach((elem, index) => {
+        // Do not count the lines at the end of the piece
+        if (index > emptyLine)
+            return;
+
+        if (elem.every(val => val == 0))
+            emptyLine++;
+        else
+            return;
+    });
 
     piece.forEach(line => {
         if (line.every(val => val == 0))
