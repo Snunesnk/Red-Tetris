@@ -26,8 +26,8 @@ function handleGame(game, player, socket) {
     let changed = false;
     // Handle new piece at the same time than gravity,
     // because I need to disable gravity after both functions
-    if (player.gravityApply || player.currentPieceY == -1) {
-        if (player.currentPieceY == -1)
+    if (player.gravityApply || player.needNewPiece == true) {
+        if (player.needNewPiece == true)
             handleNewPiece(player, piece.content[player.currentPieceRotation])
         else
             handleGravity(player, piece.content[player.currentPieceRotation]);
@@ -54,9 +54,7 @@ function handleGame(game, player, socket) {
 }
 
 function handleNewPiece(player, piece) {
-    // Init new coordinates to draw the piece
-    player.currentPieceX = 3;
-    player.currentPieceY = 0;
+    player.needNewPiece = false;
 
     // Check if there's still enough room for the piece
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
@@ -77,25 +75,20 @@ function handleNewPiece(player, piece) {
         // One day I will manage to draw the last piece
     }
     else {
+        // Check if there's an empty line before drawing the piece
+        let emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
+        player.currentPieceY -= emptyLine;
+
         draw(player, piece, placeLine);
     }
 }
 
+let bottomHit = false;
+
 function handleGravity(player, piece) {
-    // Erase piece at previous position 
-    draw(player, piece, eraseLine);
-
-    if (!hasHitBottom(player.map, piece, player.currentPieceY + 1, player.currentPieceX)) {
-        player.currentPieceY += 1;
-
-        const drew = draw(player, piece, placeLine);
-    }
-    // If the piece will hit the bottom, draw it back
-    // Maybe I can avoid to erase then to draw it back, but it is much easier
-    // for the calculations
-    else {
-        draw(player, piece, placeLine);
-
+    // Check that the piece is still at the bottom
+    if (bottomHit && hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        bottomHit = false;
         // Check if line were cleared
         player.lineCleared += handleClearedLines(player);
 
@@ -104,14 +97,19 @@ function handleGravity(player, piece) {
             player.increaseLevel();
 
         player.getNextPiece();
+        return;
     }
 
-    // Okay so for the gravity, I just need to first erase the piece on
-    // its current position on the map, then draw it again one raw down
-    // (so with y + 1)
-    // There is room for improvment here
+    // Erase piece at previous position
+    draw(player, piece, eraseLine);
 
-    // If the piece hit the bottom, then it's time for the next piece
+    player.currentPieceY += 1;
+
+    const drew = draw(player, piece, placeLine);
+    // If the piece will hit the bottom, draw it back
+    // Maybe I can avoid to erase then to draw it back, but it is much easier
+    // for the calculations
+    bottomHit = hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)
 }
 
 function handleMove(game, player, move, piece) {
@@ -129,7 +127,7 @@ function handleMove(game, player, move, piece) {
             break;
 
         case " ":
-            while (player.currentPieceY != -1)
+            while (player.needNewPiece != true)
                 handleGravity(player, piece.content[player.currentPieceRotation]);
             break;
 
@@ -155,38 +153,16 @@ function handleClearedLines(player) {
 
 // Check if a piece at given coordinates will hit the bottom
 function hasHitBottom(map, piece, y, x) {
-    let pieceHeight = piece.length;
-    let emptyLine = 0;
-
-    piece.forEach((elem, index) => {
-        // Do not count the lines at the end of the piece
-        if (index > emptyLine)
-            return;
-
-        if (elem.every(val => val == 0))
-            emptyLine++;
-        else
-            return;
-    });
-
-    piece.forEach(line => {
-        if (line.every(val => val == 0))
-            pieceHeight--;
-    });
-
-    // Do not go past the edge of the map
-    // TODO: Change this to integrate the "Tas"
-    if (y + pieceHeight > map.length)
-        return true;
-
-    // Check if there's something under
-    for (let i = piece.length - 1; i >= 0; i--) {
-        if (piece[i].every(val => val == 0))
-            continue;
-
+    for (let i = 0; i < piece.length; i++) {
         for (let j = 0; j < piece[i].length; j++) {
-            if (map[y + i - emptyLine][x + j] != 0 && piece[i][j] != 0)
+            // For each piece's cell that has an empty space under
+            // (or is the end of the piece), check if it's out of the map
+            // or if there's a piece under it
+            if (piece[i][j] !== 0
+                && (i === piece.length - 1 || piece[i + 1][j] === 0)
+                && (y + i + 1 >= map.length || map[y + i + 1][x + j] !== 0)) {
                 return true;
+            }
         }
     }
 
