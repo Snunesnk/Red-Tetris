@@ -22,7 +22,6 @@ function moveRight(player, piece) {
 }
 
 function rotate(game, player, piece, rotIndex) {
-    console.log("Trying rotation " + rotIndex);
     draw(player, piece.content[player.currentPieceRotation], eraseLine);
     const prevX = player.currentPieceX;
     const prevY = player.currentPieceY;
@@ -42,10 +41,6 @@ function rotate(game, player, piece, rotIndex) {
         player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
     }
 
-    console.log("Rotation: ");
-    console.log(NORMAL_ROTATION[player.currentPieceRotation][rotIndex]);
-    console.log("Top left piece coordinates: [" + player.currentPieceX + ", " + player.currentPieceY + "]");
-
     if (draw(player, piece.content[nextRotation], placeLine) != 0) {
         // Restore data
         player.currentPieceX = prevX;
@@ -59,17 +54,14 @@ function rotate(game, player, piece, rotIndex) {
         // If there's still some rotation to test, test them.
         // Otherwise, draw the piece as it was
         if (rotIndex < 4) {
-            console.log("Rotation failed");
             rotate(game, player, piece, rotIndex + 1);
         }
         else {
-            console.log("rotation completey failed ...");
             draw(player, piece.content[player.currentPieceRotation], placeLine);
         }
     }
     // If the draw succeed, update the piece rotation
     else {
-        console.log("Rotation complete !");
         player.currentPieceRotation = nextRotation;
     }
 }

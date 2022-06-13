@@ -83,11 +83,9 @@ function handleNewPiece(player, piece) {
     }
 }
 
-let bottomHit = false;
-
 function handleGravity(player, piece) {
     // Check that the piece is still at the bottom
-    if (bottomHit && hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+    if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         bottomHit = false;
         // Check if line were cleared
         player.lineCleared += handleClearedLines(player);
@@ -106,10 +104,6 @@ function handleGravity(player, piece) {
     player.currentPieceY += 1;
 
     const drew = draw(player, piece, placeLine);
-    // If the piece will hit the bottom, draw it back
-    // Maybe I can avoid to erase then to draw it back, but it is much easier
-    // for the calculations
-    bottomHit = hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)
 }
 
 function handleMove(game, player, move, piece) {

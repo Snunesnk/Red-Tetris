@@ -7,7 +7,6 @@ function draw(player, piece, drawFunc) {
             const drew = drawFunc(player.map, piece[i], player.currentPieceX, player.currentPieceY + i);
             // If the draw fail for this line, remove all previously placed lines
             if (drew != 0) {
-                console.log("line " + i + " failed");
                 i--;
                 for (i; i >= 0; i--) {
                     eraseLine(player.map, piece[i], player.currentPieceX, player.currentPieceY + i)
@@ -16,9 +15,6 @@ function draw(player, piece, drawFunc) {
             }
         }
     }
-
-    if (message.length > 0)
-        console.log(message);
 
     return consts.PIECE_DREW;
 }
