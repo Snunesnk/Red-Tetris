@@ -9,6 +9,7 @@ function draw(player, piece, drawFunc) {
             const drew = drawFunc(player.map, piece[i], player.currentPieceX, player.currentPieceY - emptyLine + i);
             // If the draw fail for this line, remove all previously placed lines
             if (drew != 0) {
+                i--;
                 for (i; i >= 0; i--) {
                     eraseLine(player.map, piece[i], player.currentPieceX, player.currentPieceY - emptyLine + i)
                 }
