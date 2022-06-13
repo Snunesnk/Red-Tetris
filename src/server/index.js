@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
 app.get("/bundle.js", (req, res) => {
     res.sendFile(path.resolve("public/bundle.js"));
 });
+// Return the font
+app.get("/BarcadeBrawl.ttf", (req, res) => {
+    res.sendFile(path.resolve("public/BarcadeBrawl.ttf"));
+});
 
 
 const PORT = 3042;

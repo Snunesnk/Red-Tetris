@@ -1,23 +1,15 @@
 import { applyMiddleware, combineReducers } from "@reduxjs/toolkit";
 import { createStore } from '@reduxjs/toolkit';
-import { DEFAULT_MAP } from "../constants";
-import mapReducer from "./mapReducer";
+import rootReducer from "./reducers";
 import asyncFunctionMiddleware from "./middleware";
-
-
-// const storeReducer = combineReducers({
-//   map: mapReducer
-// });
-
-const initialState = {
-  map: [...DEFAULT_MAP]
-}
+import { initSockets } from "../Socket/socket";
 
 const store = createStore(
-  // storeReducer,
-  mapReducer,
-  initialState,
+  rootReducer,
+  undefined,
   applyMiddleware(asyncFunctionMiddleware)
 );
+
+initSockets(store.dispatch);
 
 export default store;

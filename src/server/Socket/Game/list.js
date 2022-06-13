@@ -1,7 +1,7 @@
 const { Games } = require("../../const");
 
 function listGames(socket) {
-  console.log("hit => game:list");
+  console.log("server hit => game:list");
   socket.emit("game:listed", { gamesList: Games });
 }
 

@@ -16,6 +16,11 @@ class Game {
       this.pieces.push(new Piece());
     }
   }
+
+  addPlayer(playerName, socketId) {
+    const newPlayer = new Player(socketId, playerName);
+    this.players.push(newPlayer);
+  }
 }
 
 module.exports = Game;

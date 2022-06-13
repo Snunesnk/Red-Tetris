@@ -1,8 +1,8 @@
 const { Games } = require("../../const");
 const Player = require("../../player");
 
-function joinGame(payload, socket) {
-  console.log("server hit => game:join");
+function startGame(payload, socket) {
+  console.log("server hit => game:start");
   console.log(payload);
   const gameFound = Games.find((game) => game.name === payload.gameName ? true : false);
 
@@ -16,11 +16,13 @@ function joinGame(payload, socket) {
     }
   }
 
-  socket.emit("game:joined", {
+  const new_payload = {
     gameName: payload.gameName,
     playerName: payload.playerName,
-    game: { ...gameFound, players: [] },
-  });
+    game: { game: { ...gameFound, players: [] } },
+  }
+
+  socket.emit("game:started", new_payload);
 }
 
-module.exports = joinGame;
+module.exports = startGame;

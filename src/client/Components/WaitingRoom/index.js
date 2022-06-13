@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Paper, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     GridContainerStyle,
-    PseudoPaperStyle,
     PlayButtonStyle,
     CenteredContainer,
     PlayersHeaderPaperStyle,
@@ -33,16 +33,9 @@ const players = [
     }
 ]
 
-export const WaitongRoomComponent = ({ mode, setMode }) => {
-
-    const startGame = () => {
-        setMode((prev) => {
-            return {
-                ...prev,
-                isGameStarted: true
-            };
-        });
-    };
+export const WaitingRoomComponent = () => {
+    const dispatch = useDispatch();
+    const appState = useSelector(state => state.appState);
 
     return (
         <Grid container style={GridContainerStyle}>
@@ -92,7 +85,7 @@ export const WaitongRoomComponent = ({ mode, setMode }) => {
                         style={PlayButtonStyle}
                         size="large"
                         fullWidth
-                        onClick={startGame}
+                        onClick={() => { dispatch({ type: "game:start", roomName: appState.roomName, playerName: appState.playerName }) }}
                     >
                         Start
                     </Button>

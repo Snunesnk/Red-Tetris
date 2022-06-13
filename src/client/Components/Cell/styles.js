@@ -1,3 +1,3 @@
 export const InnerCellStyle = {
-    padding: '0.9em'
+    padding: '1.3em'
 }
