@@ -1,10 +1,11 @@
 const consts = require("./const");
+const map = require("./maps/maps");
 
 class Player {
   constructor(socketId, name) {
     this.socketId = socketId;
     this.name = name;
-    this.map = consts.defaultMap;
+    this.map = map.empty;
     this.currentPiece = 0;
     this.currentPieceRotation = 0;
     this.currentPieceY = 0;

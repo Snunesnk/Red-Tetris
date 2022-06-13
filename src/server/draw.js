@@ -1,4 +1,5 @@
 const consts = require("./const");
+const map = require("./maps/maps").empty;
 
 function draw(player, piece, drawFunc) {
     for (let i = 0; i < piece.length; i++) {
@@ -51,9 +52,9 @@ function eraseLine(map, line, x, y) {
 }
 
 function coordinatesOk(x, y) {
-    if (x < 0 || x >= consts.defaultMap[0].length)
+    if (x < 0 || x >= map[0].length)
         return false;
-    if (y < 0 || y >= consts.defaultMap.length)
+    if (y < 0 || y >= map.length)
         return false;
     return true;
 }
