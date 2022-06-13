@@ -26,6 +26,12 @@ function placeLine(map, line, x, y) {
             continue;
         if ((line[i] != 0 && !coordinatesOk(x + i, y)) || map[y][x + i] != 0)
             return consts.MOVE_NOT_PERMITTED;
+    }
+
+    // Everything seems fine, put the piece
+    for (let i = 0; i < line.length; i++) {
+        if (line[i] == 0)
+            continue;
         else {
             map[y][x + i] = line[i];
         }

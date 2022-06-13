@@ -10,28 +10,7 @@ import {
     PlayersPaperStyle
 } from "./styles";
 
-const players = [
-    {
-        name: "Ryan",
-        isHost: false
-    },
-    {
-        name: "Brad",
-        isHost: false
-    },
-    {
-        name: "Chuck",
-        isHost: false
-    },
-    {
-        name: "Jack",
-        isHost: true
-    },
-    {
-        name: "Dwayne",
-        isHost: false
-    }
-]
+const players = []
 
 export const WaitingRoomComponent = () => {
     const dispatch = useDispatch();
