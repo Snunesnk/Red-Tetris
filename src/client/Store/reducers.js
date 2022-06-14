@@ -40,7 +40,7 @@ function map(state = DEFAULT_MAP, action) {
 
 function roomName(state = "", action) {
     switch (action.type) {
-        case "game:joined":
+        case "game:join":
             emitJoinGame(action.roomName, action.playerName);
             return state;
 
@@ -49,11 +49,11 @@ function roomName(state = "", action) {
             return state;
 
         case "game:start":
-            emitStartGame(action.roomName, action.playerName);
+            emitStartGame();
             return state;
 
         case "game:tetrisStart":
-            emitStartTetris(action.roomName, action.playerName);
+            emitStartTetris();
             return state;
 
         default:
@@ -92,7 +92,6 @@ function appState(state = defaultAppState, action) {
             }
 
         case "state:gameOver":
-            console.log("client hit => Game Over");
             return {
                 ...state,
                 isGameOver: true

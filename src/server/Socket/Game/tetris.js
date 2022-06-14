@@ -1,18 +1,15 @@
 const { tetris } = require("../../tetris");
+const { findGameBySocketIdPlayer } = require("../../games");
 const { Games } = require("../../const");
+const { findPlayer } = require("../../players");
 
 function startTetris(payload, socket) {
     console.log("server hit => game:startTetris");
     console.log(payload);
-    const gameFound = Games.find((game) => game.name === payload.gameName ? true : false);
-
-    const playerFound = gameFound.players.find(function (player) {
-        if (player.name == payload.playerName) return true;
-    });
-
-    playerFound.setStartDate();
-
-    tetris(gameFound, playerFound, socket);
+    const game  = findGameBySocketIdPlayer(socket.id);
+    const player = findPlayer(game, socket.id);
+    player.setStartDate();
+    tetris(game, player, socket);
 }
 
 module.exports = { startTetris };

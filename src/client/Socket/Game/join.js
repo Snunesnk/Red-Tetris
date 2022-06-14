@@ -5,12 +5,9 @@ export function emitJoinGame(gameName, playerName) {
 }
 
 export function onGameJoined(dispatch, payload) {
-  // error: payload null if playerName is already taked
   console.log("client hit -> game:joined");
-  if (payload) {
-    console.log(payload.playerName);
-    dispatch({ type: "state:roomSelected", roomName: payload.gameName });
-  }
-  else
-    console.log("error");
+
+  if (!payload.error)
+    dispatch({ type: "state:roomSelected", roomName: payload.game.name });
+  else console.log(payload.error);
 }

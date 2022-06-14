@@ -1,14 +1,12 @@
 const { Games } = require("../../const");
+const { findGameBySocketIdPlayer } = require("../../games");
+const { findPlayer } = require("../../players");
 
 function moveInGame(payload, socket) {
-  // Add the move to the player move queue
-  const gameFound = Games.find((game) => game.name === payload.gameName ? true : false);
+  const game = findGameBySocketIdPlayer(socket.id);
+  const player = findPlayer(game, socket.id);
 
-  const playerFound = gameFound.players.find(function (player) {
-    if (player.name == payload.playerName) return true;
-  });
-
-  playerFound.addMove(payload.move)
+  player.addMove(payload.move);
 
   socket.emit("inGame:moved", { move: payload.move });
 }

@@ -1,17 +1,14 @@
 import socket from "../socket";
 
-export function emitStartGame(gameName, playerName) {
-  socket.emit("game:start", { gameName, playerName });
+export function emitStartGame() {
+  socket.emit("game:start");
 }
 
 export function onGameStarted(dispatch, payload) {
-  // error: payload null if gameName is already taken
   console.log("client hit -> game:started");
-  if (payload) {
-    console.log("payload");
-    console.log(payload);
-    dispatch({ type: "state:gameStarted" }, payload);
+  if (!payload.error) {
+    dispatch({ type: "state:gameStarted" });
   }
   else
-    console.log("error");
+    console.log(payload.error);
 }
