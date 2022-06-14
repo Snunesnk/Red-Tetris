@@ -10,6 +10,7 @@ class Player {
     this.currentPieceRotation = 0;
     this.currentPieceY = 0;
     this.currentPieceX = 3;
+    this.currentSpecterY = 0;
     this.lineCleared = 0;
     this.level = 0;
     this.isOver = false;
@@ -35,6 +36,7 @@ class Player {
     // Init new coordinates to draw the piece
     this.currentPieceX = 3;
     this.currentPieceY = 0;
+    this.currentSpecterY = 0;
   }
 
   increaseLevel() {

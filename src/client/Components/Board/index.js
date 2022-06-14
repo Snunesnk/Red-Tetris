@@ -20,6 +20,19 @@ export const BoardComponent = () => {
             <div key={'line_' + y_pos} style={LineStyle}>
                 {
                     y.map(x => {
+                        let innerColor;
+                        let outerColor;
+
+                        // Handle specter
+                        console.log("x: " + x + ", +x: " + +x);
+                        if (+x > 7) {
+                            innerColor = INNER_TETRIS_COLORS[0];
+                            outerColor = OUTER_TETRIS_COLORS[+x - 7];
+                        }
+                        else {
+                            innerColor = INNER_TETRIS_COLORS[+x];
+                            outerColor = OUTER_TETRIS_COLORS[+x];
+                        }
                         x_pos++;
 
                         return (
@@ -28,8 +41,8 @@ export const BoardComponent = () => {
                                 x_pos={x_pos}
                                 y_pos={y_pos}
                                 dispatch={dispatch}
-                                inner_color={INNER_TETRIS_COLORS[+x]}
-                                outer_color={OUTER_TETRIS_COLORS[+x]}
+                                inner_color={innerColor}
+                                outer_color={outerColor}
                             />
                         )
                     })

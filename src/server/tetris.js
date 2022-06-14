@@ -31,6 +31,8 @@ function handleGame(game, player, socket) {
 
     // Erase the previous piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+    // Erase previous specter
+    erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
 
     if (player.needNewPiece == true) {
         handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
@@ -50,7 +52,7 @@ function handleGame(game, player, socket) {
     // calculateScore(obj, lines_cleared);
 
     // Draw the specter of the piece
-    // drawPieceSpecter(player, pieceContent)
+    drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
 
     // Draw the actual piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
@@ -177,12 +179,34 @@ function drawPieceSpecter(player, piece) {
         currentY += 1;
     }
 
-    console.log("LastPossible y: " + lastYpossible);
-
     // Do not make the specter overlap the real piece
     if (lastYpossible != player.currentPieceY) {
-        draw(player.map, player.currentPieceX, lastYpossible, piece, placeLine);
+        const pieceSpecter = piece.map((col) => {
+            return col.map((cell) => {
+                if (cell != 0)
+                    return cell + 7;
+                return 0;
+            });
+        });
+
+        draw(player.map, player.currentPieceX, lastYpossible, pieceSpecter, placeLine);
+        player.currentSpecterY = lastYpossible;
     }
+}
+
+function erasePieceSpecter(player, piece) {
+    const pieceSpecter = piece.map((col) => {
+        return col.map((cell) => {
+            if (cell != 0)
+                return cell + 7;
+            return 0;
+        });
+    })
+
+    if (player.currentSpecterY == 0)
+        return;
+
+    draw(player.map, player.currentPieceX, player.currentSpecterY, pieceSpecter, eraseLine);
 }
 
 module.exports = { tetris };
