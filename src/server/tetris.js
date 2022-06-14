@@ -32,17 +32,18 @@ function handleGame(game, player, socket) {
     // Erase the previous piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
 
-    if (player.needNewPiece || player.gravityApply) {
-        if (player.needNewPiece == true)
-            handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
-        else
-            handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
-
+    if (player.needNewPiece == true) {
+        handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         player.gravityApply = false;
     }
 
     if (player.moveQueue.length > 0) {
         handleMove(game, player, player.moveQueue.shift(), game.pieces[player.currentPiece]);
+    }
+
+    if (player.gravityApply) {
+        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+        player.gravityApply = false;
     }
 
     // Maybe for a bonus
