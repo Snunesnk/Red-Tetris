@@ -1,26 +1,21 @@
-const { Games } = require("../../const");
-const Player = require("../../player");
+const { findGameByName } = require("../../games");
 
 function joinGame(payload, socket) {
   console.log("server hit => game:join");
   console.log(payload);
-  const gameFound = Games.find((game) => game.name === payload.gameName ? true : false);
+  const game = findGameByName(payload.gameName);
+  if (game) {
+    game.addPlayer(payload.playerName, socket.id);
 
-  if (gameFound) {
-    const playerFound = gameFound.players.find(function (player) {
-      if (player.name == payload.playerName) return true;
+    socket.emit("game:joined", {
+      game,
     });
-
-    if (!playerFound) {
-      gameFound.players.push(new Player(socket.id, payload.playerName));
-    }
+  } else {
+    console.log("game do not exist");
+    socket.emit("game:joined", {
+      error: "Do not exist",
+    });
   }
-
-  socket.emit("game:joined", {
-    gameName: payload.gameName,
-    playerName: payload.playerName,
-    game: { ...gameFound, players: [] },
-  });
 }
 
 module.exports = joinGame;
