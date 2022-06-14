@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { LineStyle, ModalStyle } from './styles'
+import { useSelector } from 'react-redux'
+import { LineStyle } from './styles'
 import { CellComponent } from "../Cell/index";
 import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
@@ -9,8 +9,6 @@ export const BoardComponent = () => {
     const boardMap = useSelector(state => (state.map));
     const appState = useSelector(state => state.appState);
     let y_pos = -1;
-
-    const dispatch = useDispatch();
 
     const board = boardMap.map(y => {
         y_pos++;
@@ -24,10 +22,9 @@ export const BoardComponent = () => {
                         let outerColor;
 
                         // Handle specter
-                        console.log("x: " + x + ", +x: " + +x);
-                        if (+x > 7) {
+                        if (x > 7) {
                             innerColor = INNER_TETRIS_COLORS[0];
-                            outerColor = OUTER_TETRIS_COLORS[+x - 7];
+                            outerColor = OUTER_TETRIS_COLORS[x - 7];
                         }
                         else {
                             innerColor = INNER_TETRIS_COLORS[+x];
@@ -40,7 +37,6 @@ export const BoardComponent = () => {
                                 key={'cell_' + y_pos + '_' + x_pos}
                                 x_pos={x_pos}
                                 y_pos={y_pos}
-                                dispatch={dispatch}
                                 inner_color={innerColor}
                                 outer_color={outerColor}
                             />

@@ -1,6 +1,6 @@
 const consts = require("./const");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
-const { moveLeft, moveRight, rotate } = require("./moves");
+const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -20,10 +20,6 @@ async function tetris(game, player, socket) {
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
 // is applied
-// 
-// TODO: Erase the current piece + the current specter at the begining of the function,
-//       and draw the piece only at the end of the function.
-//       Use testDraw for every function instead of actually drawing on the map
 function handleGame(game, player, socket) {
     // If there's no changes, do nothing
     if (!player.gravityApply && !player.needNewPiece && player.moveQueue.length == 0)
@@ -56,6 +52,9 @@ function handleGame(game, player, socket) {
 
     // Draw the actual piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
+
+    // Check if line were cleared
+    handleClearedLines(player);
 
     socket.emit("map:new", { map: player.map });
 
@@ -97,20 +96,12 @@ function handleNewPiece(player, piece) {
 function handleGravity(player, piece) {
     // Check that the piece is still at the bottom
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
-        bottomHit = false;
-        // Check if line were cleared
-        player.lineCleared += handleClearedLines(player);
-
-        // Increase level every 10 lines
-        if (player.lineCleared / 5 > player.level)
-            player.increaseLevel();
-
         player.needNewPiece = true;
-        return;
     }
-
-    // Increase piece's Y
-    player.currentPieceY += 1;
+    else {
+        // Increase piece's Y
+        player.currentPieceY += 1;
+    }
 }
 
 function handleMove(game, player, move, piece) {
@@ -128,8 +119,7 @@ function handleMove(game, player, move, piece) {
             break;
 
         case " ":
-            while (player.needNewPiece != true)
-                handleGravity(player, piece.content[player.currentPieceRotation]);
+            putPieceDown(player, piece.content[player.currentPieceRotation]);
             break;
 
         case "ArrowUp":
@@ -139,17 +129,26 @@ function handleMove(game, player, move, piece) {
 }
 
 function handleClearedLines(player) {
+    // Check only if the pllayer needs a new piece,
+    // Wich means that the previous one was  integrated to the tas
+    if (!player.needNewPiece)
+        return;
+
     let clearedLines = 0;
 
     for (let i = 0; i < player.map.length; i++) {
-        if (player.map[i].every(val => val != 0)) {
+        if (player.map[i].every(val => val != 0 && val <= 7)) {
             clearedLines += 1;
             player.map.splice(i, 1);
             player.map.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
         }
     }
 
-    return clearedLines;
+    player.lineCleared += clearedLines;
+
+    // Increase level every 10 lines
+    if (player.lineCleared / 5 > player.level)
+        player.increaseLevel();
 }
 
 // Check if a piece at given coordinates will hit the bottom

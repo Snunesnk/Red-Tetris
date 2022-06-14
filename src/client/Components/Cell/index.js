@@ -1,8 +1,17 @@
 import { flexbox } from "@mui/system";
 import React from "react";
 
-export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos, dispatch }) => {
-    let innerSize = inner_color === "black" ? "55px" : "42px";
+export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos }) => {
+    // Handle The inner cell color size, different for background,
+    // Tetrimino or Tetrimino specter
+    // Tetrimino
+    let innerSize = "42px";
+    // Background
+    if (inner_color === "black" && outer_color == "#141e30")
+        innerSize = "55px";
+    // Tetrimino specter
+    else if (inner_color === "black")
+        innerSize = "50px";
 
     // Don't know how to edit the background color after import
     const CellStyle = {

@@ -35,9 +35,9 @@ export const OUTER_TETRIS_COLORS = [
     "blue", // DARK BLUE => J cell - 2
     "#FF971C", // ORANGE => L cell - 3
     "#FFD500", // YELLOW => O cell - 4
-    "#72CB3B", // GREEN => S cell - 5
-    "#9900FF", // PURPLE => T cell - 6
-    "#FF3213" // RED => Z cell - 7
+    "green", // GREEN => S cell - 5
+    "purple", // PURPLE => T cell - 6
+    "red" // RED => Z cell - 7
 ]
 
 export const INNER_TETRIS_COLORS = [
@@ -47,7 +47,7 @@ export const INNER_TETRIS_COLORS = [
     "rgb(0, 124, 215)", // DARK BLUE => J cell - 2
     "orange", // ORANGE => L cell - 3
     "yellow", // YELLOW => O cell - 4
-    "green", // GREEN => S cell - 5
-    "purple", // PURPLE => T cell - 6
-    "red" // RED => Z cell - 7
+    "#72CB3B", // GREEN => S cell - 5
+    "#9900FF", // PURPLE => T cell - 6
+    "#FF3213" // RED => Z cell - 7
 ]
