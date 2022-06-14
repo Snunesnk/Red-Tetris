@@ -1,33 +1,26 @@
-const { draw, placeLine, eraseLine } = require("./draw");
-const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW } = require("./const");
+const { testDraw } = require("./draw");
+const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW, MOVE_NOT_PERMITTED } = require("./const");
 
 function moveLeft(player, piece) {
-    draw(player, piece, eraseLine);
     player.currentPieceX -= 1;
 
-    if (draw(player, piece, placeLine) != PIECE_DREW) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) == MOVE_NOT_PERMITTED) {
         player.currentPieceX += 1;
-        draw(player, piece, placeLine)
     }
 }
 
 function moveRight(player, piece) {
-    draw(player, piece, eraseLine);
     player.currentPieceX += 1;
 
-    if (draw(player, piece, placeLine) != PIECE_DREW) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) == MOVE_NOT_PERMITTED) {
         player.currentPieceX -= 1;
-        draw(player, piece, placeLine)
     }
 }
 
 function rotate(game, player, piece, rotIndex) {
-    draw(player, piece.content[player.currentPieceRotation], eraseLine);
     const prevX = player.currentPieceX;
     const prevY = player.currentPieceY;
     const nextRotation = (player.currentPieceRotation + 1) % 4;
-
-    piece = game.pieces[player.currentPiece];
 
     // Perform the appropriate translation for this attempt
     // I piece
@@ -41,28 +34,26 @@ function rotate(game, player, piece, rotIndex) {
         player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
     }
 
-    if (draw(player, piece.content[nextRotation], placeLine) != 0) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation]) == MOVE_NOT_PERMITTED) {
         // Restore data
         player.currentPieceX = prevX;
         player.currentPieceY = prevY;
-        piece = game.pieces[player.currentPiece];
 
         // If the drawing fails, two cases:
-        //  - All rotations have been tested, so the rotation is impossible
-        //  - One or more rotations are to be tested, so test them
+        //  - One or more rotations test are to be performed, so do them
+        //  - All rotations tests have been performed, so the rotation is impossible
 
-        // If there's still some rotation to test, test them.
-        // Otherwise, draw the piece as it was
+        // If there's still some rotation tests to perform, do them.
         if (rotIndex < 4) {
             rotate(game, player, piece, rotIndex + 1);
-        }
-        else {
-            draw(player, piece.content[player.currentPieceRotation], placeLine);
         }
     }
     // If the draw succeed, update the piece rotation
     else {
         player.currentPieceRotation = nextRotation;
+        console.log("Rotation ok !")
+        console.log("Y : " + player.currentPieceY);
+        console.log("X: " + player.currentPieceX);
     }
 }
 

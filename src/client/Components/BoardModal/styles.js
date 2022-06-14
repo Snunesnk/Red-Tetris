@@ -5,3 +5,7 @@ export const ModalStyle = {
     width: "100%",
     height: "100%",
 }
+
+export const TitleLayer = {
+    backgroundColor: "rgba(0, 0, 0, 0.25)"
+}

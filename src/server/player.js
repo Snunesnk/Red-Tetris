@@ -35,8 +35,6 @@ class Player {
     // Init new coordinates to draw the piece
     this.currentPieceX = 3;
     this.currentPieceY = 0;
-
-    this.needNewPiece = true;
   }
 
   increaseLevel() {
@@ -48,7 +46,7 @@ class Player {
       clearInterval(this.gravityInterval);
 
     this.gravityInterval = setInterval(() => {
-      // this.gravityApply = true;
+      this.gravityApply = true;
     }, consts.levels[this.level]);
   }
 }

@@ -2,18 +2,16 @@ import { flexbox } from "@mui/system";
 import React from "react";
 
 export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos, dispatch }) => {
-    let innerSize = inner_color === "black" ? "65px" : "52px";
+    let innerSize = inner_color === "black" ? "55px" : "42px";
 
     // Don't know how to edit the background color after import
     const CellStyle = {
-        height: '68px',
-        width: '68px',
+        height: '58px',
+        width: '58px',
         backgroundColor: outer_color,
         display: 'flex',
         justifyContent: "center",
         alignItems: "center"
-        // borderTop: '1px solid white',
-        // borderLeft: '1px solid white'
     };
 
     const InnerCellStyle = {
@@ -23,8 +21,8 @@ export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos, dispatch
     };
 
     const BackgroundCell = {
-        height: '69px',
-        width: '69px',
+        height: '59px',
+        width: '59px',
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",

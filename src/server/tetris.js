@@ -1,5 +1,5 @@
 const consts = require("./const");
-const { draw, placeLine, eraseLine } = require("./draw");
+const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotate } = require("./moves");
 
 async function tetris(game, player, socket) {
@@ -19,38 +19,48 @@ async function tetris(game, player, socket) {
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
-// is applied 
+// is applied
+// 
+// TODO: Erase the current piece + the current specter at the begining of the function,
+//       and draw the piece only at the end of the function.
+//       Use testDraw for every function instead of actually drawing on the map
 function handleGame(game, player, socket) {
-    const piece = game.pieces[player.currentPiece];
+    // If there's no changes, do nothing
+    if (!player.gravityApply && !player.needNewPiece && player.moveQueue.length == 0)
+        return;
 
-    let changed = false;
-    // Handle new piece at the same time than gravity,
-    // because I need to disable gravity after both functions
-    if (player.gravityApply || player.needNewPiece == true) {
+    // Erase the previous piece
+    draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+
+    if (player.needNewPiece || player.gravityApply) {
         if (player.needNewPiece == true)
-            handleNewPiece(player, piece.content[player.currentPieceRotation])
+            handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         else
-            handleGravity(player, piece.content[player.currentPieceRotation]);
+            handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+
         player.gravityApply = false;
-        changed = true;
     }
 
     if (player.moveQueue.length > 0) {
-        handleMove(game, player, player.moveQueue.shift(), piece);
-        changed = true;
+        handleMove(game, player, player.moveQueue.shift(), game.pieces[player.currentPiece]);
     }
 
     // Maybe for a bonus
     // calculateScore(obj, lines_cleared);
 
-    // player.isOver = isPlayerOver(game, player);
+    // Draw the specter of the piece
+    // drawPieceSpecter(player, pieceContent)
 
-    if (changed) {
-        socket.emit("map:new", { map: player.map });
+    // Draw the actual piece
+    draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
 
-        if (game.pieces.length - player.currentPiece < 3)
-            game.addPieces(10);
-    }
+    socket.emit("map:new", { map: player.map });
+
+    if (game.pieces.length - player.currentPiece < 3)
+        game.addPieces(10);
+
+    if (player.needNewPiece)
+        player.getNextPiece();
 }
 
 function handleNewPiece(player, piece) {
@@ -78,8 +88,6 @@ function handleNewPiece(player, piece) {
         // Check if there's an empty line before drawing the piece
         let emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
         player.currentPieceY -= emptyLine;
-
-        draw(player, piece, placeLine);
     }
 }
 
@@ -94,16 +102,12 @@ function handleGravity(player, piece) {
         if (player.lineCleared / 5 > player.level)
             player.increaseLevel();
 
-        player.getNextPiece();
+        player.needNewPiece = true;
         return;
     }
 
-    // Erase piece at previous position
-    draw(player, piece, eraseLine);
-
+    // Increase piece's Y
     player.currentPieceY += 1;
-
-    const drew = draw(player, piece, placeLine);
 }
 
 function handleMove(game, player, move, piece) {
@@ -161,6 +165,23 @@ function hasHitBottom(map, piece, y, x) {
     }
 
     return false;
+}
+
+function drawPieceSpecter(player, piece) {
+    let currentY = player.currentPieceY;
+    let lastYpossible = player.currentPieceY;
+
+    while (testDraw(player.map, player.currentPieceX, currentY, piece) == consts.PIECE_DREW) {
+        lastYpossible = currentY;
+        currentY += 1;
+    }
+
+    console.log("LastPossible y: " + lastYpossible);
+
+    // Do not make the specter overlap the real piece
+    if (lastYpossible != player.currentPieceY) {
+        draw(player.map, player.currentPieceX, lastYpossible, piece, placeLine);
+    }
 }
 
 module.exports = { tetris };
