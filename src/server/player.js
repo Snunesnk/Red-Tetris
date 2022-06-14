@@ -48,7 +48,7 @@ class Player {
       clearInterval(this.gravityInterval);
 
     this.gravityInterval = setInterval(() => {
-      this.gravityApply = true;
+      // this.gravityApply = true;
     }, consts.levels[this.level]);
   }
 }

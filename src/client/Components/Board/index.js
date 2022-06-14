@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { LineStyle, ModalStyle } from './styles'
 import { CellComponent } from "../Cell/index";
-import { TETRIS_COLORS } from "../../constants";
+import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
 import { BoardGameOverComponent } from "../BoardGameOver/index";
-
 export const BoardComponent = () => {
     const boardMap = useSelector(state => (state.map));
     const appState = useSelector(state => state.appState);
@@ -29,7 +28,8 @@ export const BoardComponent = () => {
                                 x_pos={x_pos}
                                 y_pos={y_pos}
                                 dispatch={dispatch}
-                                color={TETRIS_COLORS[+x]}
+                                inner_color={INNER_TETRIS_COLORS[+x]}
+                                outer_color={OUTER_TETRIS_COLORS[+x]}
                             />
                         )
                     })
