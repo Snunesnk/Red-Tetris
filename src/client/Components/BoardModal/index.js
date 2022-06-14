@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal, Box } from "@mui/material";
 import { Title } from '../Title/styles'
-import { ModalStyle } from './styles'
+import { ModalStyle, TitleLayer } from './styles'
 
 export const BoardModalComponent = () => {
     const [open, setOpen] = useState(true);

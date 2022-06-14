@@ -28,38 +28,7 @@ import { LandingInputLabelStyle, LandingInputStyle } from "../Landing/styles";
 import { emitJoinGame } from "../../Socket/Game/join";
 import { emitCreateGame } from "../../Socket/Game/create";
 
-const rows = [
-    {
-        roomName: "first room",
-        owner: "Thierry",
-        players: "1"
-    },
-    {
-        roomName: "second room",
-        owner: "Jessica",
-        players: "2"
-    },
-    {
-        roomName: "third room",
-        owner: "Dominique",
-        players: "3"
-    },
-    {
-        roomName: "Super Fun Room Come XD lool",
-        owner: "BTS<3",
-        players: "765"
-    },
-    {
-        roomName: "Tetris",
-        owner: "Tetris",
-        players: "10"
-    },
-    {
-        roomName: "Pls come",
-        owner: "Xx_d4rk_s4suk3_xX",
-        players: "1"
-    }
-]
+const rows = []
 
 export const RoomSelectionComponent = () => {
     const [open, setOpen] = useState(false);

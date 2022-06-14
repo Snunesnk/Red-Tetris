@@ -1,5 +1,5 @@
 const consts = require("./const");
-const { draw, placeLine, eraseLine } = require("./draw");
+const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotate } = require("./moves");
 
 async function tetris(game, player, socket) {
@@ -19,44 +19,55 @@ async function tetris(game, player, socket) {
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
-// is applied 
+// is applied
+// 
+// TODO: Erase the current piece + the current specter at the begining of the function,
+//       and draw the piece only at the end of the function.
+//       Use testDraw for every function instead of actually drawing on the map
 function handleGame(game, player, socket) {
-    const piece = game.pieces[player.currentPiece];
+    // If there's no changes, do nothing
+    if (!player.gravityApply && !player.needNewPiece && player.moveQueue.length == 0)
+        return;
 
-    let changed = false;
-    // Handle new piece at the same time than gravity,
-    // because I need to disable gravity after both functions
-    if (player.gravityApply || player.currentPieceY == -1) {
-        if (player.currentPieceY == -1)
-            handleNewPiece(player, piece.content[player.currentPieceRotation])
-        else
-            handleGravity(player, piece.content[player.currentPieceRotation]);
+    // Erase the previous piece
+    draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+    // Erase previous specter
+    erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
+
+    if (player.needNewPiece == true) {
+        handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         player.gravityApply = false;
-        changed = true;
     }
 
     if (player.moveQueue.length > 0) {
-        handleMove(game, player, player.moveQueue.shift(), piece);
-        changed = true;
+        handleMove(game, player, player.moveQueue.shift(), game.pieces[player.currentPiece]);
+    }
+
+    if (player.gravityApply) {
+        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+        player.gravityApply = false;
     }
 
     // Maybe for a bonus
     // calculateScore(obj, lines_cleared);
 
-    // player.isOver = isPlayerOver(game, player);
+    // Draw the specter of the piece
+    drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
 
-    if (changed) {
-        socket.emit("map:new", { map: player.map });
+    // Draw the actual piece
+    draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
 
-        if (game.pieces.length - player.currentPiece < 3)
-            game.addPieces(10);
-    }
+    socket.emit("map:new", { map: player.map });
+
+    if (game.pieces.length - player.currentPiece < 3)
+        game.addPieces(10);
+
+    if (player.needNewPiece)
+        player.getNextPiece();
 }
 
 function handleNewPiece(player, piece) {
-    // Init new coordinates to draw the piece
-    player.currentPieceX = 3;
-    player.currentPieceY = 0;
+    player.needNewPiece = false;
 
     // Check if there's still enough room for the piece
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
@@ -77,25 +88,16 @@ function handleNewPiece(player, piece) {
         // One day I will manage to draw the last piece
     }
     else {
-        draw(player, piece, placeLine);
+        // Check if there's an empty line before drawing the piece
+        let emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
+        player.currentPieceY -= emptyLine;
     }
 }
 
 function handleGravity(player, piece) {
-    // Erase piece at previous position 
-    draw(player, piece, eraseLine);
-
-    if (!hasHitBottom(player.map, piece, player.currentPieceY + 1, player.currentPieceX)) {
-        player.currentPieceY += 1;
-
-        const drew = draw(player, piece, placeLine);
-    }
-    // If the piece will hit the bottom, draw it back
-    // Maybe I can avoid to erase then to draw it back, but it is much easier
-    // for the calculations
-    else {
-        draw(player, piece, placeLine);
-
+    // Check that the piece is still at the bottom
+    if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        bottomHit = false;
         // Check if line were cleared
         player.lineCleared += handleClearedLines(player);
 
@@ -103,15 +105,12 @@ function handleGravity(player, piece) {
         if (player.lineCleared / 5 > player.level)
             player.increaseLevel();
 
-        player.getNextPiece();
+        player.needNewPiece = true;
+        return;
     }
 
-    // Okay so for the gravity, I just need to first erase the piece on
-    // its current position on the map, then draw it again one raw down
-    // (so with y + 1)
-    // There is room for improvment here
-
-    // If the piece hit the bottom, then it's time for the next piece
+    // Increase piece's Y
+    player.currentPieceY += 1;
 }
 
 function handleMove(game, player, move, piece) {
@@ -129,7 +128,7 @@ function handleMove(game, player, move, piece) {
             break;
 
         case " ":
-            while (player.currentPieceY != -1)
+            while (player.needNewPiece != true)
                 handleGravity(player, piece.content[player.currentPieceRotation]);
             break;
 
@@ -155,42 +154,59 @@ function handleClearedLines(player) {
 
 // Check if a piece at given coordinates will hit the bottom
 function hasHitBottom(map, piece, y, x) {
-    let pieceHeight = piece.length;
-    let emptyLine = 0;
-
-    piece.forEach((elem, index) => {
-        // Do not count the lines at the end of the piece
-        if (index > emptyLine)
-            return;
-
-        if (elem.every(val => val == 0))
-            emptyLine++;
-        else
-            return;
-    });
-
-    piece.forEach(line => {
-        if (line.every(val => val == 0))
-            pieceHeight--;
-    });
-
-    // Do not go past the edge of the map
-    // TODO: Change this to integrate the "Tas"
-    if (y + pieceHeight > map.length)
-        return true;
-
-    // Check if there's something under
-    for (let i = piece.length - 1; i >= 0; i--) {
-        if (piece[i].every(val => val == 0))
-            continue;
-
+    for (let i = 0; i < piece.length; i++) {
         for (let j = 0; j < piece[i].length; j++) {
-            if (map[y + i - emptyLine][x + j] != 0 && piece[i][j] != 0)
+            // For each piece's cell that has an empty space under
+            // (or is the end of the piece), check if it's out of the map
+            // or if there's a piece under it
+            if (piece[i][j] !== 0
+                && (i === piece.length - 1 || piece[i + 1][j] === 0)
+                && (y + i + 1 >= map.length || map[y + i + 1][x + j] !== 0)) {
                 return true;
+            }
         }
     }
 
     return false;
+}
+
+function drawPieceSpecter(player, piece) {
+    let currentY = player.currentPieceY;
+    let lastYpossible = player.currentPieceY;
+
+    while (testDraw(player.map, player.currentPieceX, currentY, piece) == consts.PIECE_DREW) {
+        lastYpossible = currentY;
+        currentY += 1;
+    }
+
+    // Do not make the specter overlap the real piece
+    if (lastYpossible != player.currentPieceY) {
+        const pieceSpecter = piece.map((col) => {
+            return col.map((cell) => {
+                if (cell != 0)
+                    return cell + 7;
+                return 0;
+            });
+        });
+
+        draw(player.map, player.currentPieceX, lastYpossible, pieceSpecter, placeLine);
+        player.currentSpecterY = lastYpossible;
+    }
+}
+
+function erasePieceSpecter(player, piece) {
+    const pieceSpecter = piece.map((col) => {
+        return col.map((cell) => {
+            if (cell != 0)
+                return cell + 7;
+            return 0;
+        });
+    })
+
+    if (player.currentSpecterY == 0)
+        return;
+
+    draw(player.map, player.currentPieceX, player.currentSpecterY, pieceSpecter, eraseLine);
 }
 
 module.exports = { tetris };

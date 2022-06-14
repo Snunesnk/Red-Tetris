@@ -1,18 +1,14 @@
 const consts = require("./const");
+const EmptyMap = require("./maps/maps").empty;
 
-function draw(player, piece, drawFunc) {
-    const emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
-
+function draw(map, x, y, piece, drawFunc) {
     for (let i = 0; i < piece.length; i++) {
         // Do not draw if the line is empty
         if (!piece[i].every(val => val == 0)) {
-            const drew = drawFunc(player.map, piece[i], player.currentPieceX, player.currentPieceY - emptyLine + i);
+            const drew = drawFunc(map, piece[i], x, y + i);
+
             // If the draw fail for this line, remove all previously placed lines
             if (drew != 0) {
-                console.log("Move not permitted, going to erase from " + i);
-                for (i; i >= 0; i--) {
-                    eraseLine(player.map, piece[i], player.currentPieceX, player.currentPieceY - emptyLine + i)
-                }
                 return drew;
             }
         }
@@ -27,6 +23,12 @@ function placeLine(map, line, x, y) {
             continue;
         if ((line[i] != 0 && !coordinatesOk(x + i, y)) || map[y][x + i] != 0)
             return consts.MOVE_NOT_PERMITTED;
+    }
+
+    // Everything seems fine, put the piece
+    for (let i = 0; i < line.length; i++) {
+        if (line[i] == 0)
+            continue;
         else {
             map[y][x + i] = line[i];
         }
@@ -39,7 +41,7 @@ function eraseLine(map, line, x, y) {
     for (let i = 0; i < line.length; i++) {
         if (line[i] == 0 || !coordinatesOk(x + i, y))
             continue;
-        else
+        else if (map[y][x + i] == line[i])
             map[y][x + i] = 0
     }
 
@@ -47,11 +49,28 @@ function eraseLine(map, line, x, y) {
 }
 
 function coordinatesOk(x, y) {
-    if (x < 0 || x >= consts.defaultMap[0].length)
+    if (x < 0 || x >= EmptyMap[0].length)
         return false;
-    if (y < 0 || y >= consts.defaultMap.length)
+    if (y < 0 || y >= EmptyMap.length)
         return false;
     return true;
 }
 
-module.exports = { draw, placeLine, eraseLine };
+function testDraw(map, x, y, piece) {
+    for (let j = 0; j < piece.length; j++) {
+        if (piece[j].every(val => val == 0))
+            continue;
+
+        for (let i = 0; i < piece[j].length; i++) {
+            if (piece[j][i] == 0)
+                continue;
+
+            if (!coordinatesOk(x + i, y + j) || map[y + j][x + i] != 0)
+                return consts.MOVE_NOT_PERMITTED;
+        }
+    }
+
+    return consts.PIECE_DREW;
+}
+
+module.exports = { draw, placeLine, eraseLine, testDraw }; 
