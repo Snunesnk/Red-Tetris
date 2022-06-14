@@ -1,26 +1,24 @@
 const { Games } = require("../../const");
 const Game = require("../../game");
-const Player = require("../../player");
+const { findGameByName } = require("../../games");
+const joinGame = require("./join");
 
 function createGame(payload, socket) {
   console.log("server hit => game:create");
   console.log(payload);
 
-  const found = Games.find(function (game) {
-    if (game.name === payload.gameName) return true;
-  });
+  const found = findGameByName(payload.gameName);
 
   if (!found) {
-    console.log("No similar game found")
-    let newGame = new Game(payload.gameName);
-    // newGame.addPlayer(payload.playerName, socket.id);
-
+    const newGame = new Game(payload.gameName);
     Games.push(newGame);
 
-    socket.emit("game:created", { game: { ...newGame, players: [] } });
+    socket.emit("game:created", { game: newGame });
+    joinGame(payload, socket);
+  } else {
+    console.log("gameName already taken");
+    socket.emit("game:created", { error: "Name already taken" });
   }
-  else
-    socket.emit("game:created", { game: null });
 }
 
 module.exports = createGame;

@@ -1,20 +1,19 @@
 import socket from "../socket";
 
-export function emitStartTetris(gameName, playerName) {
-    console.log("Going to emit start tetris with " + gameName + " " + playerName);
-    socket.emit("game:tetrisStart", { gameName, playerName });
+export function emitStartTetris() {
+  socket.emit("game:tetrisStart");
 }
 
 export function onNewMap(dispatch, payload) {
-    // error: payload null if gameName is already taken
-    // console.log("client hit -> game:newMap");
-    if (payload) {
-        dispatch({ type: "map:new", map: payload.map });
-    }
-    else
-        console.log("error");
+  console.log("client hit -> game:newMap");
+
+  if (!payload.error) {
+    dispatch({ type: "map:new", map: payload.map });
+  } else console.log(payload.error);
 }
 
 export function onGameOver(dispatch) {
-    dispatch({ type: "state:gameOver" });
+  console.log("client hit => Game Over");
+
+  dispatch({ type: "state:gameOver" });
 }
