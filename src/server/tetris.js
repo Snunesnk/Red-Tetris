@@ -65,32 +65,41 @@ function handleGame(game, player, socket) {
         player.getNextPiece();
 }
 
+// Check if a new piece can be put or not
+// The player must be over only when the next piece can't be displayed
 function handleNewPiece(player, piece) {
     player.needNewPiece = false;
 
-    // Check if there's still enough room for the piece
-    if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
-        player.isOver = true;
+    let pieceHeight;
 
-        // Display only the part of the new piece that should be visible
-        let height = 0;
-
-        for (let j = 0; j >= piece.length - 1; j--) {
-            if (!piece[j].every(val => val == 0))
-                height++;
-            else
-                break;
+    for (let i = piece.length - 1; i >= 0; i--) {
+        if (!piece[i].every((cell) => cell === 0)) {
+            pieceHeight = i;
+            break;
         }
-
-        player.currentPieceY = 1 - height;
-
-        // One day I will manage to draw the last piece
     }
-    else {
-        // Check if there's an empty line before drawing the piece
-        let emptyLine = piece[0].every(val => val == 0) ? 1 : 0;
-        player.currentPieceY -= emptyLine;
+
+    // If there're some empty spaces at the top of the piece, up it
+    for (let i = 0; i < piece.length; i++) {
+        if (piece[i].every((cell) => cell === 0))
+            player.currentPieceY--;
+        else
+            break;
     }
+
+    // Get the position where the piece did not hit the bottom
+    while (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        player.currentPieceY--;
+    }
+
+    if (player.currentPieceY + pieceHeight < 0) {
+        player.currentPieceY++;
+        player.isOver = true;
+    }
+    // This will mean that the piece has just the place to be displayed, so draw it from the top
+    // Add a trick so the I piece do not get drew one row lower
+    else if (player.currentPieceY + pieceHeight == 0 && !piece[0].every((cell) => cell === 0))
+        player.currentPieceY++;
 }
 
 function handleGravity(player, piece) {
@@ -160,6 +169,7 @@ function hasHitBottom(map, piece, y, x) {
             // or if there's a piece under it
             if (piece[i][j] !== 0
                 && (i === piece.length - 1 || piece[i + 1][j] === 0)
+                && y + i + 1 >= 0
                 && (y + i + 1 >= map.length || map[y + i + 1][x + j] !== 0)) {
                 return true;
             }
