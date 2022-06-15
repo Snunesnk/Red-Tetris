@@ -100,6 +100,8 @@ function handleNewPiece(player, piece) {
     // Add a trick so the I piece do not get drew one row lower
     else if (player.currentPieceY + pieceHeight == 0 && !piece[0].every((cell) => cell === 0))
         player.currentPieceY++;
+
+    player.resetGravityInterval();
 }
 
 function handleGravity(player, piece) {
