@@ -4,28 +4,17 @@ import { useSelector } from "react-redux";
 import {
     Title,
     TitleContainer,
-    PseudoPaperStyle,
-    CenteredContainer
+    TitleTextContainer,
 } from "./styles";
 
 export const TitleComponent = ({ text }) => {
     const appState = useSelector(state => state.appState);
-    const playerName = useSelector(state => state.appState).playerName;
 
     return (
         <TitleContainer>
             <Grid container>
-                <Grid item xs={3}></Grid>
-
-                <Grid item xs={6} style={CenteredContainer}>
-                    <Title>{text}</Title>
-                </Grid>
-
-                <Grid item xs={3} style={CenteredContainer}>
-                    {appState.isPseudoEntered && (
-                        <Paper style={PseudoPaperStyle} elevation={1}>
-                            <span>{playerName}</span>
-                        </Paper>)}
+                <Grid item xs={12} style={TitleTextContainer}>
+                    <Title>Red Tetris</Title>
                 </Grid>
             </Grid>
         </TitleContainer>

@@ -17,17 +17,8 @@ font-size: 3.2em;
 margin-top: 0.3em;
 `
 
-export const PseudoPaperStyle = {
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "75%",
-    minWidth: "75%"
-}
-
-export const CenteredContainer = {
+export const TitleTextContainer = {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: "end"
+    alignItems: "center"
 }

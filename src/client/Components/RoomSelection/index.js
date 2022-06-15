@@ -23,7 +23,7 @@ import {
     DialogBtnContainerStyle,
     DialogBtn,
 } from "./styles";
-import { LandingInputLabelStyle, LandingInputStyle } from "../Landing/styles";
+import { LandingInputStyle } from "../Landing/styles";
 
 import { emitJoinGame } from "../../Socket/Game/join";
 import { emitCreateGame } from "../../Socket/Game/create";
@@ -71,10 +71,10 @@ export const RoomSelectionComponent = () => {
                         <Paper style={PaperHeaderRowStyle}>
                             <Grid container>
                                 <Grid item xs={5} style={TableColStyle}>
-                                    Room Name
+                                    Name
                                 </Grid>
                                 <Grid item xs={5} style={TableColStyle}>
-                                    Room Host
+                                    Host
                                 </Grid>
                                 <Grid item xs={2} style={TableColStyle}>
                                     Players
@@ -126,7 +126,6 @@ export const RoomSelectionComponent = () => {
                     <TextField
                         label="Enter room name"
                         variant="standard"
-                        InputLabelProps={{ style: LandingInputLabelStyle }}
                         inputProps={{
                             style: LandingInputStyle,
                             onChange: (e) => { newRoomName = e.target.value }
