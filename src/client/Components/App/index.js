@@ -36,9 +36,7 @@ export function App() {
                 )}
 
                 {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == false && (
-                    <Grid item xs={12}>
-                        <RoomSelectionComponent></RoomSelectionComponent>
-                    </Grid>
+                    <RoomSelectionComponent></RoomSelectionComponent>
                 )}
 
                 {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == true && (

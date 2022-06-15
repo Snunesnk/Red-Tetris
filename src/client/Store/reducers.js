@@ -59,10 +59,10 @@ function roomName(state = "", action) {
 
 const defaultAppState = {
     isGameStarted: false,
-    isPseudoEntered: false,
+    isPseudoEntered: true,
     isRoomSelected: false,
     isGameOver: false,
-    playerName: "",
+    playerName: "SNK",
     roomName: ""
 }
 function appState(state = defaultAppState, action) {

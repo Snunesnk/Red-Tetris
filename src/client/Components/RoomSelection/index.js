@@ -11,24 +11,41 @@ import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import { useDispatch, useSelector } from "react-redux";
 import {
-    GridContainerStyle,
-    CreateRoomButtonStyle,
     CenteredContainer,
-    TableHeaderStyle,
     JoinRoomBtnStyle,
-    TableColStyle,
-    TableRowStyle,
     PaperHeaderRowStyle,
     PaperRowStyle,
     DialogBtnContainerStyle,
-    DialogBtn,
+    JoinButtonContainer,
+    GridRow,
+    CreateRoomBtn,
+    HeaderContainer,
+    StartContainer
 } from "./styles";
 import { LandingInputStyle } from "../Landing/styles";
 
-import { emitJoinGame } from "../../Socket/Game/join";
-import { emitCreateGame } from "../../Socket/Game/create";
-
-const rows = []
+const rows = [
+    {
+        roomName: "Hey",
+        owner: "It's me",
+        players: "7"
+    },
+    {
+        roomName: "Hey",
+        owner: "It's me",
+        players: "7"
+    },
+    {
+        roomName: "Hey",
+        owner: "It's me",
+        players: "7"
+    },
+    {
+        roomName: "Hey",
+        owner: "It's me",
+        players: "7"
+    },
+]
 
 export const RoomSelectionComponent = () => {
     const [open, setOpen] = useState(false);
@@ -46,76 +63,76 @@ export const RoomSelectionComponent = () => {
     const playerName = useSelector(state => state.appState).playerName;
 
     return (
-        <Grid container style={GridContainerStyle}>
-            <Grid item xs={7}>
-                <div style={CenteredContainer}>
-                    <Button
-                        variant="contained"
-                        style={CreateRoomButtonStyle}
-                        onClick={handleClickOpen}
-                    >
-                        Create new room
-                    </Button>
-                </div>
-            </Grid>
+        <Grid container style={CenteredContainer}>
 
             {/* Table header */}
-            <Grid item xs={10}>
-                <div style={{ marginTop: "3em", marginLeft: "10px" }}>
-                    <span>Available rooms</span>
-                </div>
+            <Grid item xs={10} md={8} xl={7} style={StartContainer}>
+                <span>Available rooms</span>
             </Grid>
-            <Grid item xs={10} style={TableHeaderStyle}>
-                <Grid container style={{ height: "100%" }}>
+            <Grid item xs={10} md={8} xl={7} style={HeaderContainer}>
+                <Grid container>
                     <Grid item xs={10}>
                         <Paper style={PaperHeaderRowStyle}>
                             <Grid container>
-                                <Grid item xs={5} style={TableColStyle}>
+                                <Grid item xs={4} md={5} style={CenteredContainer}>
                                     Name
                                 </Grid>
-                                <Grid item xs={5} style={TableColStyle}>
+                                <Grid item xs={4} md={5} style={CenteredContainer}>
                                     Host
                                 </Grid>
-                                <Grid item xs={2} style={TableColStyle}>
+                                <Grid item xs={4} md={2} style={CenteredContainer}>
                                     Players
                                 </Grid>
                             </Grid>
                         </Paper>
                     </Grid>
+                    <Grid item xs={2} style={JoinButtonContainer}>
+                        <Button
+                            variant="contained"
+                            onClick={handleClickOpen}
+                            style={CreateRoomBtn}
+                        >
+                            Create Room
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
 
             {/* Table rows */}
-            {rows.map((row, i) => (
-                <Grid item xs={10} style={TableRowStyle} key={i}>
-                    <Grid container>
-                        <Grid item xs={10}>
-                            <Paper style={PaperRowStyle} elevation={2}>
-                                <Grid container>
-                                    <Grid item xs={5} style={TableColStyle}>
-                                        {row.roomName}
+            {
+                rows.map((row, i) => (
+                    <Grid item xs={10} md={8} xl={7} style={GridRow} key={i}>
+                        <Grid container>
+                            <Grid item xs={10}>
+                                <Paper style={PaperRowStyle} elevation={2}>
+                                    <Grid container>
+                                        <Grid item xs={4} md={5} style={CenteredContainer}>
+                                            {row.roomName}
+                                        </Grid>
+                                        <Grid item xs={4} md={5} style={CenteredContainer}>
+                                            {row.owner}
+                                        </Grid>
+                                        <Grid item xs={4} md={2} style={CenteredContainer}>
+                                            {row.players}
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={5} style={TableColStyle}>
-                                        {row.owner}
-                                    </Grid>
-                                    <Grid item xs={2} style={TableColStyle}>
-                                        {row.players}
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={2} style={TableColStyle}>
-                            <Button
-                                variant="contained"
-                                style={JoinRoomBtnStyle}
-                                onClick={() => { dispatch({ type: "game:joined", roomName: row.roomName, playerName: playerName }) }}
-                            >
-                                Join
-                            </Button>
+                                </Paper>
+                            </Grid>
+
+                            <Grid item xs={2} style={JoinButtonContainer}>
+                                <Button
+                                    variant="contained"
+                                    style={JoinRoomBtnStyle}
+                                    onClick={() => { dispatch({ type: "game:joined", roomName: row.roomName, playerName: playerName }) }}
+                                >
+                                    Join
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            ))}
+                ))
+            }
+
 
             <Dialog
                 open={open}
@@ -125,7 +142,7 @@ export const RoomSelectionComponent = () => {
                 <DialogContent>
                     <TextField
                         label="Enter room name"
-                        variant="standard"
+                        variant="filled"
                         inputProps={{
                             style: LandingInputStyle,
                             onChange: (e) => { newRoomName = e.target.value }
@@ -137,14 +154,12 @@ export const RoomSelectionComponent = () => {
                 <DialogActions style={DialogBtnContainerStyle}>
                     <Button
                         variant="contained"
-                        style={DialogBtn}
                         onClick={handleClose}
                     >
                         Cancel
                     </Button>
                     <Button
                         variant="contained"
-                        style={DialogBtn}
                         onClick={() => { handleClose(); dispatch({ type: "game:create", roomName: newRoomName, playerName: playerName }) }}
                     >
                         Continue
