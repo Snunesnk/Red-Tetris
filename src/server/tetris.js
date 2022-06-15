@@ -25,12 +25,13 @@ function handleGame(game, player, socket) {
     if (!player.gravityApply && !player.needNewPiece && player.moveQueue.length == 0)
         return;
 
-    // Erase the previous piece
-    draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
-    // Erase previous specter
-    erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
-
-    if (player.needNewPiece == true) {
+    if (!player.needNewPiece) {
+        // Erase the previous piece
+        draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+        // Erase previous specter
+        erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+    }
+    else {
         handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         player.gravityApply = false;
     }
@@ -48,7 +49,7 @@ function handleGame(game, player, socket) {
     // calculateScore(obj, lines_cleared);
 
     // Draw the specter of the piece
-    drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation])
+    drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
 
     // Draw the actual piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
@@ -70,16 +71,8 @@ function handleGame(game, player, socket) {
 function handleNewPiece(player, piece) {
     player.needNewPiece = false;
 
-    let pieceHeight;
-
-    for (let i = piece.length - 1; i >= 0; i--) {
-        if (!piece[i].every((cell) => cell === 0)) {
-            pieceHeight = i;
-            break;
-        }
-    }
-
     // If there're some empty spaces at the top of the piece, up it
+    // Used for the I piece
     for (let i = 0; i < piece.length; i++) {
         if (piece[i].every((cell) => cell === 0))
             player.currentPieceY--;
@@ -87,19 +80,10 @@ function handleNewPiece(player, piece) {
             break;
     }
 
-    // Get the position where the piece did not hit the bottom
-    while (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+    // Get the position where the piece could be displayed
+    while (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) !== consts.PIECE_DREW) {
         player.currentPieceY--;
     }
-
-    if (player.currentPieceY + pieceHeight < 0) {
-        player.currentPieceY++;
-        player.isOver = true;
-    }
-    // This will mean that the piece has just the place to be displayed, so draw it from the top
-    // Add a trick so the I piece do not get drew one row lower
-    else if (player.currentPieceY + pieceHeight == 0 && !piece[0].every((cell) => cell === 0))
-        player.currentPieceY++;
 
     player.resetGravityInterval();
 }
@@ -107,6 +91,19 @@ function handleNewPiece(player, piece) {
 function handleGravity(player, piece) {
     // Check that the piece is still at the bottom
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        let pieceHeight = 0
+
+        // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
+        for (let i = 0; i < piece.length; i++) {
+            if (player.currentPieceY + i >= 0)
+                break;
+
+            if (!piece[i].every((cell) => cell === 0)) {
+                player.isOver = true;
+                break;
+            }
+        }
+
         player.needNewPiece = true;
     }
     else {
@@ -172,7 +169,7 @@ function hasHitBottom(map, piece, y, x) {
             if (piece[i][j] !== 0
                 && (i === piece.length - 1 || piece[i + 1][j] === 0)
                 && y + i + 1 >= 0
-                && (y + i + 1 >= map.length || map[y + i + 1][x + j] !== 0)) {
+                && (y + i + 1 >= map.length || (map[y + i + 1][x + j] !== 0 && map[y + i + 1][x + j] <= 7))) {
                 return true;
             }
         }
@@ -213,9 +210,6 @@ function erasePieceSpecter(player, piece) {
             return 0;
         });
     })
-
-    if (player.currentSpecterY == 0)
-        return;
 
     draw(player.map, player.currentPieceX, player.currentSpecterY, pieceSpecter, eraseLine);
 }
