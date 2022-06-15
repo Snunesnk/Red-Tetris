@@ -11,8 +11,7 @@ function draw(map, x, y, piece, drawFunc) {
 
             const drew = drawFunc(map, piece[i], x, y + i);
 
-            // If the draw fail for this line, remove all previously placed lines
-            if (drew != 0) {
+            if (drew != consts.PIECE_DREW) {
                 return drew;
             }
         }
@@ -47,7 +46,7 @@ function eraseLine(map, line, x, y) {
 function coordinatesOk(x, y) {
     if (x < 0 || x >= EmptyMap[0].length)
         return false;
-    if (y < 0 || y >= EmptyMap.length)
+    if (y >= EmptyMap.length)
         return false;
     return true;
 }
@@ -58,7 +57,7 @@ function testDraw(map, x, y, piece) {
             continue;
 
         for (let i = 0; i < piece[j].length; i++) {
-            if (piece[j][i] == 0)
+            if (piece[j][i] == 0 || y + j < 0)
                 continue;
 
             if (!coordinatesOk(x + i, y + j) || map[y + j][x + i] != 0)

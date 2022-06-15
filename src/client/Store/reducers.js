@@ -22,10 +22,6 @@ function map(state = DEFAULT_MAP, action) {
         case "piece/move":
             return state;
 
-        // case "incr/clicked":
-        //     state[action.pos[1]][action.pos[0]] = state[action.pos[1]][action.pos[0]] % 7 + 1;
-        //     return state
-
         case "piece/insert":
             return state;
 

@@ -44,12 +44,17 @@ class Player {
       this.level++;
     }
 
+    this.resetGravityInterval();
+  }
+
+  resetGravityInterval() {
     if (this.gravityInterval)
       clearInterval(this.gravityInterval);
 
     this.gravityInterval = setInterval(() => {
       this.gravityApply = true;
     }, consts.levels[this.level]);
+
   }
 }
 
