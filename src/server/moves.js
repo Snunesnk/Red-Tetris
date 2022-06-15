@@ -51,11 +51,21 @@ function rotate(game, player, piece, rotIndex) {
     // If the draw succeed, update the piece rotation
     else {
         player.currentPieceRotation = nextRotation;
-        console.log("Rotation ok !")
-        console.log("Y : " + player.currentPieceY);
-        console.log("X: " + player.currentPieceX);
     }
 }
 
+function putPieceDown(player, piece) {
+    let currentY = player.currentPieceY;
+    let lastYpossible = player.currentPieceY;
 
-module.exports = { moveLeft, moveRight, rotate };
+    while (testDraw(player.map, player.currentPieceX, currentY, piece) == PIECE_DREW) {
+        lastYpossible = currentY;
+        currentY += 1;
+    }
+
+    player.currentPieceY = lastYpossible;
+    player.gravityApply = true;
+}
+
+
+module.exports = { moveLeft, moveRight, rotate, putPieceDown };

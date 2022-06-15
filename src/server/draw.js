@@ -5,6 +5,10 @@ function draw(map, x, y, piece, drawFunc) {
     for (let i = 0; i < piece.length; i++) {
         // Do not draw if the line is empty
         if (!piece[i].every(val => val == 0)) {
+            // Do not draw pieces that are above the board
+            if (y + i < 0)
+                continue;
+
             const drew = drawFunc(map, piece[i], x, y + i);
 
             // If the draw fail for this line, remove all previously placed lines
@@ -18,14 +22,6 @@ function draw(map, x, y, piece, drawFunc) {
 }
 
 function placeLine(map, line, x, y) {
-    for (let i = 0; i < line.length; i++) {
-        if (line[i] == 0)
-            continue;
-        if ((line[i] != 0 && !coordinatesOk(x + i, y)) || map[y][x + i] != 0)
-            return consts.MOVE_NOT_PERMITTED;
-    }
-
-    // Everything seems fine, put the piece
     for (let i = 0; i < line.length; i++) {
         if (line[i] == 0)
             continue;
