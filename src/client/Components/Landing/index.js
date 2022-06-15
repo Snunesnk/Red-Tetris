@@ -3,7 +3,7 @@ import {
     TextField,
     Button,
     Grid,
-    Paper
+    Paper,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
@@ -47,7 +47,8 @@ export const LandingComponent = () => {
                                 <Button
                                     variant="contained"
                                     onClick={() => dispatch({ type: "state:pseudoEntered", playerName: playerName })}
-                                    disabled={playerName.length === 0}>
+                                    disabled={playerName.length === 0}
+                                    type="submit">
                                     Next
                                 </Button>
                             </div>
