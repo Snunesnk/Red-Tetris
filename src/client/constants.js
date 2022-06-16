@@ -31,23 +31,23 @@ export const DEFAULT_MAP = [
 export const OUTER_TETRIS_COLORS = [
     // "rgb(232, 230, 227)", // WHITE => empty cell - 0
     "#141e30", // Gray => empty cell
-    "#00FFFF", // LIGHT BLUE => I cell - 1
-    "blue", // DARK BLUE => J cell - 2
-    "#FF971C", // ORANGE => L cell - 3
-    "#FFD500", // YELLOW => O cell - 4
-    "green", // GREEN => S cell - 5
-    "purple", // PURPLE => T cell - 6
-    "red" // RED => Z cell - 7
+    "#50ade0", // LIGHT BLUE => I cell - 1
+    "#325ee7", // DARK BLUE => J cell - 2
+    "#d47b1f", // ORANGE => L cell - 3
+    "#d9b328", // YELLOW => O cell - 4
+    "#78c62b", // GREEN => S cell - 5
+    "#b347db", // PURPLE => T cell - 6
+    "#ea0e0e" // RED => Z cell - 7
 ]
 
 export const INNER_TETRIS_COLORS = [
     // "rgb(232, 230, 227)", // WHITE => empty cell - 0
     "black",
-    "cyan", // LIGHT BLUE => I cell - 1
-    "rgb(0, 124, 215)", // DARK BLUE => J cell - 2
-    "orange", // ORANGE => L cell - 3
-    "yellow", // YELLOW => O cell - 4
-    "#72CB3B", // GREEN => S cell - 5
-    "#9900FF", // PURPLE => T cell - 6
-    "#FF3213" // RED => Z cell - 7
+    "#9be7fc", // LIGHT BLUE => I cell - 1
+    "#8baafa", // DARK BLUE => J cell - 2
+    "#fbc666", // ORANGE => L cell - 3
+    "#f9ea72", // YELLOW => O cell - 4
+    "#c2f6a1", // GREEN => S cell - 5
+    "#d595ee", // PURPLE => T cell - 6
+    "#fa7477" // RED => Z cell - 7
 ]
