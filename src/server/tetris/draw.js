@@ -1,5 +1,5 @@
-const consts = require("./const");
-const EmptyMap = require("./maps/maps").empty;
+const consts = require("../const");
+const EmptyMap = require("../maps/maps").empty;
 
 function draw(map, x, y, piece, drawFunc) {
     for (let i = 0; i < piece.length; i++) {

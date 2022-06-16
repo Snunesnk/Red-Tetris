@@ -5,10 +5,8 @@ export function emitStartTetris() {
 }
 
 export function onNewMap(dispatch, payload) {
-  console.log("client hit -> game:newMap");
-
   if (!payload.error) {
-    dispatch({ type: "map:new", map: payload.map });
+    dispatch({ type: "map:new", map: payload.map, score: payload.score });
   } else console.log(payload.error);
 }
 

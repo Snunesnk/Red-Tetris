@@ -1,6 +1,7 @@
-const consts = require("./const");
+const consts = require("../const");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
+const { calculateScore } = require("./score");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -37,7 +38,9 @@ function handleGame(game, player, socket) {
     }
 
     if (player.moveQueue.length > 0) {
-        handleMove(game, player, player.moveQueue.shift(), game.pieces[player.currentPiece]);
+        const playerMove = player.moveQueue.shift();
+        handleMove(game, player, playerMove, game.pieces[player.currentPiece]);
+        player.moveHistory.push(playerMove);
     }
 
     if (player.gravityApply) {
@@ -45,19 +48,20 @@ function handleGame(game, player, socket) {
         player.gravityApply = false;
     }
 
-    // Maybe for a bonus
-    // calculateScore(obj, lines_cleared);
-
     // Draw the specter of the piece
     drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
 
     // Draw the actual piece
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
 
-    // Check if line were cleared
-    handleClearedLines(player);
+    if (!player.isOver) {
+        // Check if line were cleared
+        const clearedLines = handleClearedLines(player);
 
-    socket.emit("map:new", { map: player.map });
+        calculateScore(player, clearedLines)
+    }
+
+    socket.emit("map:new", { map: player.map, score: player.score });
 
     if (game.pieces.length - player.currentPiece < 3)
         game.addPieces(10);
@@ -91,8 +95,6 @@ function handleNewPiece(player, piece) {
 function handleGravity(player, piece) {
     // Check that the piece is still at the bottom
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
-        let pieceHeight = 0
-
         // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
         for (let i = 0; i < piece.length; i++) {
             if (player.currentPieceY + i >= 0)
@@ -152,11 +154,13 @@ function handleClearedLines(player) {
         }
     }
 
-    player.lineCleared += clearedLines;
+    player.clearedLines += clearedLines;
 
-    // Increase level every 10 lines
-    if (player.lineCleared / 5 > player.level)
+    // Increase the player level each time he clears 10 lines
+    if (player.clearedLines / 10 > player.level)
         player.increaseLevel();
+
+    return clearedLines;
 }
 
 // Check if a piece at given coordinates will hit the bottom

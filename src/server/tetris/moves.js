@@ -1,5 +1,5 @@
 const { testDraw } = require("./draw");
-const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW, MOVE_NOT_PERMITTED } = require("./const");
+const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW, MOVE_NOT_PERMITTED } = require("../const");
 
 function moveLeft(player, piece) {
     player.currentPieceX -= 1;

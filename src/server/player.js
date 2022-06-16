@@ -3,22 +3,32 @@ const map = require("./maps/maps");
 
 class Player {
   constructor(socketId, name) {
+    // ID
     this.socketId = socketId;
     this.name = name;
+
+    // GAME INFO
     this.map = map.empty;
+    this.lineCleared = 0;
+    this.level = 0;
+    this.score = 0;
+    this.isOver = false;
+    this.moveQueue = [];
+    this.moveHistory = [];
+    this.startDate;
+    this.b2bClear = false;
+
+    // PIECE INFO
     this.currentPiece = 0;
     this.currentPieceRotation = 0;
     this.currentPieceY = 0;
     this.currentPieceX = 3;
     this.currentSpecterY = 0;
-    this.lineCleared = 0;
-    this.level = 0;
-    this.isOver = false;
-    this.moveQueue = [];
+    this.needNewPiece = true;
+
+    // GRAVITY
     this.gravityInterval;
     this.gravityApply = false;
-    this.needNewPiece = true;
-    this.startDate;
   }
 
   setStartDate() {

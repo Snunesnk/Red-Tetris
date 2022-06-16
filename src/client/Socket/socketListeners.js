@@ -3,8 +3,7 @@ import { onGameJoined } from "./Game/join";
 import { onGamesListed } from "./Game/list";
 import { onInGameMoved } from "./InGame/move";
 import { onGameStarted } from "./Game/start";
-import { onNewMap } from "./Game/tetris";
-import { onGameOver } from "./Game/tetris";
+import { onNewMap, onGameOver } from "./Game/tetris";
 
 
 export default function setListeners(socket, dispatch) {
