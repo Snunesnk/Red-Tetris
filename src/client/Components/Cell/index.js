@@ -5,18 +5,18 @@ export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos }) => {
     // Handle The inner cell color size, different for background,
     // Tetrimino or Tetrimino specter
     // Tetrimino
-    let innerSize = "42px";
+    let innerSize = "1.88em";
     // Background
     if (inner_color === "black" && outer_color == "#141e30")
-        innerSize = "55px";
+        innerSize = "2.46em";
     // Tetrimino specter
     else if (inner_color === "black")
-        innerSize = "50px";
+        innerSize = "2.24em";
 
     // Don't know how to edit the background color after import
     const CellStyle = {
-        height: '58px',
-        width: '58px',
+        height: '2.6em',
+        width: '2.6em',
         backgroundColor: outer_color,
         display: 'flex',
         justifyContent: "center",
@@ -30,8 +30,8 @@ export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos }) => {
     };
 
     const BackgroundCell = {
-        height: '59px',
-        width: '59px',
+        height: '2.7em',
+        width: '2.7em',
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",

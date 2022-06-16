@@ -6,8 +6,9 @@ import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
-import { CenteredContainer } from "./styles";
+import { CenteredContainer, MainGrid } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
+import { PlayerPseudoComponent } from "../PlayerPseudo";
 
 function onKeyDown(e, isGameStarted, appState) {
     if (isGameStarted)
@@ -25,21 +26,17 @@ export function App() {
 
     return (
         <div id="app_div" style={CenteredContainer}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={MainGrid}>
                 <Grid item xs={12}>
-                    <TitleComponent text={"Red Tetris"}></TitleComponent>
+                    <TitleComponent></TitleComponent>
                 </Grid>
 
                 {appState.isGameStarted == false && appState.isPseudoEntered == false && (
-                    <Grid item xs={12}>
-                        <LandingComponent></LandingComponent>
-                    </Grid>
+                    <LandingComponent></LandingComponent>
                 )}
 
                 {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == false && (
-                    <Grid item xs={12}>
-                        <RoomSelectionComponent></RoomSelectionComponent>
-                    </Grid>
+                    <RoomSelectionComponent></RoomSelectionComponent>
                 )}
 
                 {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == true && (
@@ -52,6 +49,10 @@ export function App() {
                     <Grid item xs={12}>
                         <BoardComponent></BoardComponent>
                     </Grid>
+                )}
+
+                {appState.isPseudoEntered && (
+                    <PlayerPseudoComponent></PlayerPseudoComponent>
                 )}
             </Grid>
         </div >

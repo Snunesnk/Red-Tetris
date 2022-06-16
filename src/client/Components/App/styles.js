@@ -9,3 +9,6 @@ export const WidthThirdCentered = {
     display: "flex",
     justifyContent: "center"
 }
+
+export const MainGrid = {
+}

@@ -1,32 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     TextField,
     Button,
     Grid,
-    Paper
+    Paper,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
     MainInputStyle,
     MainInputContainerStyle,
     MainButtonStyle,
-    LandingButtonStyle,
-    LandingInputLabelStyle,
     LandingInputStyle,
-    LandingPaperStyle,
-    LandingGridStyle
+    LandingGridItem,
+    LandingGridContainer
 } from "./styles";
 
 export const LandingComponent = () => {
     const dispatch = useDispatch();
-    let playerName = "";
+    const [playerName, setPlayerName] = useState("");
 
     return (
-        <Grid container id="landing-grid">
-            <Grid item xs={12} style={LandingGridStyle}>
+        <Grid container id="landing-grid" style={LandingGridContainer}>
+            <Grid item xs={12} style={LandingGridItem}>
                 <Paper
                     component="form"
-                    style={LandingPaperStyle}
                 >
                     <Grid container>
                         <Grid item xs={12}>
@@ -34,14 +31,13 @@ export const LandingComponent = () => {
                                 <div style={MainInputContainerStyle}>
                                     <TextField
                                         label="Enter your pseudo ..."
-                                        variant="standard"
+                                        variant="filled"
                                         inputProps={{
                                             style: LandingInputStyle,
-                                            onChange: (e) => playerName = e.target.value
+                                            onChange: (e) => setPlayerName(e.target.value)
                                         }}
-                                        InputLabelProps={{ style: LandingInputLabelStyle }}
-                                        fullWidth
-                                    >
+                                        autoFocus
+                                        fullWidth>
                                     </TextField>
                                 </div>
                             </div>
@@ -49,10 +45,10 @@ export const LandingComponent = () => {
                         <Grid item xs={12}>
                             <div style={MainButtonStyle}>
                                 <Button
-                                    style={LandingButtonStyle}
                                     variant="contained"
                                     onClick={() => dispatch({ type: "state:pseudoEntered", playerName: playerName })}
-                                >
+                                    disabled={playerName.length === 0}
+                                    type="submit">
                                     Next
                                 </Button>
                             </div>

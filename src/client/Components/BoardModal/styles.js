@@ -1,3 +1,7 @@
+import {
+    RED_COLOR
+} from "../../constants";
+
 export const ModalStyle = {
     display: 'flex',
     justifyContent: 'center',
@@ -6,6 +10,20 @@ export const ModalStyle = {
     height: "100%",
 }
 
-export const TitleLayer = {
-    backgroundColor: "rgba(0, 0, 0, 0.25)"
+export const CenteredContainer = {
+    display: "flex",
+    justifyContent: "center",
+}
+
+export const ModalMessage = {
+    textAlign: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
+    textShadow: "1px 1px 1px rgba(0, 0, 0, 0.45)",
+    fontSize: "3em",
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    color: RED_COLOR,
+    lineHeight: "4.2rem",
+    paddingLeft: "1em",
+    paddingRight: "1em",
 }

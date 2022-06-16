@@ -4,7 +4,6 @@ import { LineStyle } from './styles'
 import { CellComponent } from "../Cell/index";
 import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
-import { BoardGameOverComponent } from "../BoardGameOver/index";
 export const BoardComponent = () => {
     const boardMap = useSelector(state => (state.map));
     const appState = useSelector(state => state.appState);
@@ -50,10 +49,6 @@ export const BoardComponent = () => {
     return (
         <div>
             <BoardModalComponent />
-
-            {appState.isGameOver == true &&
-                <BoardGameOverComponent />
-            }
 
             {board}
         </div>

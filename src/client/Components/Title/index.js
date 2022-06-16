@@ -1,33 +1,24 @@
 import React from "react";
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
     Title,
-    TitleContainer,
-    PseudoPaperStyle,
-    CenteredContainer
+    CenteredContainer,
 } from "./styles";
 
 export const TitleComponent = ({ text }) => {
     const appState = useSelector(state => state.appState);
-    const playerName = useSelector(state => state.appState).playerName;
 
     return (
-        <TitleContainer>
-            <Grid container>
-                <Grid item xs={3}></Grid>
-
-                <Grid item xs={6} style={CenteredContainer}>
-                    <Title>{text}</Title>
-                </Grid>
-
-                <Grid item xs={3} style={CenteredContainer}>
-                    {appState.isPseudoEntered && (
-                        <Paper style={PseudoPaperStyle} elevation={1}>
-                            <span>{playerName}</span>
-                        </Paper>)}
-                </Grid>
+        <Grid container>
+            {/* Add an invisible grid for when the screen is not wide
+                enough to be displayed on 1 line, there's still some space 
+                on the left side of the title */}
+            <Grid item xs={1}></Grid>
+            <Grid item xs={10} style={CenteredContainer}>
+                <Title>Red Tetris</Title>
             </Grid>
-        </TitleContainer>
+            <Grid item xs={1}></Grid>
+        </Grid>
     );
 }

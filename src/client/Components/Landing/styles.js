@@ -19,12 +19,7 @@ export const MainInputContainerStyle = {
     width: "85%",
 }
 
-export const LandingInputLabelStyle = {
-    fontFamily: "BarcadeBrawl",
-    color: RED_COLOR
-}
 export const LandingInputStyle = {
-    fontFamily: "BarcadeBrawl",
     textAlign: "center",
     marginTop: "5px",
     fontSize: "1.5em"
@@ -34,14 +29,15 @@ export const LandingButtonStyle = {
     backgroundColor: RED_COLOR
 }
 
-export const LandingPaperStyle = {
-    width: "33%",
-    marginTop: "10em"
-}
-
-export const LandingGridStyle = {
-    width: "100%",
+export const LandingGridItem = {
     display: "flex",
     justifyContent: "center",
-    alignContent: "center"
+}
+
+export const LandingGridContainer = {
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    marginTop: "13vh"
 }

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Box } from "@mui/material";
-import { Title } from '../Title/styles'
-import { ModalStyle, TitleLayer } from './styles'
+import { Modal, Box, Grid } from "@mui/material";
+import { ModalStyle, CenteredContainer, ModalMessage } from './styles'
 
 export const BoardModalComponent = () => {
     const [open, setOpen] = useState(true);
@@ -27,13 +26,24 @@ export const BoardModalComponent = () => {
 
     return (
         <Modal
-            open={open}
+            open={open || appState.isGameOver}
             // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box style={ModalStyle}>
-                <Title>{message}</Title>
+                <Grid container style={CenteredContainer}>
+                    {!appState.isGameOver && message.length > 0 && (
+                        <Grid item xs={12} style={ModalMessage}>
+                            {message}
+                        </Grid>
+                    )}
+                    {appState.isGameOver && (
+                        <Grid item xs={12} style={ModalMessage}>
+                            Game Over :(
+                        </Grid>
+                    )}
+                </Grid>
             </Box>
         </Modal>
     );
