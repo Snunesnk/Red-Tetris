@@ -3,7 +3,6 @@ import { Paper } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
     PseudoPaperStyle,
-    CenteredContainer
 } from "./styles";
 
 export const PlayerPseudoComponent = () => {

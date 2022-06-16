@@ -3,20 +3,19 @@ import { Grid, Paper } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
     Title,
-    TitleContainer,
-    TitleTextContainer,
+    CenteredContainer,
 } from "./styles";
 
 export const TitleComponent = ({ text }) => {
     const appState = useSelector(state => state.appState);
 
     return (
-        <TitleContainer>
-            <Grid container>
-                <Grid item xs={12} style={TitleTextContainer}>
-                    <Title>Red Tetris</Title>
-                </Grid>
+        <Grid container>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={10} style={CenteredContainer}>
+                <Title>Red Tetris</Title>
             </Grid>
-        </TitleContainer>
+            <Grid item xs={1}></Grid>
+        </Grid>
     );
 }

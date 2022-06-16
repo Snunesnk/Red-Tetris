@@ -1,8 +1,9 @@
-export const PseudoPaperStyle = {
+export let PseudoPaperStyle = {
     position: "absolute",
     bottom: "1em",
     left: "1em",
-    padding: "1.3em",
+    padding: "1.8em",
+    fontSize: "1.3em"
 }
 
 export const CenteredContainer = {

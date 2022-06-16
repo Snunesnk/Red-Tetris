@@ -148,6 +148,7 @@ export const RoomSelectionComponent = () => {
                             onChange: (e) => { newRoomName = e.target.value }
                         }}
                         fullWidth
+                        autoFocus
                     >
                     </TextField>
                 </DialogContent>
@@ -160,6 +161,7 @@ export const RoomSelectionComponent = () => {
                     </Button>
                     <Button
                         variant="contained"
+                        // type="submit"
                         onClick={() => { handleClose(); dispatch({ type: "game:create", roomName: newRoomName, playerName: playerName }) }}
                     >
                         Continue
