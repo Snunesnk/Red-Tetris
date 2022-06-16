@@ -1,7 +1,7 @@
 const consts = require("../const");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
-const { calculateScore } = require("./score");
+const { calculateScore, isTspin } = require("./score");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -55,10 +55,13 @@ function handleGame(game, player, socket) {
     draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], placeLine);
 
     if (!player.isOver) {
+        // Check if this is a T-spin before the lines get removed
+        const tspin = isTspin(player, game.pieces[player.currentPiece].type);
+
         // Check if line were cleared
         const clearedLines = handleClearedLines(player);
 
-        calculateScore(player, clearedLines)
+        calculateScore(player, clearedLines, tspin);
     }
 
     socket.emit("map:new", { map: player.map, score: player.score });

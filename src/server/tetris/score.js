@@ -36,9 +36,8 @@
 //          000X0   here, the T tetrimino has 3 blocks at the diagonal of its center 
 //          0TTT0   s if its last move was a rotatation, it's a T-spin
 //          0XTX0
-function calculateScore(player, clearedLines) {
+function calculateScore(player, clearedLines, Tspin) {
     let score = 0;
-    const Tspin = isTspin(player)
 
     // Proceed by steps
     switch (clearedLines) {
@@ -109,7 +108,6 @@ function calculateScore(player, clearedLines) {
     // The level increase every 10 lines cleared
     if (player.lineCleared / 10 > player.level) {
         player.increaseLevel();
-        console.log("Level increased !");
     }
 
     return score;
@@ -119,9 +117,9 @@ function calculateScore(player, clearedLines) {
 // The piece must be integrated to the "tas"
 // The last move must be a rotation
 // At least 3 of the 4 blocks diagonally around the center of the tetrimino must be filled
-function isTspin(player) {
+function isTspin(player, pieceType) {
     // Check for T tetrimono
-    if (player.currentPiece != 5)
+    if (pieceType != 5)
         return false;
 
     // Check if the piece is integrated or not
@@ -150,11 +148,11 @@ function isTspin(player) {
         cornerFilled += 1;
     }
     // [2, 0]
-    if (player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
+    if (player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
         cornerFilled += 1;
     }
     // [0, 2]
-    if (player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
+    if (player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
         cornerFilled += 1;
     }
     // [2, 2]
@@ -165,4 +163,4 @@ function isTspin(player) {
     return cornerFilled >= 3;
 }
 
-module.exports = { calculateScore };
+module.exports = { calculateScore, isTspin };
