@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
     Title,
@@ -11,6 +11,9 @@ export const TitleComponent = ({ text }) => {
 
     return (
         <Grid container>
+            {/* Add an invisible grid for when the screen is not wide
+                enough to be displayed on 1 line, there's still some space 
+                on the left side of the title */}
             <Grid item xs={1}></Grid>
             <Grid item xs={10} style={CenteredContainer}>
                 <Title>Red Tetris</Title>
