@@ -27,6 +27,15 @@ let config = {
     compress: true,
     port: 3024,
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      process: {
+        env: {
+          PORT: process.env.PORT || 3042
+        }
+      }
+    })
+  ]
 }
 
 module.exports = config;

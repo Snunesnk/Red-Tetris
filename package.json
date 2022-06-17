@@ -4,7 +4,9 @@
     "description": "my first socket.io app",
     "scripts": {
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
-        "cli-dev": "webpack-dev-server --hot"
+        "cli-dev": "webpack-dev-server --hot",
+        "srv-prod": "node src/server/index.js",
+        "cli-prod": "npx webpack"
     },
     "dependencies": {
         "@emotion/react": "^11.8.2",
@@ -17,9 +19,9 @@
         "react-router": "^6.3.0",
         "redux-thunk": "^2.4.1",
         "socket.io": "^4.4.1",
-        "socket.io-client": "^4.4.1"
-    },
-    "devDependencies": {
+        "socket.io-client": "^4.4.1",
+        "webpack-cli": "^4.10.0",
+        "webpack": "^5.0",
         "@babel/core": "^7.17.5",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
@@ -34,8 +36,10 @@
         "react-hot-loader": "^4.13.0",
         "style-loader": "^2.0.0",
         "styled-components": "^5.3.5",
-        "webpack": "^5.0",
-        "webpack-cli": "^4.9.2",
         "webpack-dev-server": "^4.7.3"
+    },
+    "engines": {
+        "node": "16.15.x",
+        "npm": "8.11.x"
     }
 }
