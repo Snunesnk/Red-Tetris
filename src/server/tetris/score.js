@@ -105,8 +105,9 @@ function calculateScore(player, clearedLines, Tspin) {
     player.lineCleared += clearedLines;
     player.score += score * player.level;
 
-    // The level increase every 10 lines cleared
-    if (player.lineCleared / 10 > player.level) {
+    // Increase the level if the score is sufficient
+    if (player.score >= player.level * player.level * 2000) {
+        console.log("New level !");
         player.increaseLevel();
     }
 
