@@ -7,26 +7,26 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    CenteredContainer,
-    JoinRoomBtnStyle,
-    PaperHeaderRowStyle,
-    PaperRowStyle,
-    DialogBtnContainerStyle,
-    JoinButtonContainer,
-    GridRow,
-    CreateRoomBtn,
-    HeaderContainer,
-    StartContainer
+  GridContainerStyle,
+  CreateRoomButtonStyle,
+  CenteredContainer,
+  TableHeaderStyle,
+  JoinRoomBtnStyle,
+  TableColStyle,
+  TableRowStyle,
+  PaperHeaderRowStyle,
+  PaperRowStyle,
+  DialogBtnContainerStyle,
+  DialogBtn,
 } from "./styles";
 import { LandingInputStyle } from "../Landing/styles";
 
-import { emitJoinGame } from "../../Socket/Game/join";
-import { emitCreateGame } from "../../Socket/Game/create";
 
 export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
   const rows = useSelector((state) => state.appState).roomList;
   const dispatch = useDispatch();
+  console.log(rows)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -35,8 +35,7 @@ export const RoomSelectionComponent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  dispatch({ type: "game:list" });
-
+  dispatch({ type: "game:list" })
   let newRoomName = "";
   const playerName = useSelector((state) => state.appState).playerName;
 
@@ -88,13 +87,13 @@ export const RoomSelectionComponent = () => {
               <Paper style={PaperRowStyle} elevation={2}>
                 <Grid container>
                   <Grid item xs={5} style={TableColStyle}>
-                    {row.roomName}
+                    {row.name}
                   </Grid>
                   <Grid item xs={5} style={TableColStyle}>
-                    {row.owner}
+                    {row.players[0].name}
                   </Grid>
                   <Grid item xs={2} style={TableColStyle}>
-                    {row.players}
+                    {row.players.length}
                   </Grid>
                 </Grid>
               </Paper>
@@ -106,7 +105,7 @@ export const RoomSelectionComponent = () => {
                 onClick={() => {
                   dispatch({
                     type: "game:join",
-                    roomName: row.roomName,
+                    roomName: row.name,
                     playerName: playerName,
                   });
                 }}

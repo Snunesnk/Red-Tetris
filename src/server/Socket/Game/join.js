@@ -8,7 +8,7 @@ function joinGame(payload, socket) {
     game.addPlayer(payload.playerName, socket.id);
     socket.join(game.name);
     socket.emit("game:joined", { game });
-    socket.to(game.name).emit("game:updated", { game });
+    socket.to(game.name).emit("game:edited", { game });
   } else {
     console.log("game do not exist");
     socket.emit("game:joined", { error: "Do not exist" });
