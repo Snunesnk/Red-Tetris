@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { App } from './Components/App/index';
 import store from './Store/store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+// import { HashRouter, Route } from 'react-router-dom';
 
 let theme = createTheme({
     palette: {
