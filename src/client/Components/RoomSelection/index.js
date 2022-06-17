@@ -83,7 +83,7 @@ export const RoomSelectionComponent = () => {
                     {row.name}
                   </Grid>
                   <Grid item xs={4} xl={5} style={CenteredContainer}>
-                    {row.players[0].name}
+                    {row.players.length > 0 && row.players[0].name}
                   </Grid>
                   <Grid item xs={4} xl={2} style={CenteredContainer}>
                     {row.players.length}

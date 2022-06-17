@@ -5,6 +5,7 @@ const listGames = require("./Game/list");
 const moveInGame = require("./InGame/move");
 const startGame = require("./Game/start");
 const { startTetris } = require("./Game/tetris");
+const { deletePlayer } = require("../players");
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
@@ -33,6 +34,9 @@ function initSocket(httpServer) {
     socket.on("inGame:move", (payload) => {
       moveInGame(payload, socket);
     });
+    socket.on("disconnect", () => {
+      deletePlayer(socket);
+    })
   });
   return io;
 }

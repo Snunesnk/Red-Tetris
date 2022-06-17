@@ -1,4 +1,6 @@
 const consts = require("../const");
+const updateMap = require("../Socket/InGame/updateMap");
+const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
@@ -44,8 +46,10 @@ function handleGame(game, player, socket) {
     }
 
     if (player.gravityApply) {
-        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation], game);
         player.gravityApply = false;
+        if (player.needNewPiece)
+            updateSpecter(game, player, socket);
     }
 
     // Draw the specter of the piece
@@ -64,7 +68,7 @@ function handleGame(game, player, socket) {
         calculateScore(player, clearedLines, tspin);
     }
 
-    socket.emit("map:new", { map: player.map, score: player.score, level: player.level });
+    updateMap(player, socket);
 
     if (game.pieces.length - player.currentPiece < 3)
         game.addPieces(10);
@@ -95,7 +99,7 @@ function handleNewPiece(player, piece) {
     player.resetGravityInterval();
 }
 
-function handleGravity(player, piece) {
+function handleGravity(player, piece, game) {
     // Check that the piece is still at the bottom
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
@@ -110,6 +114,8 @@ function handleGravity(player, piece) {
         }
 
         player.needNewPiece = true;
+        // TODO: broadcast to other players my map
+
     }
     else {
         // Increase piece's Y
@@ -128,7 +134,7 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowDown":
-            handleGravity(player, piece.content[player.currentPieceRotation]);
+            handleGravity(player, piece.content[player.currentPieceRotation], game);
             break;
 
         case " ":
