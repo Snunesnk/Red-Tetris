@@ -5,7 +5,8 @@
     "scripts": {
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
         "cli-dev": "webpack-dev-server --hot",
-        "start-app": "npm run srv-dev & && npm run cli-dev &"
+        "srv-prod": "node src/server/index.js",
+        "cli-prod": "node src/client/index.js"
     },
     "dependencies": {
         "@emotion/react": "^11.8.2",
