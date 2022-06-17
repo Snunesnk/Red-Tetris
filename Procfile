@@ -1,1 +1,1 @@
-web: ./src/server npm run srv-dev
+web: npm run start-app
