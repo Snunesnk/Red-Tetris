@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run srv-dev
+    #- run: npm run srv-dev
     
     
   build-client:
@@ -47,4 +47,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run cli-dev
+    #- run: npm run cli-dev
