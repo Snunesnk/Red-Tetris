@@ -33,3 +33,5 @@ const PORT = 3042;
 httpServer.listen(3042, () => {
   console.log("Listening on *:" + PORT);
 });
+
+module.exports = io;

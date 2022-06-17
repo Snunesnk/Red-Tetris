@@ -3,12 +3,11 @@ const { findGameBySocketIdPlayer } = require("../../games");
 const { Games } = require("../../const");
 const { findPlayer } = require("../../players");
 
-function startTetris(payload, socket) {
+function startTetris(socket) {
     console.log("server hit => game:startTetris");
-    console.log(payload);
-    const game = findGameBySocketIdPlayer(socket.id);
+    const game  = findGameBySocketIdPlayer(socket.id);
     const player = findPlayer(game, socket.id);
-    player.setStartDate();
+    player.setStartDate(); // TODO: move startDate to game instead of player
     tetris(game, player, socket);
 }
 

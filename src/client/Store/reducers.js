@@ -5,6 +5,7 @@ import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
 import { DEFAULT_MAP } from "../constants";
+import { emitListGames } from "../Socket/Game/list";
 
 function move(state = {}, action) {
     switch (action.type) {
@@ -34,7 +35,9 @@ function roomName(state = "", action) {
         case "game:tetrisStart":
             emitStartTetris();
             return state;
-
+        case "game:list":
+            emitListGames();
+            return state;
         default:
             return state;
     }
@@ -68,6 +71,8 @@ const defaultAppState = {
     map: DEFAULT_MAP,
     playerName: "",
     roomName: "",
+    roomList: [],
+    room: null
 }
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -82,7 +87,8 @@ function appState(state = defaultAppState, action) {
             return {
                 ...state,
                 isRoomSelected: true,
-                roomName: action.roomName
+                roomName: action.room.name, // TODO: remove it and use selectedRoom.name instead
+                room: action.room
             }
 
         case "state:gameStarted":
@@ -97,6 +103,16 @@ function appState(state = defaultAppState, action) {
                 isGameOver: true
             }
 
+        case "state:gameEdited":
+            return {
+                ...state,
+                room: action.room
+            }
+        case "state:gamesListed":
+            return {
+                ...state,
+                roomList: action.roomList
+            }
         default:
             return state;
     }

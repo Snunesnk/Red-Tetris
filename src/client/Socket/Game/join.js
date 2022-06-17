@@ -8,6 +8,6 @@ export function onGameJoined(dispatch, payload) {
   console.log("client hit -> game:joined");
 
   if (!payload.error)
-    dispatch({ type: "state:roomSelected", roomName: payload.game.name });
+    dispatch({ type: "state:roomSelected", room: payload.game });
   else console.log(payload.error);
 }
