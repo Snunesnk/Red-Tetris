@@ -12,10 +12,7 @@ on:
 jobs:
   build-server:
 
-    runs-on: ubuntu-latest    
-    defaults:
-      run:
-        working-directory: ./src/server
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -30,15 +27,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run srv-dev --if-present
+    - run: npm run srv-dev --if-present --prefix src/server
     
     
   build-client:
 
-    runs-on: ubuntu-latest    
-    defaults:
-      run:
-        working-directory: ./src/client
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -53,4 +47,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run cli-dev --if-present
+    - run: npm run cli-dev --prefix src/client
