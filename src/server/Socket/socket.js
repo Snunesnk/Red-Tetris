@@ -6,10 +6,12 @@ const moveInGame = require("./InGame/move");
 const startGame = require("./Game/start");
 const { startTetris } = require("./Game/tetris");
 
+const port = process.env.PORT || 3024
+
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3024",
+      origin: "http://localhost:" + port,
       methods: ["GET", "POST"],
     },
   });

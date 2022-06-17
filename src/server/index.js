@@ -29,7 +29,7 @@ app.get("/BarcadeBrawl.ttf", (req, res) => {
 });
 
 
-httpServer.listen(process.env.PORT || 3042, () => {
+httpServer.listen(3042, () => {
     console.log("Listening on *:" + PORT);
 });
 
