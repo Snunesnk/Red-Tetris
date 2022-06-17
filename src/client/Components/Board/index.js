@@ -8,6 +8,14 @@ export const BoardComponent = () => {
     const stateBoard = useSelector(state => state.stateBoard);
     let y_pos = -1;
 
+    const spanStyle = {
+        color: OUTER_TETRIS_COLORS[stateBoard.level - 1 % OUTER_TETRIS_COLORS.length],
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+        marginBottom: "1em",
+    }
+
     const board = stateBoard.board.map(y => {
         y_pos++;
 
@@ -49,7 +57,9 @@ export const BoardComponent = () => {
         <div>
             <BoardModalComponent />
 
-            score: {stateBoard.score}
+            <span style={spanStyle}>
+                score: {stateBoard.score}
+            </span>
 
             {board}
         </div>

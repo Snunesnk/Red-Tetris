@@ -64,7 +64,7 @@ function handleGame(game, player, socket) {
         calculateScore(player, clearedLines, tspin);
     }
 
-    socket.emit("map:new", { map: player.map, score: player.score });
+    socket.emit("map:new", { map: player.map, score: player.score, level: player.level });
 
     if (game.pieces.length - player.currentPiece < 3)
         game.addPieces(10);
