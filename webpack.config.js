@@ -25,7 +25,7 @@ let config = {
   },
   devServer: {
     compress: true,
-    port: process.env.PORT || 3024,
+    port: 3024,
   },
 }
 

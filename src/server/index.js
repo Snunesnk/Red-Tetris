@@ -28,8 +28,8 @@ app.get("/BarcadeBrawl.ttf", (req, res) => {
     res.sendFile(path.resolve("public/BarcadeBrawl.ttf"));
 });
 
-
-httpServer.listen(3042, () => {
+const PORT = process.env.PORT || 3042
+httpServer.listen(PORT, () => {
     console.log("Listening on *:" + PORT);
 });
 

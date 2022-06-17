@@ -6,7 +6,7 @@
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
         "cli-dev": "webpack-dev-server --hot",
         "srv-prod": "node src/server/index.js",
-        "cli-prod": "node src/client/index.js"
+        "cli-prod": "npx webpack"
     },
     "dependencies": {
         "@emotion/react": "^11.8.2",
