@@ -1,16 +1,19 @@
+const io = require("../..");
 const { findGameBySocketIdPlayer } = require("../../games");
+const { findPlayer } = require("../../players");
 
-function startGame(payload, socket) {
+function startGame(socket, io) {
   console.log("server hit => game:start");
-  console.log(payload);
   const game = findGameBySocketIdPlayer(socket.id);
-  const new_payload = {
-    // gameName: payload.gameName,
-    // playerName: payload.playerName,
-    // game,
-  };
-
-  socket.emit("game:started", new_payload);
+  if (game) {
+    const player = findPlayer(game, socket.id);
+    if (player && game.players.indexOf(player) === 0) {
+      io.to(game.name).emit("game:started", {});
+    } else
+      socket.emit("game:started", {
+        error: "Player do not exist or do not have permission",
+      });
+  } else socket.emit("game:started", { error: "Game name do not exist" });
 }
 
 module.exports = startGame;

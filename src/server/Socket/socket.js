@@ -24,11 +24,11 @@ function initSocket(httpServer) {
     socket.on("game:list", () => {
       listGames(socket);
     });
-    socket.on("game:start", (payload) => {
-      startGame(payload, socket);
+    socket.on("game:start", () => {
+      startGame(socket, io);
     });
-    socket.on("game:tetrisStart", (payload) => {
-      startTetris(payload, socket);
+    socket.on("game:tetrisStart", () => {
+      startTetris(socket);
     });
     socket.on("inGame:move", (payload) => {
       moveInGame(payload, socket);

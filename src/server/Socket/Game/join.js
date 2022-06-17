@@ -6,15 +6,12 @@ function joinGame(payload, socket) {
   const game = findGameByName(payload.gameName);
   if (game) {
     game.addPlayer(payload.playerName, socket.id);
-
-    socket.emit("game:joined", {
-      game,
-    });
+    socket.join(game.name);
+    socket.emit("game:joined", { game });
+    socket.to(game.name).emit("game:edited", { game });
   } else {
     console.log("game do not exist");
-    socket.emit("game:joined", {
-      error: "Do not exist",
-    });
+    socket.emit("game:joined", { error: "Do not exist" });
   }
 }
 
