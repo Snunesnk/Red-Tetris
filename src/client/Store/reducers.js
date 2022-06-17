@@ -17,23 +17,6 @@ function move(state = {}, action) {
     }
 }
 
-function map(state = DEFAULT_MAP, action) {
-    switch (action.type) {
-        case "piece/move":
-            return state;
-
-        case "piece/insert":
-            return state;
-
-        case "map:new":
-            state = action.map;
-            return state;
-
-        default:
-            return state;
-    }
-}
-
 function roomName(state = "", action) {
     switch (action.type) {
         case "game:join":
@@ -57,13 +40,34 @@ function roomName(state = "", action) {
     }
 }
 
+const defaultBoard = {
+    board: DEFAULT_MAP,
+    score: 0,
+    level: 0,
+}
+function stateBoard(state = defaultBoard, action) {
+    switch (action.type) {
+        case "map:new":
+            return {
+                ...state,
+                board: action.map,
+                score: action.score,
+                level: action.level
+            }
+
+        default:
+            return state;
+    }
+}
+
 const defaultAppState = {
     isGameStarted: false,
     isPseudoEntered: false,
     isRoomSelected: false,
     isGameOver: false,
+    map: DEFAULT_MAP,
     playerName: "",
-    roomName: ""
+    roomName: "",
 }
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -99,10 +103,10 @@ function appState(state = defaultAppState, action) {
 }
 
 const rootReducer = combineReducers({
-    map,
     roomName,
     appState,
-    move
+    move,
+    stateBoard
 });
 
 export default rootReducer;

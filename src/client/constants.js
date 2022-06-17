@@ -30,7 +30,7 @@ export const DEFAULT_MAP = [
 
 export const OUTER_TETRIS_COLORS = [
     // "rgb(232, 230, 227)", // WHITE => empty cell - 0
-    "#141e30", // Gray => empty cell
+    "black",
     "#50ade0", // LIGHT BLUE => I cell - 1
     "#325ee7", // DARK BLUE => J cell - 2
     "#d47b1f", // ORANGE => L cell - 3
@@ -42,7 +42,7 @@ export const OUTER_TETRIS_COLORS = [
 
 export const INNER_TETRIS_COLORS = [
     // "rgb(232, 230, 227)", // WHITE => empty cell - 0
-    "black",
+    "#141e30", // Gray => empty cell
     "#9be7fc", // LIGHT BLUE => I cell - 1
     "#8baafa", // DARK BLUE => J cell - 2
     "#fbc666", // ORANGE => L cell - 3

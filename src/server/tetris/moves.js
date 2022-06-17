@@ -1,5 +1,5 @@
 const { testDraw } = require("./draw");
-const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW, MOVE_NOT_PERMITTED } = require("./const");
+const { NORMAL_ROTATION, I_ROTATION, PIECE_DREW, MOVE_NOT_PERMITTED } = require("../const");
 
 function moveLeft(player, piece) {
     player.currentPieceX -= 1;
@@ -34,7 +34,7 @@ function rotate(game, player, piece, rotIndex) {
         player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
     }
 
-    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation]) == MOVE_NOT_PERMITTED) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation], true) == MOVE_NOT_PERMITTED) {
         // Restore data
         player.currentPieceX = prevX;
         player.currentPieceY = prevY;

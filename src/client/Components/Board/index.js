@@ -5,11 +5,18 @@ import { CellComponent } from "../Cell/index";
 import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
 export const BoardComponent = () => {
-    const boardMap = useSelector(state => (state.map));
-    const appState = useSelector(state => state.appState);
+    const stateBoard = useSelector(state => state.stateBoard);
     let y_pos = -1;
 
-    const board = boardMap.map(y => {
+    const spanStyle = {
+        color: OUTER_TETRIS_COLORS[stateBoard.level - 1 % OUTER_TETRIS_COLORS.length],
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+        marginBottom: "1em",
+    }
+
+    const board = stateBoard.board.map(y => {
         y_pos++;
 
         let x_pos = -1;
@@ -49,6 +56,10 @@ export const BoardComponent = () => {
     return (
         <div>
             <BoardModalComponent />
+
+            <span style={spanStyle}>
+                score: {stateBoard.score}
+            </span>
 
             {board}
         </div>

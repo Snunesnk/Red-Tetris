@@ -1,5 +1,5 @@
-const consts = require("./const");
-const EmptyMap = require("./maps/maps").empty;
+const consts = require("../const");
+const EmptyMap = require("../maps/maps").empty;
 
 function draw(map, x, y, piece, drawFunc) {
     for (let i = 0; i < piece.length; i++) {
@@ -51,14 +51,16 @@ function coordinatesOk(x, y) {
     return true;
 }
 
-function testDraw(map, x, y, piece) {
+function testDraw(map, x, y, piece, BREAK_IF_CELL_OFF_LIMITS = false) {
     for (let j = 0; j < piece.length; j++) {
         if (piece[j].every(val => val == 0))
             continue;
 
         for (let i = 0; i < piece[j].length; i++) {
-            if (piece[j][i] == 0 || y + j < 0)
+            if (piece[j][i] === 0 || (!BREAK_IF_CELL_OFF_LIMITS && y + j < 0))
                 continue;
+            else if (piece[j][i] !== 0 && BREAK_IF_CELL_OFF_LIMITS && y + j < 0)
+                return consts.MOVE_NOT_PERMITTED;
 
             if (!coordinatesOk(x + i, y + j) || map[y + j][x + i] != 0)
                 return consts.MOVE_NOT_PERMITTED;
