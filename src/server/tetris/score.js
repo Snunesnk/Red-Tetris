@@ -106,7 +106,7 @@ function calculateScore(player, clearedLines, Tspin) {
     player.score += score * player.level;
 
     // Increase the level if the score is sufficient
-    if (player.score >= player.level * player.level * 2000) {
+    if (player.score >= player.level * player.level * 100) {
         console.log("New level !");
         player.increaseLevel();
     }

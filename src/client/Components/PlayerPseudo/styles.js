@@ -1,11 +1,11 @@
 export let PseudoPaperStyle = {
     position: "absolute",
-    bottom: "1em",
-    left: "1em",
+    bottom: "0.7em",
+    left: "0.7em",
     paddingLeft: "1.7em",
     paddingRight: "1.7em",
-    paddingTop: "1.3em",
-    paddingBottom: "1.3em",
+    paddingTop: "1em",
+    paddingBottom: "1em",
     fontSize: "1.3em"
 }
 

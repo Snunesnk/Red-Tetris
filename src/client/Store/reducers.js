@@ -42,7 +42,8 @@ function roomName(state = "", action) {
 
 const defaultBoard = {
     board: DEFAULT_MAP,
-    score: "0"
+    score: 0,
+    level: 0,
 }
 function stateBoard(state = defaultBoard, action) {
     switch (action.type) {
@@ -50,7 +51,8 @@ function stateBoard(state = defaultBoard, action) {
             return {
                 ...state,
                 board: action.map,
-                score: action.score
+                score: action.score,
+                level: action.level
             }
 
         default:
@@ -66,7 +68,6 @@ const defaultAppState = {
     map: DEFAULT_MAP,
     playerName: "",
     roomName: "",
-    score: "0",
 }
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -94,12 +95,6 @@ function appState(state = defaultAppState, action) {
             return {
                 ...state,
                 isGameOver: true
-            }
-
-        case "state:newScore":
-            return {
-                ...state,
-                score: action.score
             }
 
         default:
