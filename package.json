@@ -4,7 +4,8 @@
     "description": "my first socket.io app",
     "scripts": {
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
-        "cli-dev": "webpack-dev-server --hot"
+        "cli-dev": "webpack-dev-server --hot",
+        "start-app": "npm run srv-dev & && npm run cli-dev &"
     },
     "dependencies": {
         "@emotion/react": "^11.8.2",
