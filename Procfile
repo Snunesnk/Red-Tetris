@@ -1,1 +1,2 @@
-web: npm run start-app
+api: npm run srv-dev
+web: npm run cli-dev
