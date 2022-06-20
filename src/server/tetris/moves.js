@@ -106,11 +106,15 @@ function putPieceDown(player, piece) {
     while (testDraw(player.map, player.currentPieceX, currentY, piece) == PIECE_DREW) {
         lastYpossible = currentY;
         currentY += 1;
+        player.score += 2;
     }
 
     player.currentPieceY = lastYpossible;
     player.gravityApply = true;
 }
 
+function moveDown() {
+
+}
 
 module.exports = { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown };

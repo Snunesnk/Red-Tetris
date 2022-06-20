@@ -6,6 +6,9 @@ const { calculateScore, isTspin } = require("./score");
 async function tetris(game, player, socket) {
     player.increaseLevel();
 
+    // Calculate / handle one frame.
+    // Make this run to target 60 fps,
+    // so a total of 1000 / 60 ms
     const intervalMov = setInterval(() => {
         handleGame(game, player, socket);
 
@@ -15,7 +18,7 @@ async function tetris(game, player, socket) {
 
             socket.emit("game:over");
         }
-    }, 5);
+    }, 1000 / 60);
 }
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
@@ -134,6 +137,7 @@ function handleMove(game, player, move, piece) {
 
         case "ArrowDown":
             handleGravity(player, piece.content[player.currentPieceRotation]);
+            player.score += 1;
             break;
 
         case " ":
