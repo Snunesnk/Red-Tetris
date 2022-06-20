@@ -81,15 +81,6 @@ function handleGame(game, player, socket) {
 function handleNewPiece(player, piece) {
     player.needNewPiece = false;
 
-    // If there're some empty spaces at the top of the piece, up it
-    // Used for the I piece
-    for (let i = 0; i < piece.length; i++) {
-        if (piece[i].every((cell) => cell === 0))
-            player.currentPieceY--;
-        else
-            break;
-    }
-
     // Get the position where the piece could be displayed
     while (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) !== consts.PIECE_DREW) {
         player.currentPieceY--;
