@@ -1,12 +1,12 @@
 export let PseudoPaperStyle = {
     position: "absolute",
-    bottom: "0.7em",
-    left: "0.7em",
-    paddingLeft: "1.7em",
-    paddingRight: "1.7em",
-    paddingTop: "1em",
-    paddingBottom: "1em",
-    fontSize: "1.3em"
+    top: "0.3em",
+    right: "0.3em",
+    paddingLeft: "1.3em",
+    paddingRight: "1.3em",
+    paddingTop: "0.9em",
+    paddingBottom: "0.9em",
+    fontSize: "1.1em"
 }
 
 export const CenteredContainer = {

@@ -64,7 +64,16 @@ class Player {
     this.gravityInterval = setInterval(() => {
       this.gravityApply = true;
     }, consts.levels[this.level]);
+  }
 
+  setDeadLock() {
+    if (this.gravityInterval)
+      clearInterval(this.gravityInterval);
+
+    this.gravityInterval = setInterval(() => {
+      this.gravityApply = true;
+      this.resetGravityInterval();
+    }, consts.DEAD_LOCK);
   }
 }
 

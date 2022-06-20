@@ -207,10 +207,14 @@ const levels = [
   1
 ]
 
+const DEAD_LOCK = 500;
+
 const PIECE_DREW = 0;
 const BOTTOM_EDGE_HIT = 1;
 const MOVE_NOT_PERMITTED = 2;
 
+// Convention: positive x rightward, positive y upward.
+// Mty functionment: positiv x rightward: positive y downward 
 const NORMAL_ROTATION = [
   // 0 >> 1
   [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: 2 }, { x: -1, y: 2 }],
@@ -222,15 +226,37 @@ const NORMAL_ROTATION = [
   [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: -2 }, { x: -1, y: -2 }]
 ]
 
+const LEFT_NORMAL_ROTATION = [
+  // 0 >> 3
+  [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: 2 }, { x: 1, y: 2 }],
+  // 3 >> 2
+  [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: -2 }, { x: -1, y: -2 }],
+  // 2 >> 1
+  [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: 2 }, { x: -1, y: 2 }],
+  // 1 >> 0
+  [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: -2 }, { x: 1, y: -2 }]
+]
+
 const I_ROTATION = [
   // 0 >> 1
   [{ x: 0, y: 0 }, { x: -2, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -2 }, { x: -2, y: 1 }],
   // 1 >> 2
-  [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: 2, y: 0 }, { x: -1, y: 2 }, { x: 2, y: 1 }],
+  [{ x: 0, y: 0 }, { x: -1, y: 0 }, { x: 2, y: 0 }, { x: -1, y: -2 }, { x: 2, y: 1 }],
   // 2 >> 3
   [{ x: 0, y: 0 }, { x: 2, y: 0 }, { x: -1, y: 0 }, { x: 2, y: -1 }, { x: -1, y: 1 }],
   // 3 >> 0
   [{ x: 0, y: 0 }, { x: -2, y: 0 }, { x: 1, y: 0 }, { x: -2, y: -1 }, { x: 1, y: 2 }]
+]
+
+const LEFT_I_ROTATION = [
+  // 0 >> 3
+  [{ x: 0, y: 0 }, { x: 2, y: 0 }, { x: -1, y: 0 }, { x: -1, y: -2 }, { x: 2, y: 1 }],
+  // 3 >> 2
+  [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: -2, y: 0 }, { x: 1, y: -2 }, { x: -2, y: 1 }],
+  // 2 >> 1
+  [{ x: 0, y: 0 }, { x: -2, y: 0 }, { x: 1, y: 0 }, { x: -2, y: -1 }, { x: 1, y: 1 }],
+  // 1 >> 0
+  [{ x: 0, y: 0 }, { x: 2, y: 0 }, { x: -1, y: 0 }, { x: 2, y: -1 }, { x: -1, y: 2 }]
 ]
 
 module.exports = {
@@ -241,5 +267,8 @@ module.exports = {
   BOTTOM_EDGE_HIT,
   MOVE_NOT_PERMITTED,
   NORMAL_ROTATION,
-  I_ROTATION
+  LEFT_NORMAL_ROTATION,
+  I_ROTATION,
+  LEFT_I_ROTATION,
+  DEAD_LOCK
 };

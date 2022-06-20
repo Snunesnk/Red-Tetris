@@ -1,6 +1,6 @@
 const consts = require("../const");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
-const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
+const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
 
 async function tetris(game, player, socket) {
@@ -114,6 +114,11 @@ function handleGravity(player, piece) {
     else {
         // Increase piece's Y
         player.currentPieceY += 1;
+
+        // // Handle dead lock
+        // if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        //     player.setDeadLock();
+        // }
     }
 }
 
@@ -136,7 +141,11 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowUp":
-            rotate(game, player, piece, 0);
+            rotateRight(game, player, piece, 0);
+            break;
+
+        case "c":
+            rotateLeft(game, player, piece, 0);
             break;
     }
 }
