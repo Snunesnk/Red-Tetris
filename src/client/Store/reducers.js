@@ -76,6 +76,12 @@ const defaultAppState = {
 function appState(state = defaultAppState, action) {
     switch (action.type) {
         case "state:pseudoEntered":
+            // If there' a destination room, then tells the server
+            // So th player can be redirected to the correct game
+            if (action.destRoom !== "") {
+                emitJoinGame(action.destRoom, action.playerName);
+            }
+
             return {
                 ...state,
                 isPseudoEntered: true,
