@@ -23,8 +23,8 @@
 //   - move value + 50
 //
 // Score for drop: 
-//   - Soft drop: 1 // Not sure hot to implement
-//   - Hard drop: 1 * NB_CELLS // Implemented within the hard drop movment function
+//   - Soft drop: 1 // Directly inside the "handleMove" function in tetris.js
+//   - Hard drop: 2 * NB_CELLS // Implemented within the hard drop movement function
 //
 // Then the final score is multiplied by the player lever to get the definitive player score
 // with its last action
@@ -106,7 +106,7 @@ function calculateScore(player, clearedLines, Tspin) {
     player.score += score * player.level;
 
     // Increase the level if the score is sufficient
-    if (player.score >= player.level * player.level * 1000) {
+    if (player.score >= player.level * player.level * 1500) {
         console.log("New level !");
         player.increaseLevel();
     }

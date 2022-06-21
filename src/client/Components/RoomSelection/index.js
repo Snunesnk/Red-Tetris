@@ -97,6 +97,8 @@ export const RoomSelectionComponent = () => {
                 variant="contained"
                 style={JoinRoomBtnStyle}
                 onClick={() => {
+                  location.href = "#" + row.name + "[" + playerName + "]";
+                  console.log("location: " + location.href);
                   dispatch({
                     type: "game:join",
                     roomName: row.name,
@@ -135,6 +137,8 @@ export const RoomSelectionComponent = () => {
             // type="submit"
             onClick={() => {
               handleClose();
+              location.href = "#" + newRoomName + "[" + playerName + "]";
+              console.log("location: " + location.href);
               dispatch({
                 type: "game:create",
                 roomName: newRoomName,

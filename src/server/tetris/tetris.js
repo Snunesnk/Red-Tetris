@@ -2,12 +2,15 @@ const consts = require("../const");
 const updateMap = require("../Socket/InGame/updateMap");
 const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
-const { moveLeft, moveRight, rotate, putPieceDown } = require("./moves");
+const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
 
+    // Calculate / handle one frame.
+    // Make this run to target 60 fps,
+    // so a total of 1000 / 60 ms
     const intervalMov = setInterval(() => {
         handleGame(game, player, socket);
 
@@ -17,7 +20,7 @@ async function tetris(game, player, socket) {
 
             socket.emit("game:over");
         }
-    }, 5);
+    }, 1000 / 60);
 }
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
@@ -82,15 +85,6 @@ function handleGame(game, player, socket) {
 function handleNewPiece(player, piece) {
     player.needNewPiece = false;
 
-    // If there're some empty spaces at the top of the piece, up it
-    // Used for the I piece
-    for (let i = 0; i < piece.length; i++) {
-        if (piece[i].every((cell) => cell === 0))
-            player.currentPieceY--;
-        else
-            break;
-    }
-
     // Get the position where the piece could be displayed
     while (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) !== consts.PIECE_DREW) {
         player.currentPieceY--;
@@ -99,7 +93,7 @@ function handleNewPiece(player, piece) {
     player.resetGravityInterval();
 }
 
-function handleGravity(player, piece, game) {
+function handleGravity(player, piece) {
     // Check that the piece is still at the bottom
     if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
@@ -120,6 +114,11 @@ function handleGravity(player, piece, game) {
     else {
         // Increase piece's Y
         player.currentPieceY += 1;
+
+        // // Handle dead lock
+        // if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        //     player.setDeadLock();
+        // }
     }
 }
 
@@ -134,7 +133,8 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowDown":
-            handleGravity(player, piece.content[player.currentPieceRotation], game);
+            handleGravity(player, piece.content[player.currentPieceRotation]);
+            player.score += 1;
             break;
 
         case " ":
@@ -142,7 +142,11 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowUp":
-            rotate(game, player, piece, 0);
+            rotateRight(game, player, piece, 0);
+            break;
+
+        case "c":
+            rotateLeft(game, player, piece, 0);
             break;
     }
 }
