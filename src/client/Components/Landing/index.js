@@ -18,6 +18,20 @@ import {
 export const LandingComponent = () => {
     const dispatch = useDispatch();
     const [playerName, setPlayerName] = useState("");
+    let destRoom = "";
+    let destPlayer = "";
+
+    // Check if the player came from a link or not
+    const my_url = new window.URL(location.href);
+
+    if (my_url.hash != "") {
+        // If there's a hash, assume that he is joining a room
+        // Remove the first '#' and the last ']', then separate the roomName and the playerName
+        const infos = my_url.hash.slice(1, -1).split('[');
+        destRoom = infos[0];
+        destPlayer = infos[1];
+    }
+    console.log(my_url);
 
     return (
         <Grid container id="landing-grid" style={LandingGridContainer}>
@@ -46,7 +60,14 @@ export const LandingComponent = () => {
                             <div style={MainButtonStyle}>
                                 <Button
                                     variant="contained"
-                                    onClick={() => dispatch({ type: "state:pseudoEntered", playerName: playerName })}
+                                    onClick={() => {
+                                        dispatch({
+                                            type: "state:pseudoEntered",
+                                            playerName: playerName,
+                                            destRoom: destRoom,
+                                            destPlayer: destPlayer
+                                        });
+                                    }}
                                     disabled={playerName.length === 0}
                                     type="submit">
                                     Next
