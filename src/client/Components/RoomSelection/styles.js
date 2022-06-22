@@ -32,8 +32,6 @@ export const PaperHeaderRowStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: "center",
-    paddingTop: "0.5em",
-    paddingBottom: "0.5em",
 }
 
 export const PaperRowStyle = {

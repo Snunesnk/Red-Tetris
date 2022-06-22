@@ -1,24 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { GridContainer } from './styles'
-import { CellComponent } from "../Cell/index";
-import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
-import { BoardModalComponent } from "../BoardModal/index";
-import { BoardInfosComponent } from '../BoardInfos';
 import { Grid } from '@mui/material';
-export const BoardComponent = () => {
+import { CenteredContainer, GridContainer } from './styles';
+import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS } from '../../constants';
+import { CellComponent } from '../Cell';
+
+
+export const BoardInfosComponent = ({ score, level }) => {
     const stateBoard = useSelector(state => state.stateBoard);
+    const color = OUTER_TETRIS_COLORS[level - 1 % OUTER_TETRIS_COLORS.length]
     let y_pos = -1;
 
-    const spanStyle = {
-        color: OUTER_TETRIS_COLORS[stateBoard.level - 1 % OUTER_TETRIS_COLORS.length],
-        display: "flex",
-        justifyContent: "center",
-        width: "100%",
-        marginBottom: "1em",
-    }
-
-    const board = stateBoard.board.map(y => {
+    const next_pieces = stateBoard.nextPieces.map(y => {
         y_pos++;
 
         let x_pos = -1;
@@ -52,20 +45,21 @@ export const BoardComponent = () => {
     });
 
     return (
-        <Grid container>
-            <Grid item xs={12}>
-                <BoardModalComponent />
-            </Grid>
-
-
-            <Grid item xs={3} style={{ display: "flex", justifyContent: "end" }}>
-                <BoardInfosComponent score={stateBoard.score} level={stateBoard.level} />
-            </Grid>
-            <Grid item xs={9} xl={6} style={{ display: "flex", justifyContent: "center" }}>
+        <div>
+            <div style={CenteredContainer}>
+                score
+            </div>
+            <div style={CenteredContainer}>
+                <span style={{ color: color }}>{score}</span>
+            </div >
+            <div style={CenteredContainer}>
+                Next pieces
+            </div>
+            <div style={CenteredContainer}>
                 <div style={GridContainer}>
-                    {board}
+                    {next_pieces}
                 </div>
-            </Grid>
-        </Grid>
+            </div>
+        </div>
     );
 }

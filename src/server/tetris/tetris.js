@@ -71,9 +71,9 @@ function handleGame(game, player, socket) {
         calculateScore(player, clearedLines, tspin);
     }
 
-    updateMap(player, socket);
+    updateMap(game, player, socket);
 
-    if (game.pieces.length - player.currentPiece < 3)
+    if (game.pieces.length - player.currentPiece < 5)
         game.addPieces(10);
 
     if (player.needNewPiece)

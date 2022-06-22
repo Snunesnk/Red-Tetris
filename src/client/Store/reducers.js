@@ -4,7 +4,7 @@ import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
-import { DEFAULT_MAP } from "../constants";
+import { DEFAULT_MAP, NEXT_PIECES } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
 
 function move(state = {}, action) {
@@ -45,17 +45,20 @@ function roomName(state = "", action) {
 
 const defaultBoard = {
     board: JSON.parse(JSON.stringify(DEFAULT_MAP)),
+    nextPieces: JSON.parse(JSON.stringify(NEXT_PIECES)),
     score: 0,
     level: 0,
 }
 function stateBoard(state = defaultBoard, action) {
     switch (action.type) {
         case "map:new":
+            console.log(action);
             return {
                 ...state,
                 board: action.map,
                 score: action.score,
-                level: action.level
+                level: action.level,
+                nextPieces: action.nextPieces
             }
 
         default:

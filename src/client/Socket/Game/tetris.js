@@ -10,7 +10,8 @@ export function onNewMap(dispatch, payload) {
       type: "map:new",
       map: payload.map,
       score: payload.score,
-      level: payload.level
+      level: payload.level,
+      nextPieces: payload.nextPieces
     });
   } else console.log(payload.error);
 }
