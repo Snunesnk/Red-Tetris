@@ -18,7 +18,7 @@ function joinGame(payload, socket) {
     game.addPlayer(payload.playerName, socket.id);
     socket.join(game.name);
 
-    socket.emit("game:joined", { game, specters });
+    socket.emit("game:joined", { game, specters, id: socket.id });
     editGame(game, socket);
   } else {
     console.log("game do not exist");

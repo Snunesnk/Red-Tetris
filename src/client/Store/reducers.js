@@ -75,6 +75,7 @@ const defaultAppState = {
     roomList: [],
     room: null,
     specters: [],
+    id: "",
 };
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -98,6 +99,7 @@ function appState(state = defaultAppState, action) {
                 roomName: action.room.name, // TODO: remove it and use selectedRoom.name instead
                 room: action.room,
                 specters: action.specters,
+                id: action.id
             };
 
         case "state:gameStarted":
@@ -113,10 +115,11 @@ function appState(state = defaultAppState, action) {
             };
 
         case "state:gameEdited":
+            // Remove player's specter from list
             return {
                 ...state,
                 room: action.room,
-                specters: action.specters,
+                specters: action.specters.filter(specter => specter.id != state.id),
             };
         case "state:gamesListed":
             if (state.roomList.toString() !== action.roomList.toString()) {
@@ -127,12 +130,9 @@ function appState(state = defaultAppState, action) {
             }
 
         case "specters:new":
-            console.log("New specter !");
-            console.log(action);
             for (let i = 0; i < state.specters.length; i++) {
                 if (state.specters[i].id == action.index) {
                     state.specters[i].map = action.map;
-                    console.log(state.specters[i].map);
                     break;
                 }
             }

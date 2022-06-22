@@ -15,8 +15,6 @@ export default function setListeners(socket, dispatch) {
   });
 
   socket.on("game:edited", (payload) => {
-    console.log("Hmm");
-    console.log(payload);
     onGameEdited(dispatch, payload);
   })
 

@@ -145,20 +145,26 @@ function isTspin(player, pieceType) {
     // Because this is a T tetriminos, the coordinates for the corner are
     // as follow (Starting from the piece's [x, y] coordinates):
     // [0, 0]
-    if (player.map[player.currentPieceY][player.currentPieceX] !== 0) {
-        cornerFilled += 1;
+    try {
+        if (player.map[player.currentPieceY][player.currentPieceX] !== 0) {
+            cornerFilled += 1;
+        }
+        // [2, 0]
+        if (player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
+            cornerFilled += 1;
+        }
+        // [0, 2]
+        if (player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
+            cornerFilled += 1;
+        }
+        // [2, 2]
+        if (player.map[player.currentPieceY + 2][player.currentPieceX + 2] !== 0) {
+            cornerFilled += 1;
+        }
     }
-    // [2, 0]
-    if (player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
-        cornerFilled += 1;
-    }
-    // [0, 2]
-    if (player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
-        cornerFilled += 1;
-    }
-    // [2, 2]
-    if (player.map[player.currentPieceY + 2][player.currentPieceX + 2] !== 0) {
-        cornerFilled += 1;
+    catch {
+        console.log("Oops");
+        console.log(player);
     }
 
     return cornerFilled >= 3;
