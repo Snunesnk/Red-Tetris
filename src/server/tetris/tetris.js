@@ -106,10 +106,9 @@ function handleGravity(player, piece) {
         player.needNewPiece = true;
     }
     else {
-        // Increase piece's Y
         player.currentPieceY += 1;
 
-        // // Handle dead lock
+        // // Handle lock
         // if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         //     player.setDeadLock();
         // }

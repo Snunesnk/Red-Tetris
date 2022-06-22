@@ -8,7 +8,7 @@ class Player {
     this.name = name;
 
     // GAME INFO
-    this.map = JSON.parse(JSON.stringify(map.empty));;
+    this.map = JSON.parse(JSON.stringify(map.empty));
     this.lineCleared = 0;
     this.level = 0;
     this.score = 0;

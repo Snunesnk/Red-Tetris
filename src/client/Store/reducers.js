@@ -44,7 +44,7 @@ function roomName(state = "", action) {
 }
 
 const defaultBoard = {
-    board: [...DEFAULT_MAP],
+    board: JSON.parse(JSON.stringify(DEFAULT_MAP)),
     score: 0,
     level: 0,
 }

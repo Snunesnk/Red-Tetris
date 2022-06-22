@@ -6,7 +6,7 @@ import {
     CenteredContainer,
 } from "./styles";
 
-export const TitleComponent = ({ text }) => {
+export const TitleComponent = () => {
     const appState = useSelector(state => state.appState);
 
     return (
