@@ -28,7 +28,7 @@ export default function setListeners(socket, dispatch) {
     onGameStarted(dispatch, payload);
   });
 
-  socket.on("map:new", (payload) => {
+  socket.on("ingame:updateMap", (payload) => {
     onNewMap(dispatch, payload);
   });
 

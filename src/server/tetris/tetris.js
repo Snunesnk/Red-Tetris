@@ -1,4 +1,6 @@
 const consts = require("../const");
+const updateMap = require("../Socket/InGame/updateMap");
+const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
@@ -47,8 +49,10 @@ function handleGame(game, player, socket) {
     }
 
     if (player.gravityApply) {
-        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
+        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation], game);
         player.gravityApply = false;
+        if (player.needNewPiece)
+            updateSpecter(game, player, socket);
     }
 
     // Draw the specter of the piece
@@ -67,7 +71,7 @@ function handleGame(game, player, socket) {
         calculateScore(player, clearedLines, tspin);
     }
 
-    socket.emit("map:new", { map: player.map, score: player.score, level: player.level });
+    updateMap(player, socket);
 
     if (game.pieces.length - player.currentPiece < 3)
         game.addPieces(10);
@@ -104,6 +108,8 @@ function handleGravity(player, piece) {
         }
 
         player.needNewPiece = true;
+        // TODO: broadcast to other players my map
+
     }
     else {
         player.currentPieceY += 1;
