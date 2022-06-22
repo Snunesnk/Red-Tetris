@@ -9,6 +9,11 @@ function updateMap(game, player, socket) {
     }
   }
 
+  // The last line is always an empty line, so move it to the top
+  // for better proportions
+  // console.log(nextPieces.splice(nextPieces.length - 1, 1));
+  nextPieces.unshift(nextPieces.splice(nextPieces.length - 1, 1)[0]);
+
   socket.emit("ingame:updateMap", {
     map: player.map,
     score: player.score,

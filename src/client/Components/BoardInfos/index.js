@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { Grid } from '@mui/material';
-import { CenteredContainer, GridContainer } from './styles';
-import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS } from '../../constants';
+import { CenteredContainer, GridContainer, InfosContainer } from './styles';
+import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from '../../constants';
 import { CellComponent } from '../Cell';
 
 
 export const BoardInfosComponent = ({ score, level }) => {
     const stateBoard = useSelector(state => state.stateBoard);
-    const color = OUTER_TETRIS_COLORS[level - 1 % OUTER_TETRIS_COLORS.length]
+    const color = level == 0 ? "black" : OUTER_TETRIS_COLORS[level - 1 % OUTER_TETRIS_COLORS.length]
     let y_pos = -1;
 
     const next_pieces = stateBoard.nextPieces.map(y => {
@@ -20,15 +20,15 @@ export const BoardInfosComponent = ({ score, level }) => {
                 let innerColor;
                 let outerColor;
 
-                // Handle specter
-                if (x > 7) {
-                    innerColor = INNER_TETRIS_COLORS[0];
-                    outerColor = OUTER_TETRIS_COLORS[x - 7];
+                innerColor = INNER_TETRIS_COLORS[+x];
+                outerColor = OUTER_TETRIS_COLORS[+x];
+
+                // Do not show inner color for "dead" cells
+                if (x == 0) {
+                    innerColor = "black";
+                    outerColor = "black";
                 }
-                else {
-                    innerColor = INNER_TETRIS_COLORS[+x];
-                    outerColor = OUTER_TETRIS_COLORS[+x];
-                }
+
                 x_pos++;
 
                 return (
@@ -44,22 +44,36 @@ export const BoardInfosComponent = ({ score, level }) => {
         )
     });
 
+    const containerStyle = {
+        border: "7px solid " + color,
+        padding: "0.3em"
+    };
+
     return (
-        <div>
-            <div style={CenteredContainer}>
-                score
-            </div>
-            <div style={CenteredContainer}>
-                <span style={{ color: color }}>{score}</span>
-            </div >
-            <div style={CenteredContainer}>
-                Next pieces
-            </div>
-            <div style={CenteredContainer}>
-                <div style={GridContainer}>
-                    {next_pieces}
+        <div style={InfosContainer}>
+            <div style={containerStyle}>
+                <div>
+                    <div style={CenteredContainer}>
+                        score
+                    </div>
+                    <div style={CenteredContainer}>
+                        <span style={{ color: color }}>{score}</span>
+                    </div >
+                </div>
+                <div style={{ marginTop: "2em" }}>
+                    <div style={CenteredContainer}>
+                        Next
+                    </div>
+                    <div style={CenteredContainer}>
+                        pieces
+                    </div>
+                    <div style={CenteredContainer}>
+                        <div style={GridContainer}>
+                            {next_pieces}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

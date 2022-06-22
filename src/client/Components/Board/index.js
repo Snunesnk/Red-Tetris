@@ -52,7 +52,7 @@ export const BoardComponent = () => {
     });
 
     return (
-        <Grid container>
+        <Grid container style={{ marginTop: "2em" }}>
             <Grid item xs={12}>
                 <BoardModalComponent />
             </Grid>
@@ -61,7 +61,7 @@ export const BoardComponent = () => {
             <Grid item xs={3} style={{ display: "flex", justifyContent: "end" }}>
                 <BoardInfosComponent score={stateBoard.score} level={stateBoard.level} />
             </Grid>
-            <Grid item xs={9} xl={6} style={{ display: "flex", justifyContent: "center" }}>
+            <Grid item xs={9} xl={6} style={{ display: "flex", justifyContent: "start", paddingLeft: "1em" }}>
                 <div style={GridContainer}>
                     {board}
                 </div>
