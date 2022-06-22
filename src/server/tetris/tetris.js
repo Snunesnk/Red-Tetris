@@ -51,8 +51,6 @@ function handleGame(game, player, socket) {
     if (player.gravityApply) {
         handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation], game);
         player.gravityApply = false;
-        if (player.needNewPiece)
-            updateSpecter(game, player, socket);
     }
 
     // Draw the specter of the piece
@@ -71,9 +69,13 @@ function handleGame(game, player, socket) {
         calculateScore(player, clearedLines, tspin);
     }
 
-    updateMap(player, socket);
+    updateMap(game, player, socket);
 
-    if (game.pieces.length - player.currentPiece < 3)
+    // Tells the others players that a new piece has been placed
+    if (player.needNewPiece)
+        updateSpecter(game, player, socket);
+
+    if (game.pieces.length - player.currentPiece < 5)
         game.addPieces(10);
 
     if (player.needNewPiece)
@@ -112,10 +114,9 @@ function handleGravity(player, piece) {
 
     }
     else {
-        // Increase piece's Y
         player.currentPieceY += 1;
 
-        // // Handle dead lock
+        // // Handle lock
         // if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
         //     player.setDeadLock();
         // }

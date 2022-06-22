@@ -25,13 +25,13 @@ export const HeaderContainer = {
 }
 
 export const PaperHeaderRowStyle = {
-    fontSize: "1.2em",
+    fontSize: "1em",
     width: "100%",
     height: "100%",
     marginBottom: "1em",
     display: 'flex',
     justifyContent: 'center',
-    alignItems: "center"
+    alignItems: "center",
 }
 
 export const PaperRowStyle = {
@@ -52,13 +52,13 @@ export const GridRow = {
 }
 
 export const JoinRoomBtnStyle = {
-    fontSize: "0.6em",
+    fontSize: "0.5em",
     marginLeft: "4em"
 }
 
 export const CreateRoomBtn = {
     marginLeft: "2em",
-    fontSize: "0.7em"
+    fontSize: "0.6em"
 }
 
 export const DialogBtnContainerStyle = {

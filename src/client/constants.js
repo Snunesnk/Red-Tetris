@@ -28,6 +28,21 @@ export const DEFAULT_MAP = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
+export const NEXT_PIECES = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+]
+
 export const OUTER_TETRIS_COLORS = [
     // "rgb(232, 230, 227)", // WHITE => empty cell - 0
     "black",

@@ -3,7 +3,7 @@ function updateSpecter(game, player, socket) {
     .to(game.name)
     .emit("ingame:updateSpecter", {
       map: player.map,
-      index: game.players.indexOf(player),
+      index: player.socketId,
     });
 }
 

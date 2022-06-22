@@ -6,9 +6,19 @@ function joinGame(payload, socket) {
   console.log(payload);
   const game = findGameByName(payload.gameName);
   if (game) {
+    let specters = []
+    // Get specter of all already existing players
+    for (let i = 0; i < game.players.length; i++) {
+      specters.push({
+        id: game.players[i].socketId,
+        map: game.players[i].map
+      });
+    }
+
     game.addPlayer(payload.playerName, socket.id);
     socket.join(game.name);
-    socket.emit("game:joined", { game });
+
+    socket.emit("game:joined", { game, specters, id: socket.id });
     editGame(game, socket);
   } else {
     console.log("game do not exist");

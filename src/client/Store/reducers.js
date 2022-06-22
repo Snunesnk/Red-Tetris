@@ -4,7 +4,7 @@ import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
-import { DEFAULT_MAP } from "../constants";
+import { DEFAULT_MAP, NEXT_PIECES } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
 
 function move(state = {}, action) {
@@ -44,7 +44,8 @@ function roomName(state = "", action) {
 }
 
 const defaultBoard = {
-    board: [...DEFAULT_MAP],
+    board: JSON.parse(JSON.stringify(DEFAULT_MAP)),
+    nextPieces: JSON.parse(JSON.stringify(NEXT_PIECES)),
     score: 0,
     level: 0,
 }
@@ -55,7 +56,8 @@ function stateBoard(state = defaultBoard, action) {
                 ...state,
                 board: action.map,
                 score: action.score,
-                level: action.level
+                level: action.level,
+                nextPieces: action.nextPieces
             }
 
         default:
@@ -72,6 +74,8 @@ const defaultAppState = {
     roomName: "",
     roomList: [],
     room: null,
+    specters: [],
+    id: "",
 };
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -94,6 +98,8 @@ function appState(state = defaultAppState, action) {
                 isRoomSelected: true,
                 roomName: action.room.name, // TODO: remove it and use selectedRoom.name instead
                 room: action.room,
+                specters: action.specters,
+                id: action.id
             };
 
         case "state:gameStarted":
@@ -109,9 +115,11 @@ function appState(state = defaultAppState, action) {
             };
 
         case "state:gameEdited":
+            // Remove player's specter from list
             return {
                 ...state,
                 room: action.room,
+                specters: action.specters.filter(specter => specter.id != state.id),
             };
         case "state:gamesListed":
             if (state.roomList.toString() !== action.roomList.toString()) {
@@ -120,6 +128,16 @@ function appState(state = defaultAppState, action) {
                     roomList: action.roomList,
                 };
             }
+
+        case "specters:new":
+            for (let i = 0; i < state.specters.length; i++) {
+                if (state.specters[i].id == action.index) {
+                    state.specters[i].map = action.map;
+                    break;
+                }
+            }
+            return state;
+
         default:
             return state;
     }
