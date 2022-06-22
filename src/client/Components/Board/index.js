@@ -5,6 +5,7 @@ import { CellComponent } from "../Cell/index";
 import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
 import { BoardInfosComponent } from '../BoardInfos';
+import { SpecterComponent } from '../Specters';
 import { Grid } from '@mui/material';
 export const BoardComponent = () => {
     const stateBoard = useSelector(state => state.stateBoard);
@@ -61,10 +62,13 @@ export const BoardComponent = () => {
             <Grid item xs={3} style={{ display: "flex", justifyContent: "end" }}>
                 <BoardInfosComponent score={stateBoard.score} level={stateBoard.level} />
             </Grid>
-            <Grid item xs={9} xl={6} style={{ display: "flex", justifyContent: "start", paddingLeft: "1em" }}>
+            <Grid item xs={9} xl={5} style={{ display: "flex", justifyContent: "start", paddingLeft: "1em" }}>
                 <div style={GridContainer}>
                     {board}
                 </div>
+            </Grid>
+            <Grid item xs={12} xl={4}>
+                <SpecterComponent />
             </Grid>
         </Grid>
     );

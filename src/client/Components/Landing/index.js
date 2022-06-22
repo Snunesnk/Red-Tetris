@@ -31,7 +31,6 @@ export const LandingComponent = () => {
         destRoom = infos[0];
         destPlayer = infos[1];
     }
-    console.log(my_url);
 
     return (
         <Grid container id="landing-grid" style={LandingGridContainer}>

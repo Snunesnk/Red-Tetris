@@ -52,7 +52,6 @@ const defaultBoard = {
 function stateBoard(state = defaultBoard, action) {
     switch (action.type) {
         case "map:new":
-            console.log(action);
             return {
                 ...state,
                 board: action.map,
@@ -75,6 +74,7 @@ const defaultAppState = {
     roomName: "",
     roomList: [],
     room: null,
+    specters: [],
 };
 function appState(state = defaultAppState, action) {
     switch (action.type) {
@@ -97,6 +97,7 @@ function appState(state = defaultAppState, action) {
                 isRoomSelected: true,
                 roomName: action.room.name, // TODO: remove it and use selectedRoom.name instead
                 room: action.room,
+                specters: action.specters,
             };
 
         case "state:gameStarted":
@@ -115,6 +116,7 @@ function appState(state = defaultAppState, action) {
             return {
                 ...state,
                 room: action.room,
+                specters: action.specters,
             };
         case "state:gamesListed":
             if (state.roomList.toString() !== action.roomList.toString()) {
@@ -123,6 +125,19 @@ function appState(state = defaultAppState, action) {
                     roomList: action.roomList,
                 };
             }
+
+        case "specters:new":
+            console.log("New specter !");
+            console.log(action);
+            for (let i = 0; i < state.specters.length; i++) {
+                if (state.specters[i].id == action.index) {
+                    state.specters[i].map = action.map;
+                    console.log(state.specters[i].map);
+                    break;
+                }
+            }
+            return state;
+
         default:
             return state;
     }

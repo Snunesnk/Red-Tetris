@@ -51,8 +51,6 @@ function handleGame(game, player, socket) {
     if (player.gravityApply) {
         handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation], game);
         player.gravityApply = false;
-        if (player.needNewPiece)
-            updateSpecter(game, player, socket);
     }
 
     // Draw the specter of the piece
@@ -72,6 +70,10 @@ function handleGame(game, player, socket) {
     }
 
     updateMap(game, player, socket);
+
+    // Tells the others players that a new piece has been placed
+    if (player.needNewPiece)
+        updateSpecter(game, player, socket);
 
     if (game.pieces.length - player.currentPiece < 5)
         game.addPieces(10);

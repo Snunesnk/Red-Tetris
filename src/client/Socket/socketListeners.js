@@ -3,7 +3,9 @@ import { onGameEdited } from "./Game/edit";
 import { onGameJoined } from "./Game/join";
 import { onGamesListed } from "./Game/list";
 import { onGameStarted } from "./Game/start";
-import { onNewMap, onGameOver } from "./Game/tetris";
+import { onNewMap } from "./InGame/updateMap";
+import { onNewSpecter } from "./InGame/updateSpecter";
+import { onGameOver } from "./Game/tetris";
 
 
 export default function setListeners(socket, dispatch) {
@@ -13,6 +15,8 @@ export default function setListeners(socket, dispatch) {
   });
 
   socket.on("game:edited", (payload) => {
+    console.log("Hmm");
+    console.log(payload);
     onGameEdited(dispatch, payload);
   })
 
@@ -31,6 +35,11 @@ export default function setListeners(socket, dispatch) {
   socket.on("ingame:updateMap", (payload) => {
     onNewMap(dispatch, payload);
   });
+
+  socket.on("ingame:updateSpecter", (payload) => {
+    onNewSpecter(dispatch, payload);
+  });
+
 
   socket.on("game:over", () => {
     onGameOver(dispatch);

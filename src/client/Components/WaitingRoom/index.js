@@ -18,7 +18,6 @@ export const WaitingRoomComponent = () => {
     const appState = useSelector(state => state.appState);
     const room = useSelector((state) => state.appState).room;
 
-    console.log(room);
     return (
         <Grid container style={GridContainerStyle}>
 

@@ -15,7 +15,6 @@ export const CellComponent = ({ inner_color, outer_color, x_pos, y_pos }) => {
         border = "0.15em dashed " + outer_color;
         inner_color = outer_color + "32";
         outer_color = "black";
-        console.log("Inner color: " + inner_color);
     }
 
     // // Don't know how to edit the background color after import

@@ -24,7 +24,6 @@ export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
   const rows = useSelector((state) => state.appState).roomList;
   const dispatch = useDispatch();
-  console.log(rows);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -98,7 +97,6 @@ export const RoomSelectionComponent = () => {
                 style={JoinRoomBtnStyle}
                 onClick={() => {
                   location.href = "#" + row.name + "[" + playerName + "]";
-                  console.log("location: " + location.href);
                   dispatch({
                     type: "game:join",
                     roomName: row.name,
@@ -138,7 +136,6 @@ export const RoomSelectionComponent = () => {
             onClick={() => {
               handleClose();
               location.href = "#" + newRoomName + "[" + playerName + "]";
-              console.log("location: " + location.href);
               dispatch({
                 type: "game:create",
                 roomName: newRoomName,

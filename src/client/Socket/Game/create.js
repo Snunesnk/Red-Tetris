@@ -8,6 +8,6 @@ export function onGameCreated(dispatch, payload) {
   console.log("client hit -> game:created");
 
   if (!payload.error)
-    dispatch({ type: "state:roomSelected", room: payload.game });
+    dispatch({ type: "state:roomSelected", room: payload.game, specters: [] });
   else console.log(payload.error);
 }
