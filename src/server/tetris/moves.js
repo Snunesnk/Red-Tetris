@@ -110,7 +110,7 @@ function putPieceDown(player, piece) {
     }
 
     player.currentPieceY = lastYpossible;
-    player.gravityApply = true;
+    player.needNewPiece = true;
 }
 
 function moveDown() {
