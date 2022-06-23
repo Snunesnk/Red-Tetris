@@ -17,4 +17,29 @@ function findGameBySocketIdPlayer(socketId) {
   });
 }
 
-module.exports = { findGameByName, findGameBySocketIdPlayer };
+function formatGameForClient(game) {
+  return {
+    name: game.name,
+    isPublic: game.isPublic,
+    status: game.status,
+    players: game.players.map((player) => {
+      return { name: player.name, socketId: player.socketId };
+    }),
+    spectators: game.spectators.map((spectator) => {
+      return { name: spectator.name, socketId: spectator.socketId };
+    }),
+  };
+}
+
+function formatGamesForClient() {
+  return Games.map((game) => {
+    return formatGameForClient(game);
+  });
+}
+
+module.exports = {
+  findGameByName,
+  findGameBySocketIdPlayer,
+  formatGameForClient,
+  formatGamesForClient,
+};
