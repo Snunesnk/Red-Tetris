@@ -8,6 +8,9 @@ import { onNewMap, onGameOver } from "./Game/tetris";
 
 export default function setListeners(socket, dispatch) {
 
+  socket.on("connect", () => {
+    dispatch({ type: "state:gameEdited", socketId: socket.id });
+  })
   socket.on("game:created", (payload) => {
     onGameCreated(dispatch, payload);
   });
