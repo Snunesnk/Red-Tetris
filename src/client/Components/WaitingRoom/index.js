@@ -18,6 +18,8 @@ export const WaitingRoomComponent = () => {
     const appState = useSelector(state => state.appState);
     const room = useSelector((state) => state.appState).room;
 
+    location.href = "#" + room.name + "[" + appState.playerName + "]";
+
     return (
         <Grid container style={GridContainerStyle}>
 
@@ -26,7 +28,7 @@ export const WaitingRoomComponent = () => {
                 <Paper style={PlayersHeaderPaperStyle}>
                     <Grid container>
                         <Grid item xs={4}></Grid>
-                        <Grid item xs={4} style={CenteredContainer}>Players</Grid>
+                        <Grid item xs={4} style={CenteredContainer}>{room.name}</Grid>
                         <Grid item xs={4} style={HeaderSpanContainer}>{room.players.length}/8</Grid>
                     </Grid>
                 </Paper>
