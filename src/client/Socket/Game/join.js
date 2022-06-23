@@ -11,8 +11,7 @@ export function onGameJoined(dispatch, payload) {
     dispatch({
       type: "state:roomSelected",
       room: payload.game,
-      specters: payload.specters,
-      id: payload.id
+      specters: payload.specters
     });
   else console.log(payload.error);
 }
