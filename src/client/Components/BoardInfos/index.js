@@ -6,9 +6,8 @@ import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from '../../con
 import { CellComponent } from '../Cell';
 
 
-export const BoardInfosComponent = ({ score, level }) => {
+export const BoardInfosComponent = ({ score, color }) => {
     const stateBoard = useSelector(state => state.stateBoard);
-    const color = level == 0 ? "black" : OUTER_TETRIS_COLORS[level - 1 % OUTER_TETRIS_COLORS.length]
     let y_pos = -1;
 
     const next_pieces = stateBoard.nextPieces.map(y => {
@@ -46,7 +45,8 @@ export const BoardInfosComponent = ({ score, level }) => {
 
     const containerStyle = {
         border: "7px solid " + color,
-        padding: "0.3em"
+        padding: "0.3em",
+        backgroundColor: "black"
     };
 
     return (
