@@ -10,7 +10,6 @@ const { deletePlayer } = require("../players");
 const port = 3024
 
 function initSocket(httpServer) {
-  console.log(httpServer);
   const io = new Server(httpServer, {
     cors: {
       origin: "*",
