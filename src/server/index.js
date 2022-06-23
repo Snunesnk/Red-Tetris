@@ -5,7 +5,6 @@ const initSocket = require("./Socket/socket");
 
 const app = express();
 const httpServer = createServer(app);
-const io = initSocket(httpServer);
 
 let path = require("path");
 const Game = require("./game");
@@ -29,8 +28,11 @@ app.get("/BarcadeBrawl.ttf", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3042
-httpServer.listen(PORT, () => {
+const server = httpServer.listen(PORT, () => {
     console.log("Listening on *:" + PORT);
 });
+
+const io = initSocket(server);
+
 
 module.exports = io;
