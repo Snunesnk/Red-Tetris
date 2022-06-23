@@ -1,2 +1,2 @@
-web: npm run cli-prod
-api: npm run srv-prod
+worker: npm run cli-prod
+web: npm run srv-prod
