@@ -1,4 +1,4 @@
-const { findGameByName } = require("../../games");
+const { findGameByName, formatGameForClient } = require("../../games");
 const editGame = require("./edit");
 
 function joinGame(payload, socket) {
@@ -17,8 +17,7 @@ function joinGame(payload, socket) {
 
     game.addPlayer(payload.playerName, socket.id);
     socket.join(game.name);
-
-    socket.emit("game:joined", { game, specters });
+    socket.emit("game:joined", { game: formatGameForClient(game), specters });
     editGame(game, socket);
   } else {
     console.log("game do not exist");

@@ -13,7 +13,7 @@ function createGame(payload, socket) {
     const newGame = new Game(payload.gameName);
     Games.push(newGame);
 
-    socket.emit("game:created", { game: newGame });
+    socket.emit("game:created", {});
     joinGame(payload, socket);
   } else {
     console.log("gameName already taken");
