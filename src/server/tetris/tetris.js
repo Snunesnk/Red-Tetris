@@ -106,8 +106,6 @@ function handleGravity(player, piece) {
         }
 
         player.needNewPiece = true;
-        // TODO: broadcast to other players my map
-
     }
     else {
         player.currentPieceY += 1;
