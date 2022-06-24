@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 
 // Return the bundle.js, containing all js files
 app.get("/bundle.js", (req, res) => {
+    console.log("server dirname: " + __dirname);
     res.sendFile(path.resolve(__dirname, '../../public/bundle.js'));
 });
 // Return the font
