@@ -69,8 +69,6 @@ export const SpecterComponent = ({ parity }) => {
         )
     });
 
-    console.log("Specter length: " + specterLength + ", parity: " + parity);
-
     return (
         <Grid container>
             {specters.map((specter, i) => (

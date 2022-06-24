@@ -1,8 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
 
-console.log("webpack dirname: " + __dirname);
-
 let config = {
   entry: "./src/client/index.js",
   mode: "development",
