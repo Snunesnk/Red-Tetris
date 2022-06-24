@@ -6,7 +6,8 @@ let config = {
   mode: "development",
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: '/public/'
   },
   module: {
     rules: [{
