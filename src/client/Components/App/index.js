@@ -11,8 +11,9 @@ import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
 function onKeyDown(e, isGameStarted, appState) {
-    if (isGameStarted)
+    if (isGameStarted) {
         emitMoveInGame(e.key, appState);
+    }
 }
 
 export function App() {
@@ -22,7 +23,7 @@ export function App() {
         // Force focus to get all keys pressed
         document.addEventListener('keydown',
             (e) => onKeyDown(e, appState.isGameStarted, appState));
-    }, [appState]);
+    }, [appState.isGameStarted]);
 
     return (
         <div id="app_div" style={CenteredContainer}>

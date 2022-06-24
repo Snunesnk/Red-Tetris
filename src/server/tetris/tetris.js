@@ -11,7 +11,8 @@ async function tetris(game, player, socket) {
     // Calculate / handle one frame.
     while (!player.isOver) {
         handleGame(game, player, socket);
-        await await new Promise(resolve => setTimeout(resolve, 42));
+        // 17 milliseconds waiting between each frames is approximately 60fps
+        await await new Promise(resolve => setTimeout(resolve, 17));
     }
 
     socket.emit("game:over");

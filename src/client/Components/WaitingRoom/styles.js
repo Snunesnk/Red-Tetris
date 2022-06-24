@@ -46,6 +46,7 @@ export const PlayersHeaderPaperStyle = {
     paddingTop: "0.7em",
     paddingBottom: "0.7em",
     fontSize: "1.3em",
+    lineHeight: "1.3em",
     textAlign: "center",
     width: "100%",
     width: "90%"
