@@ -1,16 +1,27 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { CellComponent } from "../Cell/index";
-import { GridContainer } from './styles'
-import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS } from "../../constants";
+import { GridContainer, PlayerPseudo, SpectersContainers } from './styles'
+import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from "../../constants";
+import { Grid } from "@mui/material";
 
-export const SpecterComponent = () => {
+export const SpecterComponent = ({ parity }) => {
     let specters = useSelector(state => state.appState.specters);
+    const players = useSelector(state => state.appState.room.players);
 
-    specters = specters.map(specter => {
+    // Keep only half of the specters
+    if (parity)
+        specters = specters.filter((specter, i) => i % 2 == 0);
+    else
+        specters = specters.filter((specter, i) => i % 2 != 0);
+
+    let specterLength = specters.length;
+
+    specters = specters.map((specter, i) => {
+
         let y_pos = -1;
 
-        return specter.map.map(y => {
+        let specterMap = specter.map.map(y => {
             y_pos++;
 
             let x_pos = -1;
@@ -19,14 +30,16 @@ export const SpecterComponent = () => {
                     let innerColor;
                     let outerColor;
 
-                    // Handle specter
-                    if (x > 7) {
-                        innerColor = INNER_TETRIS_COLORS[0];
-                        outerColor = OUTER_TETRIS_COLORS[x - 7];
+                    // Only two cases here: a background cell or a specter cell
+                    // Background
+                    if (x == 0) {
+                        innerColor = INNER_TETRIS_COLORS[x];
+                        outerColor = OUTER_TETRIS_COLORS[x];
                     }
+                    // Specter
                     else {
-                        innerColor = INNER_TETRIS_COLORS[+x];
-                        outerColor = OUTER_TETRIS_COLORS[+x];
+                        innerColor = WHITE_COLOR;
+                        outerColor = WHITE_COLOR;
                     }
                     x_pos++;
 
@@ -40,17 +53,29 @@ export const SpecterComponent = () => {
                         />
                     )
                 })
-            )
+            );
         });
+
+        const player = players.find(player => player.socketId == specter.id);
+        return (
+            <Grid container>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
+                    <span style={PlayerPseudo}>{player.name}</span>
+                </Grid>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
+                    <div style={GridContainer}>{specterMap}</div>
+                </Grid>
+            </Grid>
+        )
     });
 
     return (
-        <div>
+        <Grid container>
             {specters.map((specter, i) => (
-                <div style={GridContainer} key={i}>
+                <Grid item xs={specterLength - i > 1 || i % 2 == 1 ? 6 : 12} style={SpectersContainers} key={i}>
                     {specter}
-                </div>
+                </Grid>
             ))}
-        </div>
+        </Grid>
     );
 }

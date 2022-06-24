@@ -1,3 +1,5 @@
+const { formatGameForClient } = require("../../games");
+
 function editGame(game, socket) {
   let specters = [];
 
@@ -9,7 +11,7 @@ function editGame(game, socket) {
     });
   }
 
-  socket.to(game.name).emit("game:edited", { game, specters });
+  socket.to(game.name).emit("game:edited", { game: formatGameForClient(game), specters });
 }
 
 module.exports = editGame;

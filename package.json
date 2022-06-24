@@ -6,7 +6,9 @@
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
         "cli-dev": "webpack-dev-server --hot",
         "srv-prod": "node src/server/index.js",
-        "cli-prod": "npx webpack"
+        "cli-prod": "npx webpack",
+        "start": "node src/server/index.js",
+        "heroku-postbuild": "npx webpack"
     },
     "dependencies": {
         "@emotion/react": "^11.8.2",
@@ -39,7 +41,7 @@
         "webpack-dev-server": "^4.7.3"
     },
     "engines": {
-        "node": "16.15.x",
-        "npm": "8.11.x"
+        "node": "16.x",
+        "npm": "8.x"
     }
 }

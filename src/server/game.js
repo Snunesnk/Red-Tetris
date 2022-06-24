@@ -8,6 +8,7 @@ class Game {
     this.players = []; // game actual player list
     this.spectators = []; // game spectators
     this.isPublic = isPublic; // is this game public ? (available on homepage)
+    this.status = 0;
     this.addPieces(10)
   }
 

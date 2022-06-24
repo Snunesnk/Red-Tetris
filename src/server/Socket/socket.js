@@ -12,7 +12,7 @@ const port = 3024
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:" + port,
+      origin: "*",
       methods: ["GET", "POST"],
     },
   });
