@@ -11,7 +11,7 @@ async function tetris(game, player, socket) {
     // Calculate / handle one frame.
     while (!player.isOver) {
         handleGame(game, player, socket);
-        await await new Promise(resolve => setTimeout(resolve, 5));
+        await await new Promise(resolve => setTimeout(resolve, 42));
     }
 
     socket.emit("game:over");
@@ -115,10 +115,10 @@ function handleGravity(player, piece) {
             piece.timestamp = new Date().getTime();
 
         // Handle lock
-        if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        if (hasHitBottom(player.map, pieceContent, player.currentPieceY, player.currentPieceX)) {
             player.gravityInterval = 500;
         }
-        else
+        else if (player.gravityInterval == 500)
             player.gravityInterval = consts.levels[player.level - 1]
     }
 }
