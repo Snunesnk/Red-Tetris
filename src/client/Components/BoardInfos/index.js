@@ -48,7 +48,7 @@ export const BoardInfosComponent = ({ score, color }) => {
         padding: "0.3em",
         backgroundColor: "black",
         width: "10vh",
-        fontSize: "1vh"
+        fontSize: "1.25vh"
     };
 
     return (

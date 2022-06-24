@@ -1,22 +1,10 @@
 import { combineReducers, createNextState } from "@reduxjs/toolkit";
-import { emitMoveInGame } from "../Socket/InGame/move";
 import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
 import { DEFAULT_MAP, NEXT_PIECES } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
-
-function move(state = {}, action) {
-  switch (action.type) {
-    case "inGame:move":
-      emitMoveInGame(action.keyCode);
-      return state;
-
-    default:
-      return state;
-  }
-}
 
 function roomName(state = "", action) {
   switch (action.type) {
@@ -148,7 +136,6 @@ function appState(state = defaultAppState, action) {
 const rootReducer = combineReducers({
   roomName,
   appState,
-  move,
   stateBoard,
 });
 
