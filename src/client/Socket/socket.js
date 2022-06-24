@@ -6,6 +6,7 @@ const domain = PORT == 3042 ? "http://localhost:" + PORT : window.location.hostn
 let socket = io.connect(domain);
 
 console.log("Domain: " + domain);
+console.log(window.location.hostname);
 
 export function initSockets(dispatch) {
     setListeners(socket, dispatch);
