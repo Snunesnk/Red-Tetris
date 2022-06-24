@@ -3,7 +3,7 @@ import setListeners from "./socketListeners";
 
 const PORT = process.env.PORT || 3042
 const domain = PORT == 3042 ? "http://localhost:" + PORT : window.location.hostname;
-let socket = io.connect(domain);
+let socket = io.connect(window.location.hostname);
 
 console.log("Domain: " + domain);
 console.log(window.location.hostname);
