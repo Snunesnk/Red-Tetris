@@ -4,6 +4,7 @@ const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
+const { addUnbreakabeLines } = require("./unbreakableLines");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -22,6 +23,11 @@ async function tetris(game, player, socket) {
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
 // is applied
 function handleGame(game, player, socket) {
+    if (player.needsUpdate) {
+        player.needsUpdate = false;
+        updateSpecter(game, player, socket);
+    }
+
     // If there's nothing to do, do nothing
     if (new Date().getTime() - player.gravityInterval < game.pieces[player.currentPiece].timestamp
         && !player.needNewPiece
@@ -60,6 +66,10 @@ function handleGame(game, player, socket) {
 
         // Check if line were cleared
         const clearedLines = handleClearedLines(player);
+
+        if (clearedLines > 1) {
+            addUnbreakabeLines(game, player.socketId, clearedLines - 1, socket);
+        }
 
         calculateScore(player, clearedLines, tspin);
     }
@@ -150,6 +160,9 @@ function handleMove(game, player, move, piece) {
         case "c":
             rotateLeft(game, player, piece, 0);
             break;
+
+        default:
+            break;
     }
 }
 
@@ -162,7 +175,7 @@ function handleClearedLines(player) {
     let clearedLines = 0;
 
     for (let i = 0; i < player.map.length; i++) {
-        if (player.map[i].every(val => val != 0 && val <= 7)) {
+        if (player.map[i].every(val => val > 0 && val <= 7)) {
             clearedLines += 1;
             player.map.splice(i, 1);
             player.map.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);

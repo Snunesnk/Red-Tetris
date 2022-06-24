@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { GridContainer } from './styles'
 import { CellComponent } from "../Cell/index";
-import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS, RED_COLOR } from "../../constants";
+import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS, WHITE_COLOR } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
 import { BoardInfosComponent } from '../BoardInfos';
 import { SpecterComponent } from '../Specters';
@@ -32,6 +32,11 @@ export const BoardComponent = () => {
                 if (x > 7) {
                     innerColor = INNER_TETRIS_COLORS[0];
                     outerColor = OUTER_TETRIS_COLORS[x - 7];
+                }
+                // Handle unbreakable lines
+                else if (x == -1) {
+                    innerColor = "#ea0e0e";
+                    outerColor = "#ea0e0e";
                 }
                 else {
                     innerColor = INNER_TETRIS_COLORS[+x];

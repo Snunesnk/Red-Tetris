@@ -17,6 +17,7 @@ class Player {
     this.moveHistory = [];
     this.startDate;
     this.b2bClear = false;
+    this.needsUpdate = false;
 
     // PIECE INFO
     this.currentPiece = 0;
