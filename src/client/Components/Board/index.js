@@ -63,16 +63,16 @@ export const BoardComponent = () => {
         <Grid container style={{ marginTop: "2em" }}>
             <BoardModalComponent />
 
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <SpecterComponent parity={true} />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={6}>
                 <Grid container style={{ display: "flex", justifyContent: "center" }}>
-                    <Grid item xs={3} style={{ display: "flex", justifyContent: "end" }}>
+                    <Grid item style={{ display: "flex", justifyContent: "end" }}>
                         <BoardInfosComponent score={stateBoard.score} color={color} />
                     </Grid>
-                    <Grid item xs={9} style={BoardContainerStyle}>
+                    <Grid item style={BoardContainerStyle}>
                         <div style={GridContainer}>
                             {board}
                         </div>
@@ -80,7 +80,7 @@ export const BoardComponent = () => {
                 </Grid>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <SpecterComponent parity={false} />
             </Grid>
         </Grid>

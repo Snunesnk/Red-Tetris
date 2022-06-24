@@ -11,7 +11,7 @@ async function tetris(game, player, socket) {
     // Calculate / handle one frame.
     while (!player.isOver) {
         handleGame(game, player, socket);
-        await await new Promise(resolve => setTimeout(resolve, 5));
+        await await new Promise(resolve => setTimeout(resolve, 42));
     }
 
     socket.emit("game:over");

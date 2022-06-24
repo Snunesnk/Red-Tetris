@@ -163,7 +163,7 @@ function isTspin(player, pieceType) {
         }
     }
     catch {
-        console.log("Oops");
+        console.log("Oops, error when trying to calculate the score");
         console.log(player);
     }
 
