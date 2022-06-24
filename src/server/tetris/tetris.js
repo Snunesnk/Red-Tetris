@@ -4,6 +4,7 @@ const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
+const { addUnbreakableLines } = require("./unbreakableLines");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -22,6 +23,11 @@ async function tetris(game, player, socket) {
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
 // is applied
 function handleGame(game, player, socket) {
+    if (player.needsUpdate) {
+        player.needsUpdate = false;
+        updateSpecter(game, player, socket);
+    }
+
     // If there's nothing to do, do nothing
     if (new Date().getTime() - player.gravityInterval < game.pieces[player.currentPiece].timestamp
         && !player.needNewPiece
@@ -48,6 +54,9 @@ function handleGame(game, player, socket) {
         handleGravity(player, game.pieces[player.currentPiece], game);
     }
 
+    if (player.lastLineCleared > 1)
+        addUnbreakableLines(game, player.socketId, player.lastLineCleared - 1, socket);
+
     // Draw the specter of the piece
     drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
 
@@ -59,9 +68,9 @@ function handleGame(game, player, socket) {
         const tspin = isTspin(player, game.pieces[player.currentPiece].type);
 
         // Check if line were cleared
-        const clearedLines = handleClearedLines(player);
+        player.lastLineCleared = handleClearedLines(player);
 
-        calculateScore(player, clearedLines, tspin);
+        calculateScore(player, player.lastLineCleared, tspin);
     }
 
     updateMap(game, player, socket);
@@ -150,6 +159,9 @@ function handleMove(game, player, move, piece) {
         case "c":
             rotateLeft(game, player, piece, 0);
             break;
+
+        default:
+            break;
     }
 }
 
@@ -162,7 +174,7 @@ function handleClearedLines(player) {
     let clearedLines = 0;
 
     for (let i = 0; i < player.map.length; i++) {
-        if (player.map[i].every(val => val != 0 && val <= 7)) {
+        if (player.map[i].every(val => val > 0 && val <= 7)) {
             clearedLines += 1;
             player.map.splice(i, 1);
             player.map.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
