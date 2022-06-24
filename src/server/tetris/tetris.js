@@ -115,10 +115,10 @@ function handleGravity(player, piece) {
             piece.timestamp = new Date().getTime();
 
         // Handle lock
-        if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+        if (hasHitBottom(player.map, pieceContent, player.currentPieceY, player.currentPieceX)) {
             player.gravityInterval = 500;
         }
-        else
+        else if (player.gravityInterval == 500)
             player.gravityInterval = consts.levels[player.level - 1]
     }
 }
@@ -188,6 +188,7 @@ function hasHitBottom(map, piece, y, x) {
                 && (i === piece.length - 1 || piece[i + 1][j] === 0)
                 && y + i + 1 >= 0
                 && (y + i + 1 >= map.length || (map[y + i + 1][x + j] !== 0 && map[y + i + 1][x + j] <= 7))) {
+                console.log("Bottom hit");
                 return true;
             }
         }
