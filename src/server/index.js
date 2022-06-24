@@ -28,6 +28,12 @@ app.get("/BarcadeBrawl.ttf", (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../public/BarcadeBrawl.ttf'));
 });
 
+// Catch eevery thing else
+app.get("*", (req, res) => {
+    console.log("page do not exist");
+    console.log('retrieving page: ' + req.params.pageCalled);
+})
+
 const PORT = process.env.PORT || 3042
 const server = httpServer.listen(PORT, () => {
     console.log("Listening on *:" + PORT);

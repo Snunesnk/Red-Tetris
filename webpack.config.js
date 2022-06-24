@@ -5,7 +5,7 @@ let config = {
   entry: "./src/client/index.js",
   mode: "development",
   output: {
-    path: ("./public/"),
+    path: path.resolve(__dirname, "public"),
     filename: "bundle.js",
     publicPath: '/public/'
   },
