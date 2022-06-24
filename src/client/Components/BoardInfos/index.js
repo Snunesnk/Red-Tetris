@@ -46,7 +46,9 @@ export const BoardInfosComponent = ({ score, color }) => {
     const containerStyle = {
         border: "7px solid " + color,
         padding: "0.3em",
-        backgroundColor: "black"
+        backgroundColor: "black",
+        width: "10vh",
+        fontSize: "1vh"
     };
 
     return (

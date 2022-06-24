@@ -24,6 +24,6 @@ export const GridContainer = {
     display: "grid",
     gridTemplateColumns: "repeat(4, 25%)",
     gridTemplateRows: "repeat(12, 1fr)",
-    width: "9vh",
-    height: "27vh",
+    width: "7vh",
+    height: "21vh",
 }

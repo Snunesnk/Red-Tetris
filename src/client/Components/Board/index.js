@@ -69,10 +69,10 @@ export const BoardComponent = () => {
 
             <Grid item xs={4}>
                 <Grid container style={{ display: "flex", justifyContent: "center" }}>
-                    <Grid item style={{ display: "flex", justifyContent: "end" }}>
+                    <Grid item xs={3} style={{ display: "flex", justifyContent: "end" }}>
                         <BoardInfosComponent score={stateBoard.score} color={color} />
                     </Grid>
-                    <Grid item style={BoardContainerStyle}>
+                    <Grid item xs={9} style={BoardContainerStyle}>
                         <div style={GridContainer}>
                             {board}
                         </div>
