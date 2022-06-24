@@ -4,7 +4,7 @@ const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
-const { addUnbreakabeLines } = require("./unbreakableLines");
+const { addUnbreakableLines } = require("./unbreakableLines");
 
 async function tetris(game, player, socket) {
     player.increaseLevel();
@@ -54,6 +54,9 @@ function handleGame(game, player, socket) {
         handleGravity(player, game.pieces[player.currentPiece], game);
     }
 
+    if (player.lastLineCleared > 1)
+        addUnbreakableLines(game, player.socketId, player.lastLineCleared - 1, socket);
+
     // Draw the specter of the piece
     drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
 
@@ -65,13 +68,9 @@ function handleGame(game, player, socket) {
         const tspin = isTspin(player, game.pieces[player.currentPiece].type);
 
         // Check if line were cleared
-        const clearedLines = handleClearedLines(player);
+        player.lastLineCleared = handleClearedLines(player);
 
-        if (clearedLines > 1) {
-            addUnbreakabeLines(game, player.socketId, clearedLines - 1, socket);
-        }
-
-        calculateScore(player, clearedLines, tspin);
+        calculateScore(player, player.lastLineCleared, tspin);
     }
 
     updateMap(game, player, socket);

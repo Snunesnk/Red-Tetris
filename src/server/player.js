@@ -18,6 +18,7 @@ class Player {
     this.startDate;
     this.b2bClear = false;
     this.needsUpdate = false;
+    this.lastLineCleared = 0;
 
     // PIECE INFO
     this.currentPiece = 0;

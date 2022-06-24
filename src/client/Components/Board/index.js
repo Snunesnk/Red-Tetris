@@ -35,8 +35,8 @@ export const BoardComponent = () => {
                 }
                 // Handle unbreakable lines
                 else if (x == -1) {
-                    innerColor = "#ea0e0e";
-                    outerColor = "#ea0e0e";
+                    innerColor = "rgb(234, 14, 14)";
+                    outerColor = "#000000";
                 }
                 else {
                     innerColor = INNER_TETRIS_COLORS[+x];
