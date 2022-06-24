@@ -9,26 +9,22 @@ async function tetris(game, player, socket) {
     player.increaseLevel();
 
     // Calculate / handle one frame.
-    // Make this run to target 60 fps,
-    // so a total of 1000 / 60 ms
-    const intervalMov = setInterval(() => {
+    while (!player.isOver) {
         handleGame(game, player, socket);
+        await await new Promise(resolve => setTimeout(resolve, 5));
+    }
 
-        if (player.isOver) {
-            clearInterval(intervalMov);
-            clearInterval(player.gravityInterval);
-
-            socket.emit("game:over");
-        }
-    }, 1000 / 60);
+    socket.emit("game:over");
 }
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
 // Every X time this function is also triggered, it has to corresponds with the time when the gravity
 // is applied
 function handleGame(game, player, socket) {
-    // If there's no changes, do nothing
-    if (!player.gravityApply && !player.needNewPiece && player.moveQueue.length == 0)
+    // If there's nothing to do, do nothing
+    if (new Date().getTime() - player.gravityInterval < game.pieces[player.currentPiece].timestamp
+        && !player.needNewPiece
+        && player.moveQueue.length == 0)
         return;
 
     if (!player.needNewPiece) {
@@ -38,8 +34,7 @@ function handleGame(game, player, socket) {
         erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
     }
     else {
-        handleNewPiece(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
-        player.gravityApply = false;
+        handleNewPiece(player, game.pieces[player.currentPiece]);
     }
 
     if (player.moveQueue.length > 0) {
@@ -48,9 +43,8 @@ function handleGame(game, player, socket) {
         player.moveHistory.push(playerMove);
     }
 
-    if (player.gravityApply) {
-        handleGravity(player, game.pieces[player.currentPiece].content[player.currentPieceRotation], game);
-        player.gravityApply = false;
+    if (new Date().getTime() - player.gravityInterval >= game.pieces[player.currentPiece].timestamp) {
+        handleGravity(player, game.pieces[player.currentPiece], game);
     }
 
     // Draw the specter of the piece
@@ -85,41 +79,47 @@ function handleGame(game, player, socket) {
 // Check if a new piece can be put or not
 // The player must be over only when the next piece can't be displayed
 function handleNewPiece(player, piece) {
+    const pieceContent = piece.content[player.currentPieceRotation];
     player.needNewPiece = false;
 
     // Get the position where the piece could be displayed
-    while (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) !== consts.PIECE_DREW) {
+    while (testDraw(player.map, player.currentPieceX, player.currentPieceY, pieceContent) !== consts.PIECE_DREW) {
         player.currentPieceY--;
     }
 
-    player.resetGravityInterval();
+    piece.timestamp = new Date().getTime();
 }
 
 function handleGravity(player, piece) {
+    const pieceContent = piece.content[player.currentPieceRotation]
     // Check that the piece is still at the bottom
-    if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+    if (hasHitBottom(player.map, pieceContent, player.currentPieceY, player.currentPieceX)) {
         // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
-        for (let i = 0; i < piece.length; i++) {
+        for (let i = 0; i < pieceContent.length; i++) {
             if (player.currentPieceY + i >= 0)
                 break;
 
-            if (!piece[i].every((cell) => cell === 0)) {
+            if (!pieceContent[i].every((cell) => cell === 0)) {
                 player.isOver = true;
                 break;
             }
         }
 
         player.needNewPiece = true;
-        // TODO: broadcast to other players my map
-
     }
     else {
         player.currentPieceY += 1;
+        // Only reset timestamp if this is needed
+        // Not needed if it cam from a moveDown
+        if (new Date().getTime() - player.gravityInterval >= piece.timestamp)
+            piece.timestamp = new Date().getTime();
 
-        // // Handle lock
-        // if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
-        //     player.setDeadLock();
-        // }
+        // Handle lock
+        if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
+            player.gravityInterval = 500;
+        }
+        else
+            player.gravityInterval = consts.levels[player.level - 1]
     }
 }
 
@@ -134,7 +134,7 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowDown":
-            handleGravity(player, piece.content[player.currentPieceRotation]);
+            handleGravity(player, piece);
             player.score += 1;
             break;
 

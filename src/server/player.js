@@ -28,7 +28,6 @@ class Player {
 
     // GRAVITY
     this.gravityInterval;
-    this.gravityApply = false;
   }
 
   setStartDate() {
@@ -50,30 +49,11 @@ class Player {
   }
 
   increaseLevel() {
-    if (this.level < consts.levels.length - 1) {
-      this.level++;
-    }
+    if (this.level + 1 == consts.levels.length)
+      return;
 
-    this.resetGravityInterval();
-  }
-
-  resetGravityInterval() {
-    if (this.gravityInterval)
-      clearInterval(this.gravityInterval);
-
-    this.gravityInterval = setInterval(() => {
-      this.gravityApply = true;
-    }, consts.levels[this.level]);
-  }
-
-  setDeadLock() {
-    if (this.gravityInterval)
-      clearInterval(this.gravityInterval);
-
-    this.gravityInterval = setInterval(() => {
-      this.gravityApply = true;
-      this.resetGravityInterval();
-    }, consts.DEAD_LOCK);
+    this.level += 1;
+    this.gravityInterval = consts.levels[this.level - 1];
   }
 }
 
