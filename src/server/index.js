@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
 app.get("/bundle.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../public/bundle.js'));
 });
+// Return the bundle.js, containing all js files
+app.get("/korobeiniki.mp3", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../public/korobeiniki.mp3'));
+});
 // Return the font
 app.get("/BarcadeBrawl.ttf", (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../public/BarcadeBrawl.ttf'));

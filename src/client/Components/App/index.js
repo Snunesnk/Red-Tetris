@@ -23,6 +23,18 @@ export function App() {
         // Force focus to get all keys pressed
         document.addEventListener('keydown',
             (e) => onKeyDown(e, appState.isGameStarted, appState));
+
+        var audio = new Audio("korobeiniki.mp3");
+        if (typeof audio.loop == 'boolean') {
+            audio.loop = true;
+        }
+        else {
+            audio.addEventListener('ended', function () {
+                audio.currentTime = 0;
+                audio.play();
+            }, false);
+        }
+        audio.play();
     }, [appState.isGameStarted]);
 
     return (
