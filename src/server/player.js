@@ -28,6 +28,11 @@ class Player {
     this.currentSpecterY = 0;
     this.needNewPiece = true;
 
+    // PIECE HOLD
+    this.pieceHold = -1;
+    this.hasHeld = false;
+    this.lastIndex = -1;
+
     // GRAVITY
     this.gravityInterval;
   }
@@ -48,6 +53,18 @@ class Player {
     this.currentPieceX = 3;
     this.currentPieceY = 0;
     this.currentSpecterY = 0;
+
+    // Reset hold
+    // If a piece held was swapped, then I need to put
+    // current piece to lastIndex + 1 to get the actual next
+    // piece
+    if (this.hasHeld) {
+      console.log("Has held !!");
+      this.hasHeld = false;
+      if (this.lastIndex >= 0)
+        this.currentPiece = this.lastIndex;
+      this.lastIndex = -1;
+    }
   }
 
   increaseLevel() {

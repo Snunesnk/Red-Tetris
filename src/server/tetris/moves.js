@@ -113,8 +113,30 @@ function putPieceDown(player, piece) {
     player.needNewPiece = true;
 }
 
-function moveDown() {
+function hold(player) {
+    console.log("Hold");
+    if (player.hasHeld === true)
+        return;
 
+    const saveHold = player.pieceHold;
+
+    // Put current piece in hold
+    console.log("Gonna get next piece");
+    player.pieceHold = player.currentPiece;
+    player.getNextPiece();
+    player.currentPieceY -= 1;
+
+    console.log("Next piece gotten");
+
+    // if a piece was held, then put it back
+    if (saveHold !== -1) {
+        console.log("Something was already here ...");
+        player.lastIndex = player.currentPiece;
+        player.currentPiece = saveHold;
+    }
+
+    console.log("qiot");
+    player.hasHeld = true;
 }
 
-module.exports = { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown };
+module.exports = { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold };

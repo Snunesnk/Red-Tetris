@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { CenteredContainer, GridContainer, InfosContainer } from './styles';
+import { CenteredContainer, GridContainer, InfosContainer, CenteredTitleContainer } from './styles';
 import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from '../../constants';
 import { CellComponent } from '../Cell';
 
 
-export const BoardInfosComponent = ({ score, color }) => {
+export const BoardHoldComponent = ({ color }) => {
     const stateBoard = useSelector(state => state.stateBoard);
     let y_pos = -1;
 
-    const next_pieces = stateBoard.nextPieces.map(y => {
+    const piece_hold = stateBoard.pieceHold.map(y => {
         y_pos++;
 
         let x_pos = -1;
@@ -53,25 +53,12 @@ export const BoardInfosComponent = ({ score, color }) => {
     return (
         <div style={InfosContainer}>
             <div style={containerStyle}>
-                <div>
-                    <div style={CenteredContainer}>
-                        score
-                    </div>
-                    <div style={CenteredContainer}>
-                        <span style={{ color: color }}>{score}</span>
-                    </div >
+                <div style={CenteredTitleContainer}>
+                    Hold
                 </div>
-                <div style={{ marginTop: "2em" }}>
-                    <div style={CenteredContainer}>
-                        Next
-                    </div>
-                    <div style={CenteredContainer}>
-                        pieces
-                    </div>
-                    <div style={CenteredContainer}>
-                        <div style={GridContainer}>
-                            {next_pieces}
-                        </div>
+                <div style={CenteredContainer}>
+                    <div style={GridContainer}>
+                        {piece_hold}
                     </div>
                 </div>
             </div>

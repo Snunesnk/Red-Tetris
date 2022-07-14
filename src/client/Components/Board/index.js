@@ -5,6 +5,7 @@ import { CellComponent } from "../Cell/index";
 import { OUTER_TETRIS_COLORS, INNER_TETRIS_COLORS, WHITE_COLOR } from "../../constants";
 import { BoardModalComponent } from "../BoardModal/index";
 import { BoardInfosComponent } from '../BoardInfos';
+import { BoardHoldComponent } from '../BoardHold';
 import { SpecterComponent } from '../Specters';
 import { Grid } from '@mui/material';
 export const BoardComponent = () => {
@@ -81,6 +82,9 @@ export const BoardComponent = () => {
                         <div style={GridContainer}>
                             {board}
                         </div>
+                    </Grid>
+                    <Grid item style={{ display: "flex", justifyContent: "start" }}>
+                        <BoardHoldComponent color={color} />
                     </Grid>
                 </Grid>
             </Grid>

@@ -2,7 +2,7 @@ const consts = require("../const");
 const updateMap = require("../Socket/InGame/updateMap");
 const updateSpecter = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
-const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown } = require("./moves");
+const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
 const { addUnbreakableLines } = require("./unbreakableLines");
 
@@ -79,7 +79,7 @@ function handleGame(game, player, socket) {
     if (player.needNewPiece)
         updateSpecter(game, player, socket);
 
-    if (game.pieces.length - player.currentPiece < 5)
+    if (game.pieces.length - player.currentPiece < 10)
         game.addPieces(10);
 
     if (player.needNewPiece)
@@ -158,6 +158,10 @@ function handleMove(game, player, move, piece) {
 
         case "c":
             rotateLeft(game, player, piece, 0);
+            break;
+
+        case "z":
+            hold(player);
             break;
 
         default:
