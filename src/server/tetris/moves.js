@@ -24,43 +24,6 @@ function moveRight(player, piece) {
     }
 }
 
-function rotateRight(game, player, piece, rotIndex) {
-    const prevX = player.currentPieceX;
-    const prevY = player.currentPieceY;
-    const nextRotation = (player.currentPieceRotation + 1) % 4;
-
-    // Perform the appropriate translation for this attempt
-    // I piece
-    if (piece.type == 0) {
-        player.currentPieceX += I_ROTATION[player.currentPieceRotation][rotIndex].x;
-        player.currentPieceY += I_ROTATION[player.currentPieceRotation][rotIndex].y;
-    }
-    // Other pieces
-    else {
-        player.currentPieceX += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].x;
-        player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
-    }
-
-    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation], true) == MOVE_NOT_PERMITTED) {
-        // Restore data
-        player.currentPieceX = prevX;
-        player.currentPieceY = prevY;
-
-        // If the drawing fails, two cases:
-        //  - One or more rotations test are to be performed, so do them
-        //  - All rotations tests have been performed, so the rotation is impossible
-
-        // If there's still some rotation tests to perform, do them.
-        if (rotIndex < 4) {
-            rotateRight(game, player, piece, rotIndex + 1);
-        }
-    }
-    // If the draw succeed, update the piece rotation
-    else {
-        player.currentPieceRotation = nextRotation;
-    }
-}
-
 function rotateLeft(game, player, piece, rotIndex) {
     const prevX = player.currentPieceX;
     const prevY = player.currentPieceY;
@@ -90,7 +53,47 @@ function rotateLeft(game, player, piece, rotIndex) {
 
         // If there's still some rotation tests to perform, do them.
         if (rotIndex < 4) {
-            rotateLeft(game, player, piece, rotIndex + 1);
+            return rotateLeft(game, player, piece, rotIndex + 1);
+        }
+
+        return -1;
+    }
+    // If the draw succeed, update the piece rotation
+    else {
+        player.currentPieceRotation = nextRotation;
+        return rotIndex;
+    }
+}
+
+function rotateRight(game, player, piece, rotIndex) {
+    const prevX = player.currentPieceX;
+    const prevY = player.currentPieceY;
+    const nextRotation = (player.currentPieceRotation + 1) % 4;
+
+    // Perform the appropriate translation for this attempt
+    // I piece
+    if (piece.type == 0) {
+        player.currentPieceX += I_ROTATION[player.currentPieceRotation][rotIndex].x;
+        player.currentPieceY += I_ROTATION[player.currentPieceRotation][rotIndex].y;
+    }
+    // Other pieces
+    else {
+        player.currentPieceX += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].x;
+        player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
+    }
+
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation], true) == MOVE_NOT_PERMITTED) {
+        // Restore data
+        player.currentPieceX = prevX;
+        player.currentPieceY = prevY;
+
+        // If the drawing fails, two cases:
+        //  - One or more rotations test are to be performed, so do them
+        //  - All rotations tests have been performed, so the rotation is impossible
+
+        // If there's still some rotation tests to perform, do them.
+        if (rotIndex < 4) {
+            rotateRight(game, player, piece, rotIndex + 1);
         }
     }
     // If the draw succeed, update the piece rotation
