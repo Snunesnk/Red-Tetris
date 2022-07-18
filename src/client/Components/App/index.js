@@ -6,7 +6,7 @@ import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
-import { CenteredContainer, MainGrid } from "./styles";
+import { CenteredContainer, appDiv } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
@@ -38,8 +38,8 @@ export function App() {
     }, [appState.isGameStarted]);
 
     return (
-        <div id="app_div" style={CenteredContainer}>
-            <Grid container spacing={2} style={MainGrid}>
+        <div id="app_div" style={appDiv}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TitleComponent></TitleComponent>
                 </Grid>

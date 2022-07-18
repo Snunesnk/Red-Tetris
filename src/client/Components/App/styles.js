@@ -1,7 +1,7 @@
 export const CenteredContainer = {
     display: 'flex',
     justifyContent: 'center',
-    width: "100%"
+    width: "100%",
 }
 
 export const WidthThirdCentered = {
@@ -10,5 +10,8 @@ export const WidthThirdCentered = {
     justifyContent: "center"
 }
 
-export const MainGrid = {
+export const appDiv = {
+    display: 'flex',
+    justifyContent: 'center',
+    width: "100%",
 }
