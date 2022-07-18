@@ -8,7 +8,6 @@ class Player {
     this.name = name;
 
     // GAME INFO
-    this.map = JSON.parse(JSON.stringify(map.empty));
     this.lineCleared = 0;
     this.level = 0;
     this.score = 0;
@@ -35,6 +34,9 @@ class Player {
 
     // GRAVITY
     this.gravityInterval;
+
+    // Get map
+    this.loadMap(map.empty);
   }
 
   setStartDate() {
@@ -59,7 +61,6 @@ class Player {
     // current piece to lastIndex + 1 to get the actual next
     // piece
     if (this.hasHeld) {
-      console.log("Has held !!");
       this.hasHeld = false;
       if (this.lastIndex >= 0)
         this.currentPiece = this.lastIndex;
@@ -73,6 +74,10 @@ class Player {
 
     this.level += 1;
     this.gravityInterval = consts.levels[this.level - 1];
+  }
+
+  loadMap(mapName) {
+    this.map = JSON.parse(JSON.stringify(mapName));
   }
 }
 

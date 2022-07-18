@@ -8,7 +8,8 @@
         "srv-prod": "node src/server/index.js",
         "cli-prod": "npx webpack",
         "start": "node src/server/index.js",
-        "heroku-postbuild": "npx webpack"
+        "heroku-postbuild": "npx webpack",
+        "test": "jest --coverage --coverageProvider=babel"
     },
     "dependencies": {
         "@babel/core": "^7.17.5",
@@ -44,5 +45,8 @@
     "engines": {
         "node": "16.x",
         "npm": "8.x"
+    },
+    "devDependencies": {
+        "jest": "^28.1.3"
     }
 }

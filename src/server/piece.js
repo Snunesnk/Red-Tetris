@@ -7,6 +7,14 @@ class Piece {
     this.content = pieceList[this.type];
     this.timestamp = 0;
   }
+
+  setType(pieceType) {
+    this.type = pieceType;
+    // this.type = 5;
+    this.content = pieceList[this.type];
+
+    return this;
+  }
 }
 
 module.exports = Piece;
