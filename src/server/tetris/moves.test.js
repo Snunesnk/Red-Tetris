@@ -345,4 +345,7 @@ test("Try to hold twice in the same turn", () => {
 
     // Cannot hold twice, so it should still nebe the second piece
     expect(player.currentPiece).toBe(1);
+    expect(player.pieceHold).toBeGreaterThan(-1);
+    expect(player.hasHeld).toBe(true);
+    expect(player.lastIndex).toBeGreaterThan(-1);
 });
