@@ -19,6 +19,8 @@ import {
   StartContainer,
 } from "./styles";
 import { LandingInputStyle } from "../Landing/styles";
+import { STATUS } from "../../constants";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
@@ -47,14 +49,17 @@ export const RoomSelectionComponent = () => {
           <Grid item xs={10}>
             <Paper style={PaperHeaderRowStyle}>
               <Grid container>
-                <Grid item xs={4} xl={5} style={CenteredContainer}>
+                <Grid item xs={3} style={CenteredContainer}>
                   Name
                 </Grid>
-                <Grid item xs={4} xl={5} style={CenteredContainer}>
+                <Grid item xs={3} style={CenteredContainer}>
                   Host
                 </Grid>
-                <Grid item xs={4} xl={2} style={CenteredContainer}>
+                <Grid item xs={3} style={CenteredContainer}>
                   Players
+                </Grid>
+                <Grid item xs={3} style={CenteredContainer}>
+                  Status
                 </Grid>
               </Grid>
             </Paper>
@@ -78,14 +83,23 @@ export const RoomSelectionComponent = () => {
             <Grid item xs={10}>
               <Paper style={PaperRowStyle} elevation={2}>
                 <Grid container>
-                  <Grid item xs={4} xl={5} style={CenteredContainer}>
+                  <Grid item xs={3} style={CenteredContainer}>
                     {row.name}
                   </Grid>
-                  <Grid item xs={4} xl={5} style={CenteredContainer}>
+                  <Grid item xs={3} style={CenteredContainer}>
                     {row.players.length > 0 && row.players[0].name}
                   </Grid>
-                  <Grid item xs={4} xl={2} style={CenteredContainer}>
+                  <Grid item xs={3} style={CenteredContainer}>
                     {row.players.length}
+                  </Grid>
+                  <Grid item xs={3} style={CenteredContainer}>
+                    <FiberManualRecordIcon
+                      sx={{
+                        color:
+                          row.status === STATUS.WAITING_ROOM ? "green" : "red",
+                        fontSize: 25,
+                      }}
+                    ></FiberManualRecordIcon>
                   </Grid>
                 </Grid>
               </Paper>

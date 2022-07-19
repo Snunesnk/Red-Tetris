@@ -2,6 +2,7 @@ const { Games } = require("../../const");
 const Game = require("../../game");
 const { findGameByName } = require("../../games");
 const joinGame = require("./join");
+const listGames = require("./list");
 
 function createGame(payload, socket, io) {
   console.log("server hit => game:create");
@@ -13,6 +14,7 @@ function createGame(payload, socket, io) {
     const newGame = new Game(payload.gameName);
     Games.push(newGame);
 
+    listGames(null, io);
     socket.emit("game:created", {});
     joinGame(payload, socket, io);
   } else {

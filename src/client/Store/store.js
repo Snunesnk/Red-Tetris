@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers } from "@reduxjs/toolkit";
-import { createStore } from '@reduxjs/toolkit';
+import { createStore } from "@reduxjs/toolkit";
 import rootReducer from "./reducers";
 import asyncFunctionMiddleware from "./middleware";
 import { initSockets } from "../Socket/socket";
