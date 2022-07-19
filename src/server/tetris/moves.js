@@ -13,7 +13,10 @@ function moveLeft(player, piece) {
 
     if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) == MOVE_NOT_PERMITTED) {
         player.currentPieceX += 1;
+        return -1;
     }
+
+    return 1;
 }
 
 function moveRight(player, piece) {
@@ -21,10 +24,13 @@ function moveRight(player, piece) {
 
     if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece) == MOVE_NOT_PERMITTED) {
         player.currentPieceX -= 1;
+        return -1;
     }
+
+    return 1;
 }
 
-function rotateLeft(game, player, piece, rotIndex) {
+function rotateLeft(player, piece, rotIndex) {
     const prevX = player.currentPieceX;
     const prevY = player.currentPieceY;
     const nextRotation = player.currentPieceRotation == 0 ? 3 : player.currentPieceRotation - 1;
@@ -42,7 +48,7 @@ function rotateLeft(game, player, piece, rotIndex) {
         player.currentPieceY += LEFT_NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
     }
 
-    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation], true) == MOVE_NOT_PERMITTED) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece.content[nextRotation], true) == MOVE_NOT_PERMITTED) {
         // Restore data
         player.currentPieceX = prevX;
         player.currentPieceY = prevY;
@@ -53,7 +59,7 @@ function rotateLeft(game, player, piece, rotIndex) {
 
         // If there's still some rotation tests to perform, do them.
         if (rotIndex < 4) {
-            return rotateLeft(game, player, piece, rotIndex + 1);
+            return rotateLeft(player, piece, rotIndex + 1);
         }
 
         return -1;
@@ -65,7 +71,7 @@ function rotateLeft(game, player, piece, rotIndex) {
     }
 }
 
-function rotateRight(game, player, piece, rotIndex) {
+function rotateRight(player, piece, rotIndex) {
     const prevX = player.currentPieceX;
     const prevY = player.currentPieceY;
     const nextRotation = (player.currentPieceRotation + 1) % 4;
@@ -82,7 +88,7 @@ function rotateRight(game, player, piece, rotIndex) {
         player.currentPieceY += NORMAL_ROTATION[player.currentPieceRotation][rotIndex].y;
     }
 
-    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[nextRotation], true) == MOVE_NOT_PERMITTED) {
+    if (testDraw(player.map, player.currentPieceX, player.currentPieceY, piece.content[nextRotation], true) == MOVE_NOT_PERMITTED) {
         // Restore data
         player.currentPieceX = prevX;
         player.currentPieceY = prevY;
@@ -93,7 +99,7 @@ function rotateRight(game, player, piece, rotIndex) {
 
         // If there's still some rotation tests to perform, do them.
         if (rotIndex < 4) {
-            rotateRight(game, player, piece, rotIndex + 1);
+            rotateRight(player, piece, rotIndex + 1);
         }
     }
     // If the draw succeed, update the piece rotation
@@ -117,28 +123,23 @@ function putPieceDown(player, piece) {
 }
 
 function hold(player) {
-    console.log("Hold");
     if (player.hasHeld === true)
         return;
 
     const saveHold = player.pieceHold;
 
     // Put current piece in hold
-    console.log("Gonna get next piece");
     player.pieceHold = player.currentPiece;
     player.getNextPiece();
     player.currentPieceY -= 1;
 
-    console.log("Next piece gotten");
 
     // if a piece was held, then put it back
     if (saveHold !== -1) {
-        console.log("Something was already here ...");
         player.lastIndex = player.currentPiece;
         player.currentPiece = saveHold;
     }
 
-    console.log("qiot");
     player.hasHeld = true;
 }
 
