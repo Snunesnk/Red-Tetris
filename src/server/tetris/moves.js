@@ -7,7 +7,6 @@ const {
     PIECE_DREW,
     MOVE_NOT_PERMITTED
 } = require("../const");
-const { hasHitBottom } = require("./tetris.utils");
 
 function moveLeft(player, piece) {
     player.currentPieceX -= 1;
@@ -100,12 +99,15 @@ function rotateRight(player, piece, rotIndex) {
 
         // If there's still some rotation tests to perform, do them.
         if (rotIndex < 4) {
-            rotateRight(player, piece, rotIndex + 1);
+            return rotateRight(player, piece, rotIndex + 1);
         }
+
+        return -1;
     }
     // If the draw succeed, update the piece rotation
     else {
         player.currentPieceRotation = nextRotation;
+        return rotIndex;
     }
 }
 
@@ -121,21 +123,18 @@ function putPieceDown(player, piece) {
 
     player.currentPieceY = lastYpossible;
 
-    // Check if user is game over or not
-    if (hasHitBottom(player.map, piece, player.currentPieceY, player.currentPieceX)) {
-        // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
-        for (let i = 0; i < piece.length; i++) {
-            if (player.currentPieceY + i >= 0)
-                break;
+    // If the piece is at the bottom but one or more of its part are off-screen, then it's game over
+    for (let i = 0; i < piece.length; i++) {
+        if (player.currentPieceY + i >= 0)
+            break;
 
-            if (!piece[i].every((cell) => cell === 0)) {
-                player.isOver = true;
-                break;
-            }
+        if (!piece[i].every((cell) => cell === 0)) {
+            player.isOver = true;
+            return;
         }
-
-        player.needNewPiece = true;
     }
+
+    player.needNewPiece = true;
 }
 
 function hold(player) {
