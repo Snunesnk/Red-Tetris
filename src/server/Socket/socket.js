@@ -6,6 +6,8 @@ const moveInGame = require("./InGame/move");
 const startGame = require("./Game/start");
 const { startTetris } = require("./Game/tetris");
 const { deletePlayer } = require("../players");
+const kickPlayer = require("./Game/kick");
+const hostPlayer = require("./Game/host");
 
 const port = 3024
 
@@ -19,10 +21,10 @@ function initSocket(httpServer) {
 
   io.on("connection", (socket) => {
     socket.on("game:create", (payload) => {
-      createGame(payload, socket);
+      createGame(payload, socket, io);
     });
     socket.on("game:join", (payload) => {
-      joinGame(payload, socket);
+      joinGame(payload, socket, io);
     });
     socket.on("game:list", () => {
       listGames(socket);
@@ -37,7 +39,13 @@ function initSocket(httpServer) {
       moveInGame(payload, socket);
     });
     socket.on("disconnect", () => {
-      deletePlayer(socket);
+      deletePlayer(socket, io);
+    })
+    socket.on("game:kickPlayer", (payload) => {
+      kickPlayer(payload, socket, io);
+    })
+    socket.on("game:hostPlayer", (payload) => {
+      hostPlayer(payload, socket, io);
     })
   });
   return io;

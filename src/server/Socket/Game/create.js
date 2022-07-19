@@ -3,7 +3,7 @@ const Game = require("../../game");
 const { findGameByName } = require("../../games");
 const joinGame = require("./join");
 
-function createGame(payload, socket) {
+function createGame(payload, socket, io) {
   console.log("server hit => game:create");
   console.log(payload);
 
@@ -14,7 +14,7 @@ function createGame(payload, socket) {
     Games.push(newGame);
 
     socket.emit("game:created", {});
-    joinGame(payload, socket);
+    joinGame(payload, socket, io);
   } else {
     console.log("gameName already taken");
     socket.emit("game:created", { error: "Name already taken" });

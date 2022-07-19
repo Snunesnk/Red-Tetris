@@ -8,13 +8,13 @@ function findPlayer(game, socketId) {
   });
 }
 
-function deletePlayer(socket) {
+function deletePlayer(socket, io) {
   const game = findGameBySocketIdPlayer(socket.id);
   if (game) {
     const player = findPlayer(game, socket.id);
     if (player) {
       game.players.splice(game.players.indexOf(player), 1);
-      editGame(game, socket)
+      editGame(game, socket, io)
     }
   }
 }
