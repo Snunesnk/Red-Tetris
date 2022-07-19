@@ -10,7 +10,6 @@ class Piece {
 
   setType(pieceType) {
     this.type = pieceType;
-    // this.type = 5;
     this.content = pieceList[this.type];
 
     return this;

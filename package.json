@@ -9,7 +9,7 @@
         "cli-prod": "npx webpack",
         "start": "node src/server/index.js",
         "heroku-postbuild": "npx webpack",
-        "test": "jest --coverage --coverageProvider=babel"
+        "test": "jest --coverage --verbose"
     },
     "dependencies": {
         "@babel/core": "^7.17.5",

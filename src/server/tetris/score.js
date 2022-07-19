@@ -129,23 +129,30 @@ function isTspin(player, pieceType) {
 
     // Check if the last move was indeed a rotation
     for (let i = player.moveHistory.length - 1; i >= 0; i--) {
-        // Do not count drop as actual moves
-        if (player.moveHistory[i] === " " || player.moveHistory[i] === "ArrowDown")
-            continue;
+        switch (player.moveHistory[i]) {
+            // Do not count drop as actual moves
+            case " ":
+            case "ArrowDown":
+                if (i === 0)
+                    return false;
+                continue;
 
-        if (player.moveHistory[i] === "ArrowLeft" || player.moveHistory[i] === "ArrowRight")
-            return false;
+            case "ArrowUp":
+            case "c":
+                break;
 
-        if (i === 0 && player.moveHistory[i] !== "ArrowUp")
-            return false;
+            // Any movement that is not a drop nor a rotation make the t-spin fail
+            default:
+                return false;
+        }
     }
 
     // Check that at least 3 corners are filled.
     let cornerFilled = 0;
     // Because this is a T tetriminos, the coordinates for the corner are
     // as follow (Starting from the piece's [x, y] coordinates):
-    // [0, 0]
     try {
+        // [0, 0]
         if (player.map[player.currentPieceY][player.currentPieceX] !== 0) {
             cornerFilled += 1;
         }
