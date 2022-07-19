@@ -5,6 +5,8 @@ import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
 import { DEFAULT_MAP, NEXT_PIECES, HOLD_PIECE } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
+import { emitKickPlayerGame } from "../Socket/Game/kick";
+import { emitHostPlayerGame } from "../Socket/Game/host";
 
 function roomName(state = "", action) {
   switch (action.type) {
@@ -25,6 +27,12 @@ function roomName(state = "", action) {
       return state;
     case "game:list":
       emitListGames();
+      return state;
+    case "game:kickPlayer":
+      emitKickPlayerGame(action.playerId);
+      return state;
+    case "game:hostPlayer":
+      emitHostPlayerGame(action.playerId);
       return state;
     default:
       return state;

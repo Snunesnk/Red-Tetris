@@ -1,5 +1,23 @@
 import { RED_COLOR } from "../../constants"
 
+export const ModerationActionsStyle = {
+    display: "flex",
+    justifyContent: 'end',
+    alignItems: "center",
+    paddingRight: "1em"
+}
+
+export const ModerationButtonStyle = {
+    padding: "0 0",
+    minWidth: "0"
+}
+
+export const NamePlayerPaperStyle = {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "1em"
+}
+
 export const GridContainerStyle = {
     width: "100%",
     marginTop: "1.5em",
@@ -53,19 +71,28 @@ export const PlayersHeaderPaperStyle = {
 }
 
 export const PlayersPaperStyle = {
+    display: "flex",
+    justifyContent: "space-between",
     paddingTop: "0.5em",
     paddingBottom: "0.5em",
     marginTop: "0.7em",
     border: "1px solid black",
     fontSize: "0.8em",
-    textAlign: "center",
+    textAlign: "center"
 }
 
 export const HostPlayersPaperStyle = {
+    display: "flex",
+    justifyContent: "space-between",
     paddingTop: "0.5em",
     paddingBottom: "0.5em",
     marginTop: "0.5em",
     border: "1px solid #ea0e0e",
     fontSize: "0.9em",
     textAlign: "center"
+}
+
+export const DialogBtnContainerStyle = {
+    display: "flex",
+    justifyContent: "space-between"
 }
