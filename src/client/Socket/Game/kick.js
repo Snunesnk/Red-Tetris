@@ -1,6 +1,9 @@
 import socket from "../socket";
 
 export function emitKickPlayerGame(playerId) {
-  console.log("client hit -> game:kick");
   socket.emit("game:kickPlayer", { playerId });
+}
+
+export function onPlayerKicked(dispatch, payload) {
+  dispatch({ type: "state:kicked"});
 }

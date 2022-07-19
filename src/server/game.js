@@ -1,3 +1,4 @@
+const { STATUS } = require("./const");
 const Piece = require("./piece");
 const Player = require("./player");
 
@@ -8,7 +9,7 @@ class Game {
     this.players = []; // game actual player list
     this.spectators = []; // game spectators
     this.isPublic = isPublic; // is this game public ? (available on homepage)
-    this.status = 0;
+    this.status = STATUS.WAITING_ROOM;
     this.addPieces(10)
   }
 
@@ -21,6 +22,16 @@ class Game {
   addPlayer(playerName, socketId) {
     const newPlayer = new Player(socketId, playerName);
     this.players.push(newPlayer);
+  }
+
+  resetGame(status) {
+    this.pieces = [];
+    this.status = status;
+    this.players.map((player) => player.init());
+    if (status === STATUS.WAITING_ROOM)
+      return ; // just move everyone to waiting room
+    else if (status === STATUS.IN_GAME)
+      return ; // retry directly the game
   }
 }
 
