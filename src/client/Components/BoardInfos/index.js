@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { Grid } from '@mui/material';
 import { CenteredContainer, GridContainer, InfosContainer } from './styles';
 import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from '../../constants';
 import { CellComponent } from '../Cell';
@@ -19,8 +18,8 @@ export const BoardInfosComponent = ({ score, color }) => {
                 let innerColor;
                 let outerColor;
 
-                innerColor = INNER_TETRIS_COLORS[+x];
-                outerColor = OUTER_TETRIS_COLORS[+x];
+                innerColor = INNER_TETRIS_COLORS[+x % INNER_TETRIS_COLORS.length];
+                outerColor = OUTER_TETRIS_COLORS[+x % OUTER_TETRIS_COLORS.length];
 
                 // Do not show inner color for "dead" cells
                 if (x == 0) {

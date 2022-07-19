@@ -7,6 +7,7 @@ export const InfosContainer = {
     textAlign: "center",
     paddingBottom: "0.5em",
     marginTop: "0",
+    marginRight: "0.7em",
     color: RED_COLOR,
 }
 export const CenteredContainer = {
