@@ -14,7 +14,7 @@ async function tetris(game, player, socket) {
     while (!player.isOver) {
         handleGame(game, player, socket);
         // 17 milliseconds waiting between each frames is approximately 60fps
-        await await new Promise(resolve => setTimeout(resolve, 17));
+        await new Promise(resolve => setTimeout(resolve, 17));
     }
 
     socket.emit("game:over");
@@ -47,7 +47,7 @@ function handleGame(game, player, socket) {
 
     if (player.moveQueue.length > 0) {
         const playerMove = player.moveQueue.shift();
-        handleMove(game, player, playerMove, game.pieces[player.currentPiece]);
+        handleMove(player, playerMove, game.pieces[player.currentPiece]);
         player.moveHistory.push(playerMove);
     }
 
@@ -134,7 +134,7 @@ function handleGravity(player, piece) {
     }
 }
 
-function handleMove(game, player, move, piece) {
+function handleMove(player, move, piece) {
     switch (move) {
         case "ArrowLeft":
             moveLeft(player, piece.content[player.currentPieceRotation]);
@@ -154,11 +154,11 @@ function handleMove(game, player, move, piece) {
             break;
 
         case "ArrowUp":
-            rotateRight(game, player, piece, 0);
+            rotateRight(player, piece, 0);
             break;
 
         case "c":
-            rotateLeft(game, player, piece, 0);
+            const tries = rotateLeft(player, piece, 0);
             break;
 
         case "z":
