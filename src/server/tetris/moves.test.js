@@ -59,14 +59,13 @@ test("Try to move to an occupied space", () => {
 
 /// RIGHT MOVE ///
 test("Move to right border", () => {
-    let player = new Player();
-    let res = 0;
-    let moves = 0;
-    const startX = player.currentPieceX;
-
     // Test with all kind of pieces
     for (let i = 0; i < pieceList.length; i++) {
         let piece = new Piece().setType(i);
+        let player = new Player();
+        const startX = player.currentPieceX;
+        let res = 0;
+        let moves = 0;
 
         while (res > -1) {
             res = moveRight(player, piece.content[0]);
@@ -81,11 +80,10 @@ test("Move to right border", () => {
     }
 });
 test("Try to cross right border", () => {
-    let player = new Player();
     // Test with all kind of pieces
     for (let i = 0; i < pieceList.length; i++) {
         let piece = new Piece().setType(i);
-        let startX = player.currentPieceX;
+        let player = new Player();
 
         // Depending on the type of the piece, 
         // the final X will be between 2 and 4 cases
@@ -122,10 +120,13 @@ test("Try to move to an occupied space", () => {
 });
 
 
-// /// LEFT ROTATION ///
+/// LEFT ROTATION ///
 test("Authorized left rotation in one try", () => {
     let player = new Player();
     let piece = new Piece();
+
+    // Put the piece in the middle of the board so it is not blocked
+    player.currentPieceY = 10;
 
     // Get a non I-piece, because its rotation is special
     while (piece.type === 0)
@@ -147,25 +148,27 @@ test("Authorized left rotation in one try", () => {
     }
 });
 test("Authorized left rotation in several tries", () => {
-    let player = new Player();
-    let piece = new Piece();
-    player.loadMap(Maps.forceRotationTries);
+    for (let i = 0; i < pieceList.length; i++) {
+        // Skip O-piece, because it can rotate everywhere it fits
+        if (i === 3)
+            continue;
 
-    // Get a non O-piece, because it can rotate everywhere
-    // it fits
-    while (piece.type === 3)
-        piece = new Piece();
+        let piece = new Piece().setType(i);
+        let player = new Player();
+        player.loadMap(Maps.forceLeftRotationTries);
 
-    const tries = rotateLeft(player, piece, 0);
-    expect(player.currentPieceRotation).toBe(3);
-    expect(tries).toBeGreaterThan(0);
+        const rot = player.currentPieceRotation;
+
+        const tries = rotateLeft(player, piece, 0);
+        expect(player.currentPieceRotation).not.toBe(rot);
+        expect(tries).toBeGreaterThan(0);
+    }
 });
 test("Unauthorized left rotation", () => {
-    let player = new Player();
-    player.loadMap(Maps.full);
-
     for (let i = 0; i < pieceList.length; i++) {
         let piece = new Piece().setType(i);
+        let player = new Player();
+        player.loadMap(Maps.full);
 
         const tries = rotateLeft(player, piece, 0);
         expect(player.currentPieceRotation).toBe(0);
@@ -173,10 +176,9 @@ test("Unauthorized left rotation", () => {
     }
 });
 test("Left rotation on the left border", () => {
-    let player = new Player();
-
     for (let i = 0; i < pieceList.length; i++) {
         let piece = new Piece().setType(i);
+        let player = new Player();
         let res = 0;
 
         // Move piece to the border
@@ -189,4 +191,158 @@ test("Left rotation on the left border", () => {
 
         expect(player.currentPieceX).toBeGreaterThanOrEqual(pieceX);
     }
+});
+
+
+/// RIGHT ROTATION ///
+test("Authorized right rotation in one try", () => {
+    let player = new Player();
+    let piece = new Piece();
+
+    // Put the piece in the middle of the board so it is not blocked
+    player.currentPieceY = 10;
+
+    // Get a non I-piece, because its rotation is special
+    while (piece.type === 0)
+        piece = new Piece();
+    // Do a flip with the piece
+    for (let i = 0; i < 4; i++) {
+        const tries = rotateRight(player, piece, 0);
+        expect(player.currentPieceRotation).toBe((i + 1) % 4);
+        expect(tries).toBe(0);
+    }
+
+    // Force test with I piece
+    piece = new Piece().setType(0);
+    // Do a flip with the piece
+    for (let i = 0; i < 4; i++) {
+        const tries = rotateRight(player, piece, 0);
+        expect(player.currentPieceRotation).toBe((i + 1) % 4);
+        expect(tries).toBe(0);
+    }
+});
+test("Authorized right rotation in several tries", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let player = new Player();
+        player.loadMap(Maps.forceRightRotationTries);
+
+        // Skip O-piece, because it can rotate everywhere it fits
+        if (i === 3)
+            continue;
+
+        let piece = new Piece().setType(i);
+
+        const tries = rotateRight(player, piece, 0);
+        expect(player.currentPieceRotation).not.toBe(0);
+        expect(tries).toBeGreaterThan(0);
+    }
+});
+test("Unauthorized right rotation", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let piece = new Piece().setType(i);
+        let player = new Player();
+        player.loadMap(Maps.full);
+
+        const tries = rotateRight(player, piece, 0);
+        expect(player.currentPieceRotation).toBe(0);
+        expect(tries).toBe(-1);
+    }
+});
+test("Right rotation on the right border", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let piece = new Piece().setType(i);
+        let player = new Player();
+        let res = 0;
+
+        // Move piece to the border
+        while (res > -1) {
+            res = moveRight(player, piece.content[0]);
+        }
+
+        const pieceX = player.currentPieceX;
+        rotateRight(player, piece, 0);
+
+        expect(player.currentPieceX).toBeLessThanOrEqual(pieceX);
+    }
+});
+
+
+/// SPACE MOVE ///
+test("Put pieces down without obstacles", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let piece = new Piece().setType(i);
+        let player = new Player();
+
+        putPieceDown(player, piece.content[0]);
+
+        expect(player.currentPieceY).toBeGreaterThan(player.map.length - piece.content[0].length);
+        expect(player.needNewPiece).toBe(true);
+    }
+});
+test("Put pieces down with obstacles", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let piece = new Piece().setType(i);
+        let player = new Player();
+        player.loadMap(Maps.t_spin_double);
+
+        putPieceDown(player, piece.content[0]);
+
+        expect(player.currentPieceY).toBeGreaterThan(player.map.length - 2 - piece.content[0].length);
+        expect(player.needNewPiece).toBe(true);
+    }
+});
+test("Put pieces down out of the board to trigger game over", () => {
+    for (let i = 0; i < pieceList.length; i++) {
+        let piece = new Piece().setType(i);
+        let player = new Player();
+        // needNewPiece is true by defaults 
+        player.needNewPiece = false;
+        player.loadMap(Maps.full);
+
+        // Put the piece above the board
+        player.currentPieceY -= 2;
+
+        putPieceDown(player, piece.content[0]);
+
+        expect(player.isOver).toBe(true);
+        expect(player.needNewPiece).toBe(false);
+        expect(player.currentPieceY).toBeLessThan(0);
+    }
+});
+
+
+/// HOLD ///
+test("Hold without previous held piece", () => {
+    let player = new Player();
+
+    hold(player);
+
+    expect(player.currentPiece).toBeGreaterThan(0);
+    expect(player.pieceHold).toBeGreaterThan(-1);
+    expect(player.hasHeld).toBe(true);
+    expect(player.lastIndex).toBe(-1);
+});
+test("Hold with previous held piece", () => {
+    let player = new Player();
+
+    hold(player);
+
+    // Do as if the previous piece was put down
+    player.getNextPiece();
+
+    hold(player);
+
+    expect(player.currentPiece).toBe(0);
+    expect(player.pieceHold).toBeGreaterThan(-1);
+    expect(player.hasHeld).toBe(true);
+    expect(player.lastIndex).toBeGreaterThan(-1);
+});
+test("Try to hold twice in the same turn", () => {
+    let player = new Player();
+
+    hold(player);
+    hold(player);
+
+    // Cannot hold twice, so it should still nebe the second piece
+    expect(player.currentPiece).toBe(1);
 });

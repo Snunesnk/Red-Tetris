@@ -158,7 +158,7 @@ function handleMove(player, move, piece) {
             break;
 
         case "c":
-            const tries = rotateLeft(player, piece, 0);
+            rotateLeft(player, piece, 0);
             break;
 
         case "z":
