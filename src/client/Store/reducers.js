@@ -89,12 +89,18 @@ function appState(state = defaultAppState, action) {
         isPseudoEntered: true,
         playerName: action.playerName,
       };
-
+    case "state:kicked":
+      // kick from the room you was in
+      return {
+        ...state,
+        isRoomSelected: false,
+        room: null,
+      }
     case "state:roomSelected":
       return {
         ...state,
         isRoomSelected: true,
-        roomName: action.room.name, // TODO: remove it and use selectedRoom.name instead
+        roomName: action.room.name, // TODO: remove it and use room.name instead
         room: action.room,
         specters: action.specters,
       };

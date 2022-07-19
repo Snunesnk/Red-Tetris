@@ -3,10 +3,37 @@ const map = require("./maps/maps");
 
 class Player {
   constructor(socketId, name) {
-    // ID
     this.socketId = socketId;
     this.name = name;
+    // GAME INFO
+    this.map;
+    this.lineCleared;
+    this.level;
+    this.score;
+    this.isOver;
+    this.moveQueue;
+    this.moveHistory;
+    this.startDate;
+    this.b2bClear;
+    this.needsUpdate;
+    this.lastLineCleared;
+    // PIECE INFO
+    this.currentPiece;
+    this.currentPieceRotation;
+    this.currentPieceY;
+    this.currentPieceX;
+    this.currentSpecterY;
+    this.needNewPiece;
+    // PIECE HOLD
+    this.pieceHold;
+    this.hasHeld;
+    this.lastIndex;
+    // GRAVITY
+    this.gravityInterval;
+    this.init()
+  }
 
+  init() {
     // GAME INFO
     this.lineCleared = 0;
     this.level = 0;
@@ -14,11 +41,10 @@ class Player {
     this.isOver = false;
     this.moveQueue = [];
     this.moveHistory = [];
-    this.startDate;
+    this.startDate = null;
     this.b2bClear = false;
     this.needsUpdate = false;
     this.lastLineCleared = 0;
-
     // PIECE INFO
     this.currentPiece = 0;
     this.currentPieceRotation = 0;
@@ -26,12 +52,10 @@ class Player {
     this.currentPieceX = 3;
     this.currentSpecterY = 0;
     this.needNewPiece = true;
-
     // PIECE HOLD
     this.pieceHold = -1;
     this.hasHeld = false;
     this.lastIndex = -1;
-
     // GRAVITY
     this.gravityInterval;
 

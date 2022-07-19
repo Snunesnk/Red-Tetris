@@ -1,3 +1,8 @@
+const STATUS = {
+  WAITING_ROOM: 0,
+  IN_GAME: 1
+}
+
 const pieceList = [
   [
     [
@@ -260,6 +265,7 @@ const LEFT_I_ROTATION = [
 ]
 
 module.exports = {
+  STATUS,
   pieceList,
   Games,
   levels,
