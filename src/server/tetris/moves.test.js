@@ -8,7 +8,6 @@ import {
 } from "./moves";
 import Player from "../player";
 import Piece from "../piece";
-import Game from "../game";
 import Maps from "../maps/maps";
 import { pieceList } from "../const";
 
@@ -347,5 +346,5 @@ test("Try to hold twice in the same turn", () => {
     expect(player.currentPiece).toBe(1);
     expect(player.pieceHold).toBeGreaterThan(-1);
     expect(player.hasHeld).toBe(true);
-    expect(player.lastIndex).toBeGreaterThan(-1);
+    expect(player.lastIndex).toBe(-1);
 });

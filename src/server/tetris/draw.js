@@ -9,11 +9,7 @@ function draw(map, x, y, piece, drawFunc) {
             if (y + i < 0)
                 continue;
 
-            const drew = drawFunc(map, piece[i], x, y + i);
-
-            if (drew != consts.PIECE_DREW) {
-                return drew;
-            }
+            drawFunc(map, piece[i], x, y + i);
         }
     }
 
@@ -28,8 +24,6 @@ function placeLine(map, line, x, y) {
             map[y][x + i] = line[i];
         }
     }
-
-    return consts.PIECE_DREW;
 }
 
 function eraseLine(map, line, x, y) {
@@ -39,8 +33,6 @@ function eraseLine(map, line, x, y) {
         else if (map[y][x + i] == line[i])
             map[y][x + i] = 0
     }
-
-    return consts.PIECE_DREW;
 }
 
 function coordinatesOk(x, y) {
@@ -51,6 +43,7 @@ function coordinatesOk(x, y) {
     return true;
 }
 
+/// Check if a piece could be drawn on the map without actually doing it
 function testDraw(map, x, y, piece, BREAK_IF_CELL_OFF_LIMITS = false) {
     for (let j = 0; j < piece.length; j++) {
         if (piece[j].every(val => val == 0))
