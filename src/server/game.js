@@ -22,6 +22,7 @@ class Game {
   addPlayer(playerName, socketId) {
     const newPlayer = new Player(socketId, playerName);
     this.players.push(newPlayer);
+    return newPlayer;
   }
 
   resetGame(status) {
@@ -29,9 +30,9 @@ class Game {
     this.status = status;
     this.players.map((player) => player.init());
     if (status === STATUS.WAITING_ROOM)
-      return ; // just move everyone to waiting room
+      return; // just move everyone to waiting room
     else if (status === STATUS.IN_GAME)
-      return ; // retry directly the game
+      return; // retry directly the game
   }
 }
 
