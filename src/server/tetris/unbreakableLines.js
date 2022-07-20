@@ -1,12 +1,9 @@
-function addUnbreakableLines(game, playerId, lineCleared, socket) {
+function addUnbreakableLines(game, playerId, lineCleared) {
     game.players.map(player => {
         if (player.socketId == playerId) {
-            console.log("Same player, skip !");
             return;
         }
 
-        console.log("He he poor " + player.socketId);
-        console.log("lineCleared: " + lineCleared);
         // Remove the first line of the map, 
         // and add an unbreakable line at the end
         let i = 0;

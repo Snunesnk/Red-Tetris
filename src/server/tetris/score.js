@@ -172,8 +172,6 @@ function isTspin(player, pieceType) {
         cornerFilled += 1;
     }
 
-    console.log(player);
-
     return cornerFilled >= 3;
 }
 

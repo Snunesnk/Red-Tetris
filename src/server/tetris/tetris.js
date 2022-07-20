@@ -56,7 +56,7 @@ function handleGame(game, player, socket) {
     }
 
     if (player.lastLineCleared > 1)
-        addUnbreakableLines(game, player.socketId, player.lastLineCleared - 1, socket);
+        addUnbreakableLines(game, player.socketId, player.lastLineCleared - 1);
 
     // Draw the specter of the piece
     drawPieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
@@ -115,22 +115,20 @@ function handleGravity(player, piece) {
                 break;
             }
         }
-
         player.needNewPiece = true;
     }
     else {
         player.currentPieceY += 1;
-        // Only reset timestamp if this is needed
-        // Not needed if it cam from a moveDown
-        if (new Date().getTime() - player.gravityInterval >= piece.timestamp)
-            piece.timestamp = new Date().getTime();
-
         // Handle lock
         if (hasHitBottom(player.map, pieceContent, player.currentPieceY, player.currentPieceX)) {
             player.gravityInterval = 500;
         }
-        else if (player.gravityInterval == 500)
+        else if (player.gravityInterval == 500 && new Date().getTime() - player.gravityInterval >= piece.timestamp)
             player.gravityInterval = consts.levels[player.level - 1]
+
+        // Reset timestamp if needed
+        if (new Date().getTime() - player.gravityInterval >= piece.timestamp)
+            piece.timestamp = new Date().getTime();
     }
 }
 
@@ -195,4 +193,10 @@ function handleClearedLines(player) {
     return clearedLines;
 }
 
-module.exports = { tetris };
+module.exports = {
+    tetris,
+    handleGame,
+    handleNewPiece,
+    handleGravity,
+    handleMove
+};

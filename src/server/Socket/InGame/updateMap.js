@@ -3,9 +3,9 @@ function updateMap(game, player, socket) {
   let nextPieces = [];
   const index = player.lastIndex >= 0 ? player.lastIndex - 1 : player.currentPiece;
 
-  for (i = 1; i < 4; i++) {
+  for (let i = 1; i < 4; i++) {
     const pieceContent = game.pieces[index + i].content[0];
-    for (j = 0; j < pieceContent.length; j++) {
+    for (let j = 0; j < pieceContent.length; j++) {
       nextPieces.push(pieceContent[j]);
     }
   }
@@ -17,13 +17,13 @@ function updateMap(game, player, socket) {
   // Show held piece
   let pieceHold = [];
   if (player.pieceHold === -1) {
-    for (j = 0; j < 4; j++) {
+    for (let j = 0; j < 4; j++) {
       pieceHold.push([0, 0, 0, 0]);
     }
   }
   else {
     const pieceContent = game.pieces[player.pieceHold].content[0];
-    for (j = 0; j < pieceContent.length; j++) {
+    for (let j = 0; j < pieceContent.length; j++) {
       pieceHold.push(pieceContent[j]);
     }
   }
