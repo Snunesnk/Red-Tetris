@@ -31,8 +31,9 @@ class Game {
     this.players.map((player) => player.init());
     if (status === STATUS.WAITING_ROOM)
       return; // just move everyone to waiting room
-    else if (status === STATUS.IN_GAME)
+    else if (status === STATUS.IN_GAME) {
       return; // retry directly the game
+    }
   }
 }
 

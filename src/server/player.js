@@ -13,7 +13,6 @@ class Player {
     this.isOver;
     this.moveQueue;
     this.moveHistory;
-    this.startDate;
     this.b2bClear;
     this.needsUpdate;
     this.lastLineCleared;
@@ -41,7 +40,6 @@ class Player {
     this.isOver = false;
     this.moveQueue = [];
     this.moveHistory = [];
-    this.startDate = null;
     this.b2bClear = false;
     this.needsUpdate = false;
     this.lastLineCleared = 0;
@@ -61,10 +59,6 @@ class Player {
 
     // Get map
     this.loadMap(map.empty);
-  }
-
-  setStartDate() {
-    this.startDate = new Date().getDate();
   }
 
   addMove(move) {
@@ -93,8 +87,10 @@ class Player {
   }
 
   increaseLevel() {
-    if (this.level + 1 == consts.levels.length)
+    if (this.level + 1 >= consts.levels.length) {
+      this.level = consts.levels.length;
       return;
+    }
 
     this.level += 1;
     this.gravityInterval = consts.levels[this.level - 1];
