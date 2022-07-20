@@ -3,30 +3,7 @@ import Game from "../game";
 import Maps from "../maps/maps";
 import { handleClearedLines, handleGame, handleGravity, handleMove, handleNewPiece, tetris } from "./tetris";
 import Piece from "../piece";
-
-// Create a fake socket that will store all calls
-class FakeSocket {
-    constructor() {
-        this.msg = [];
-        this.msgObj = [];
-        this.dest = [];
-        this.id = Math.floor(Math.random() * 100000000);
-    }
-
-    emit(msg, msgObj = null) {
-        this.msg.push(msg);
-        if (msgObj !== null)
-            this.msgObj.push(msgObj)
-
-        return this;
-    }
-
-    to(dest) {
-        this.dest.push(dest);
-
-        return this;
-    }
-}
+import FakeSocket from "../Socket/socket.test"
 
 jest.useFakeTimers();
 afterEach(() => {

@@ -7,7 +7,6 @@ const app = express();
 const httpServer = createServer(app);
 
 let path = require("path");
-const Game = require("./game");
 
 function f(value) {
     console.log(value.content);
