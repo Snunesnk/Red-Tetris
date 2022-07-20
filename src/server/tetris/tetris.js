@@ -169,7 +169,7 @@ function handleMove(player, move, piece) {
 }
 
 function handleClearedLines(player) {
-    // Check only if the pllayer needs a new piece,
+    // Check only if the player needs a new piece,
     // Wich means that the previous one was  integrated to the tas
     if (!player.needNewPiece)
         return;
@@ -198,5 +198,6 @@ module.exports = {
     handleGame,
     handleNewPiece,
     handleGravity,
-    handleMove
+    handleMove,
+    handleClearedLines
 };

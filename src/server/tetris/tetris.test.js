@@ -1,7 +1,7 @@
 import Player from "../player";
 import Game from "../game";
 import Maps from "../maps/maps";
-import { handleGame, handleGravity, handleMove, handleNewPiece, tetris } from "./tetris";
+import { handleClearedLines, handleGame, handleGravity, handleMove, handleNewPiece, tetris } from "./tetris";
 import Piece from "../piece";
 
 // Create a fake socket that will store all calls
@@ -270,5 +270,105 @@ describe("Handle move", () => {
         handleMove(player, "ArrowRight", piece);
 
         expect(player.currentPieceX).toBeGreaterThan(startX);
+    });
+    test("Move down", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        const startY = player.currentPieceY;
+
+        handleMove(player, "ArrowDown", piece);
+
+        expect(player.currentPieceY).toBeGreaterThan(startY);
+        expect(player.score).toBe(1);
+    });
+    test("Put down", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        handleMove(player, " ", piece);
+
+        expect(player.currentPieceY).toBeGreaterThan(15);
+        expect(player.score).toBeGreaterThan(10);
+    });
+    test("Rotate right", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        handleMove(player, "ArrowUp", piece);
+
+        expect(player.currentPieceRotation).toBe(1);
+    });
+    test("Rotate left", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        handleMove(player, "c", piece);
+
+        expect(player.currentPieceRotation).toBe(3);
+    });
+    test("Hold", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        handleMove(player, "z", piece);
+
+        expect(player.hasHeld).toBe(true);
+    });
+    test("Non existant move", () => {
+        let player = new Player();
+        let piece = new Piece();
+
+        handleMove(player, "Je n'existe pas", piece);
+
+        let clonePlayer = new Player();
+        expect(player).toMatchObject(clonePlayer);
+    });
+});
+
+
+/// HANDLE CLEARED LINES ///
+describe("Handle cleared lines", () => {
+    test("No new piece", () => {
+        let player = new Player();
+
+        player.needNewPiece = false;
+
+        handleClearedLines(player);
+
+        let clonePlayer = new Player();
+        clonePlayer.needNewPiece = false;
+        expect(player).toMatchObject(clonePlayer);
+    });
+
+    test("Clear lines", () => {
+        let player = new Player();
+        let completedLines = 0;
+
+        for (let i = 0; i < player.map.length; i++) {
+            const rand = Math.random();
+
+            if (rand >= 0.5) {
+                for (let j = 0; j < player.map[i].length; j++) {
+                    player.map[i][j] = 1;
+                }
+                completedLines += 1;
+            }
+        }
+
+        const clearedLines = handleClearedLines(player);
+
+        expect(clearedLines).toBe(completedLines);
+    });
+
+    test("Level increase", () => {
+        let player = new Player();
+
+        const startLevel = player.level;
+        player.clearedLines = 10;
+
+        handleClearedLines(player);
+
+        expect(player.level).toBeGreaterThan(startLevel);
     });
 });
