@@ -2,8 +2,6 @@ const { findGameByName, formatGameForClient } = require("../../games");
 const editGame = require("./edit");
 
 function joinGame(payload, socket, io) {
-  console.log("server hit => game:join");
-  console.log(payload);
   const game = findGameByName(payload.gameName);
   if (game) {
     let specters = []
