@@ -128,7 +128,8 @@ function appState(state = defaultAppState, action) {
       };
 
     case "state:gamesListed":
-      if (state.roomList.toString() !== action.roomList.toString()) {
+      if (JSON.stringify(state.roomList) !== JSON.stringify(action.roomList)) {
+        console.log(action.roomList);
         return {
           ...state,
           roomList: action.roomList,
