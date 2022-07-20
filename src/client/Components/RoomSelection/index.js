@@ -96,7 +96,7 @@ export const RoomSelectionComponent = () => {
                     <FiberManualRecordIcon
                       sx={{
                         color:
-                          row.status === STATUS.WAITING_ROOM ? "green" : "red",
+                          row.status === STATUS.WAITING_ROOM ? "green" : "red", // not actualizing without refresh, why ??
                         fontSize: 25,
                       }}
                     ></FiberManualRecordIcon>
@@ -109,6 +109,7 @@ export const RoomSelectionComponent = () => {
               <Button
                 variant="contained"
                 style={JoinRoomBtnStyle}
+                disabled={row.status === STATUS.IN_GAME}
                 onClick={() => {
                   location.href = "#" + row.name + "[" + playerName + "]";
                   dispatch({

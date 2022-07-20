@@ -1,6 +1,6 @@
 const { formatGameForClient } = require("../../games");
 
-function editGame(game, socket, io) {
+function editGame(game, io) {
   let specters = [];
 
   // Prepare specters of others players

@@ -13,7 +13,7 @@ function hostPlayer(payload, socket, io) {
       const indexTarget = game.players.indexOf(targetPlayer);
       game.players[0] = targetPlayer;
       game.players[indexTarget] = tmp;
-      editGame(game, socket, io);
+      editGame(game, io);
     }
   }
 }

@@ -14,7 +14,7 @@ function deletePlayer(socket, io) {
     const player = findPlayer(game, socket.id);
     if (player) {
       game.players.splice(game.players.indexOf(player), 1);
-      editGame(game, socket, io)
+      editGame(game, io)
     }
   }
 }

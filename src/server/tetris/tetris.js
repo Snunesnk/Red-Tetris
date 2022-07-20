@@ -6,8 +6,9 @@ const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold } = req
 const { calculateScore, isTspin } = require("./score");
 const { addUnbreakableLines } = require("./unbreakableLines");
 const { hasHitBottom, drawPieceSpecter, erasePieceSpecter } = require("./tetris.utils");
+const editGame = require("../Socket/Game/edit");
 
-async function tetris(game, player, socket) {
+async function tetris(game, player, socket, io) {
     player.increaseLevel();
 
     // Calculate / handle one frame.
@@ -15,6 +16,16 @@ async function tetris(game, player, socket) {
         handleGame(game, player, socket);
         // 17 milliseconds waiting between each frames is approximately 60fps
         await await new Promise(resolve => setTimeout(resolve, 17));
+    }
+    let i = 0;
+    while (i < game.players.length) {
+        if (game.players[i].isOver)
+            break;
+        i++;
+    }
+    if (i === game.players.length) { // all players losed (write little leaderboard on front ?)
+        game.status = consts.STATUS.END_GAME;
+        editGame(game, io);
     }
 
     socket.emit("game:over");

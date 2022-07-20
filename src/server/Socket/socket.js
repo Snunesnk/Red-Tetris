@@ -33,7 +33,7 @@ function initSocket(httpServer) {
       startGame(socket, io);
     });
     socket.on("game:tetrisStart", () => {
-      startTetris(socket);
+      startTetris(socket, io);
     });
     socket.on("inGame:move", (payload) => {
       moveInGame(payload, socket);

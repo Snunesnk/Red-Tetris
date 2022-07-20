@@ -1,6 +1,7 @@
 export const STATUS = {
   WAITING_ROOM: 0,
   IN_GAME: 1,
+  END_GAME: 2
 };
 
 export const MAIN_BACK_COLOR = "linear-gradient(#1A1A1D, #141e30) fixed";

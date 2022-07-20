@@ -1,6 +1,7 @@
 const STATUS = {
   WAITING_ROOM: 0,
-  IN_GAME: 1
+  IN_GAME: 1,
+  END_GAME: 2
 }
 
 const pieceList = [
