@@ -14,7 +14,6 @@ function f(value) {
 
 // On connexion to the page, returns the HTML code
 app.get("/", (req, res) => {
-    console.log("path: " + path.resolve(__dirname, '../../public/index.html'));
     res.sendFile(path.resolve(__dirname, '../../public/index.html'));
 });
 

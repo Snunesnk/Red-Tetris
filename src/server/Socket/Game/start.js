@@ -3,7 +3,6 @@ const { findGameBySocketIdPlayer } = require("../../games");
 const { findPlayer } = require("../../players");
 
 function startGame(socket, io) {
-  console.log("server hit => game:start");
   const game = findGameBySocketIdPlayer(socket.id);
   if (game) {
     const player = findPlayer(game, socket.id);

@@ -5,12 +5,10 @@ const joinGame = require("./join");
 const listGames = require("./list");
 
 function createGame(payload, socket, io) {
-  console.log("server hit => game:create");
-  console.log(payload);
-
   const found = findGameByName(payload.gameName);
 
   if (!found) {
+    console.log("Game found")
     const newGame = new Game(payload.gameName);
     Games.push(newGame);
 

@@ -3,7 +3,6 @@ const { findPlayer } = require("../../players");
 const editGame = require("./edit");
 
 function kickPlayer(payload, socket, io) {
-  console.log("server hit => game:kickPlayer");
   const game = findGameBySocketIdPlayer(socket.id);
   if (game) {
     const player = findPlayer(game, socket.id);

@@ -31,8 +31,6 @@ describe("Games", () => {
     test("Find game player's socket id", () => {
         const gameFound = findGameBySocketIdPlayer(1002);
 
-        console.log(gameFound);
-
         expect(gameFound.name).toMatch("MyPublicGame")
     });
     test("Format a game to send to client", () => {

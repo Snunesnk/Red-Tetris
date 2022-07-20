@@ -5,5 +5,6 @@ export function onNewSpecter(dispatch, payload) {
             map: payload.map,
             index: payload.index
         });
-    } else console.log(payload.error);
+    } else
+        console.log(payload.error);
 }
