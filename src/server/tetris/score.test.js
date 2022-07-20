@@ -119,11 +119,22 @@ test("Check t-spin with bad coordinates", () => {
     let player = new Player();
     player.loadMap(Maps.t_spin_double)
 
-    // Do as if the piece was integrated
-    player.currentPieceY = -17;
-    player.currentPiecX = 30;
-
     player.moveHistory.push("c");
+
+    player.currentPieceY = -17;
+    player.currentPieceX = 3;
+    expect(isTspin(player, 5)).toBe(false);
+
+    player.currentPieceY = 117;
+    player.currentPieceX = 3;
+    expect(isTspin(player, 5)).toBe(false);
+
+    player.currentPieceY = 17;
+    player.currentPieceX = -3;
+    expect(isTspin(player, 5)).toBe(false);
+
+    player.currentPieceY = 17;
+    player.currentPieceX = 30;
     expect(isTspin(player, 5)).toBe(false);
 });
 
@@ -207,7 +218,15 @@ test("Level increase", () => {
     player.b2bClear = true;
 
     calculateScore(player, 3, true);
-    expect(player.level).toBeGreaterThan(0);
     calculateScore(player, 3, true);
     expect(player.level).toBeGreaterThan(1);
+});
+test("No level increase", () => {
+    let player = new Player();
+    player.b2bClear = true;
+
+    calculateScore(player, 0, false);
+    expect(player.level).toBe(1);
+    calculateScore(player, 0, false);
+    expect(player.level).toBe(1);
 });

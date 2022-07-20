@@ -107,7 +107,7 @@ function calculateScore(player, clearedLines, Tspin) {
 
     // Increase the level if the score is sufficient
     if (player.score >= player.level * player.level * 1500) {
-        console.log("New level !");
+        // console.log("New level !");
         player.increaseLevel();
     }
 
@@ -151,30 +151,42 @@ function isTspin(player, pieceType) {
     let cornerFilled = 0;
     // Because this is a T tetriminos, the coordinates for the corner are
     // as follow (Starting from the piece's [x, y] coordinates):
-    try {
-        // [0, 0]
-        if (player.map[player.currentPieceY][player.currentPieceX] !== 0) {
-            cornerFilled += 1;
-        }
-        // [2, 0]
-        if (player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
-            cornerFilled += 1;
-        }
-        // [0, 2]
-        if (player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
-            cornerFilled += 1;
-        }
-        // [2, 2]
-        if (player.map[player.currentPieceY + 2][player.currentPieceX + 2] !== 0) {
-            cornerFilled += 1;
-        }
+    // [0, 0]
+    if (coordinatesOk(player.map, player.currentPieceY, player.currentPieceX)
+        && player.map[player.currentPieceY][player.currentPieceX] !== 0) {
+        cornerFilled += 1;
     }
-    catch {
-        console.log("Oops, error when trying to calculate the score");
-        console.log(player);
+    // [2, 0]
+    if (coordinatesOk(player.map, player.currentPieceY, player.currentPieceX + 2)
+        && player.map[player.currentPieceY][player.currentPieceX + 2] !== 0) {
+        cornerFilled += 1;
+    }
+    // [0, 2]
+    if (coordinatesOk(player.map, player.currentPieceY + 2, player.currentPieceX)
+        && player.map[player.currentPieceY + 2][player.currentPieceX] !== 0) {
+        cornerFilled += 1;
+    }
+    // [2, 2]
+    if (coordinatesOk(player.map, player.currentPieceY + 2, player.currentPieceX + 2)
+        && player.map[player.currentPieceY + 2][player.currentPieceX + 2] !== 0) {
+        cornerFilled += 1;
     }
 
+    console.log(player);
+
     return cornerFilled >= 3;
+}
+
+function coordinatesOk(map, y, x) {
+    if (y >= map.length)
+        return false;
+    if (y < 0)
+        return false;
+    if (x >= map[0].length)
+        return false;
+    if (x < 0)
+        return false;
+    return true;
 }
 
 module.exports = { calculateScore, isTspin };
