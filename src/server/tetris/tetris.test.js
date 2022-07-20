@@ -372,3 +372,5 @@ describe("Handle cleared lines", () => {
         expect(player.level).toBeGreaterThan(startLevel);
     });
 });
+
+module.exports = FakeSocket;
