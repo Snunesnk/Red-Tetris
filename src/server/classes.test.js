@@ -1,7 +1,5 @@
 import Player from "./player";
 import Game from "./game";
-import Maps from "./maps/maps";
-import Piece from "./piece";
 import FakeSocket from "./tetris/tetris.test"
 import { STATUS } from "./const"
 
