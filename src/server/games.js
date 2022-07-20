@@ -8,12 +8,14 @@ function findGameByName(name) {
 
 function findGameBySocketIdPlayer(socketId) {
   return Games.find((game) => {
-    if (
-      game.players.find((player) => {
-        if (player.socketId === socketId) return true;
-      })
-    )
+    let player = game.players.find((player) => {
+      if (player.socketId === socketId)
+        return true;
+      return false;
+    });
+    if (player)
       return true;
+    return false
   });
 }
 

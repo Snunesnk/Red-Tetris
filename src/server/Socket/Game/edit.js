@@ -1,10 +1,10 @@
 const { formatGameForClient } = require("../../games");
 
-function editGame(game, socket, io) {
+function editGame(game, io) {
   let specters = [];
 
   // Prepare specters of others players
-  for (i = 0; i < game.players.length; i++) {
+  for (let i = 0; i < game.players.length; i++) {
     specters.push({
       id: game.players[i].socketId,
       map: game.players[i].map
