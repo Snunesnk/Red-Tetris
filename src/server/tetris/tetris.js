@@ -30,10 +30,11 @@ function handleGame(game, player, socket) {
     }
 
     // If there's nothing to do, do nothing
-    if (new Date().getTime() - player.gravityInterval < game.pieces[player.currentPiece].timestamp
+    if (new Date().getTime() - player.pieceTimestamp < player.gravityInterval
         && !player.needNewPiece
-        && player.moveQueue.length == 0)
+        && player.moveQueue.length == 0) {
         return;
+    }
 
     if (!player.needNewPiece) {
         // Erase the previous piece
@@ -51,7 +52,7 @@ function handleGame(game, player, socket) {
         player.moveHistory.push(playerMove);
     }
 
-    if (new Date().getTime() - player.gravityInterval >= game.pieces[player.currentPiece].timestamp) {
+    if (new Date().getTime() - player.pieceTimestamp >= player.gravityInterval) {
         handleGravity(player, game.pieces[player.currentPiece], game);
     }
 
@@ -98,7 +99,7 @@ function handleNewPiece(player, piece) {
         player.currentPieceY--;
     }
 
-    piece.timestamp = new Date().getTime();
+    player.pieceTimestamp = new Date().getTime();
 }
 
 function handleGravity(player, piece) {
@@ -119,16 +120,19 @@ function handleGravity(player, piece) {
     }
     else {
         player.currentPieceY += 1;
-        // Handle lock
+
+        // Handle lock delay
         if (hasHitBottom(player.map, pieceContent, player.currentPieceY, player.currentPieceX)) {
             player.gravityInterval = 500;
         }
-        else if (player.gravityInterval == 500 && new Date().getTime() - player.gravityInterval >= piece.timestamp)
+        // If the piece is not at the bottom and lock delay was set, remove it
+        else if (player.gravityInterval == 500 && new Date().getTime() - player.pieceTimestamp >= 500)
             player.gravityInterval = consts.levels[player.level - 1]
 
         // Reset timestamp if needed
-        if (new Date().getTime() - player.gravityInterval >= piece.timestamp)
-            piece.timestamp = new Date().getTime();
+        if (new Date().getTime() - player.pieceTimestamp >= player.gravityInterval) {
+            player.pieceTimestamp = new Date().getTime();
+        }
     }
 }
 

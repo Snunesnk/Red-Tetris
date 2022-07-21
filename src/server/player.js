@@ -23,6 +23,7 @@ class Player {
     this.currentPieceX;
     this.currentSpecterY;
     this.needNewPiece;
+    this.pieceTimestamp;
     // PIECE HOLD
     this.pieceHold;
     this.hasHeld;
@@ -50,12 +51,13 @@ class Player {
     this.currentPieceX = 3;
     this.currentSpecterY = 0;
     this.needNewPiece = true;
+    this.pieceTimestamp = 0;
     // PIECE HOLD
     this.pieceHold = -1;
     this.hasHeld = false;
     this.lastIndex = -1;
     // GRAVITY
-    this.gravityInterval;
+    this.gravityInterval = 0;
 
     // Get map
     this.loadMap(map.empty);
@@ -68,6 +70,7 @@ class Player {
   getNextPiece() {
     this.currentPiece += 1;
     this.currentPieceRotation = 0;
+    this.pieceTimestamp = new Date().getTime();
 
     // Init new coordinates to draw the piece
     this.currentPieceX = 3;
