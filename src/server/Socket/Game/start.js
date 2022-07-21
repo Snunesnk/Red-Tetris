@@ -1,4 +1,3 @@
-const io = require("../..");
 const { STATUS } = require("../../const");
 const { findGameBySocketIdPlayer } = require("../../games");
 const { findPlayer } = require("../../players");

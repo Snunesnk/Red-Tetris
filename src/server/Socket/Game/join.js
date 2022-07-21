@@ -7,7 +7,7 @@ function joinGame(payload, socket, io) {
   console.log(payload);
   const game = findGameByName(payload.gameName);
   if (game) {
-    if (game.status === STATUS.IN_GAME)
+    if (game.status !== STATUS.WAITING_ROOM)
       socket.emit("game:joined", { error: "This game has already started" });
     else {
       let specters = [];

@@ -19,10 +19,11 @@ async function tetris(game, player, socket, io) {
     }
     let i = 0;
     while (i < game.players.length) {
-        if (game.players[i].isOver)
+        if (!game.players[i].isOver)
             break;
         i++;
     }
+    console.log(game.players.length, i);
     if (i === game.players.length) { // all players losed (write little leaderboard on front ?)
         game.status = consts.STATUS.END_GAME;
         editGame(game, io);

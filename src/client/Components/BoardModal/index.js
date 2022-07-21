@@ -51,13 +51,21 @@ export const BoardModalComponent = () => {
               Game Over :(
             </Grid>
           )}
-          {appState.isGameOver && host && appState.room.status === STATUS.END_GAME && (
-            <Grid item xs={12} style={ModalMessage}>
-              <Button onClick={() => {}} autoFocus>
-                Retry
-              </Button>
-            </Grid>
-          )}
+          {appState.isGameOver &&
+            host &&
+            appState.room.status === STATUS.END_GAME && (
+              <Grid item xs={12} style={ModalMessage}>
+                <Button
+                  onClick={() => {
+                    dispatch({
+                      type: "game:retry",
+                    });
+                  }}
+                >
+                  Retry
+                </Button>
+              </Grid>
+            )}
         </Grid>
       </Box>
       {/* // </div> */}

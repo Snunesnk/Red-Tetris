@@ -8,8 +8,9 @@ const { startTetris } = require("./Game/tetris");
 const { deletePlayer } = require("../players");
 const kickPlayer = require("./Game/kick");
 const hostPlayer = require("./Game/host");
+const retryGame = require("./Game/retry");
 
-const port = 3024
+const port = 3024;
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
@@ -40,13 +41,14 @@ function initSocket(httpServer) {
     });
     socket.on("disconnect", () => {
       deletePlayer(socket, io);
-    })
+    });
     socket.on("game:kickPlayer", (payload) => {
       kickPlayer(payload, socket, io);
-    })
+    });
     socket.on("game:hostPlayer", (payload) => {
       hostPlayer(payload, socket, io);
-    })
+    });
+    socket.on("game:retry", () => retryGame(socket, io));
   });
   return io;
 }

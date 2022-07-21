@@ -10,64 +10,73 @@ import { CenteredContainer, appDiv } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
-function onKeyDown(e, isGameStarted, appState) {
-    if (isGameStarted) {
-        emitMoveInGame(e.key, appState);
-    }
+let appState;
+
+function onKeyDown(e) {
+  if (appState.isGameStarted) {
+    emitMoveInGame(e.key, appState);
+  }
 }
 
 export function App() {
-    const appState = useSelector(state => state.appState);
+  appState = useSelector((state) => state.appState);
+  useEffect(() => {
+    // Force focus to get all keys pressed
+    if (appState.isGameStarted) document.addEventListener("keydown", onKeyDown);
+    else document.removeEventListener("keydown", onKeyDown);
 
-    useEffect(() => {
-        // Force focus to get all keys pressed
-        document.addEventListener('keydown',
-            (e) => onKeyDown(e, appState.isGameStarted, appState));
+    var audio = new Audio("korobeiniki.mp3");
+    if (typeof audio.loop == "boolean") {
+      audio.loop = true;
+    } else {
+      audio.addEventListener(
+        "ended",
+        function () {
+          audio.currentTime = 0;
+          audio.play();
+        },
+        false
+      );
+    }
+    audio.play();
+  }, [appState.isGameStarted]);
 
-        var audio = new Audio("korobeiniki.mp3");
-        if (typeof audio.loop == 'boolean') {
-            audio.loop = true;
-        }
-        else {
-            audio.addEventListener('ended', function () {
-                audio.currentTime = 0;
-                audio.play();
-            }, false);
-        }
-        audio.play();
-    }, [appState.isGameStarted]);
+  return (
+    <div id="app_div" style={appDiv}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TitleComponent></TitleComponent>
+        </Grid>
 
-    return (
-        <div id="app_div" style={appDiv}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <TitleComponent></TitleComponent>
-                </Grid>
+        {appState.isGameStarted == false &&
+          appState.isPseudoEntered == false && (
+            <LandingComponent></LandingComponent>
+          )}
 
-                {appState.isGameStarted == false && appState.isPseudoEntered == false && (
-                    <LandingComponent></LandingComponent>
-                )}
+        {appState.isGameStarted == false &&
+          appState.isPseudoEntered == true &&
+          appState.isRoomSelected == false && (
+            <RoomSelectionComponent></RoomSelectionComponent>
+          )}
 
-                {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == false && (
-                    <RoomSelectionComponent></RoomSelectionComponent>
-                )}
-
-                {appState.isGameStarted == false && appState.isPseudoEntered == true && appState.isRoomSelected == true && (
-                    <Grid item xs={12}>
-                        <WaitingRoomComponent></WaitingRoomComponent>
-                    </Grid>
-                )}
-
-                {appState.isGameStarted === true && (
-                    <Grid item xs={12}>
-                        <BoardComponent></BoardComponent>
-                    </Grid>
-                )}
-
-                {appState.isPseudoEntered && (
-                    <PlayerPseudoComponent></PlayerPseudoComponent>
-                )}
+        {appState.isGameStarted == false &&
+          appState.isPseudoEntered == true &&
+          appState.isRoomSelected == true && (
+            <Grid item xs={12}>
+              <WaitingRoomComponent></WaitingRoomComponent>
             </Grid>
-        </div >
-    );
+          )}
+
+        {appState.isGameStarted === true && (
+          <Grid item xs={12}>
+            <BoardComponent></BoardComponent>
+          </Grid>
+        )}
+
+        {appState.isPseudoEntered && (
+          <PlayerPseudoComponent></PlayerPseudoComponent>
+        )}
+      </Grid>
+    </div>
+  );
 }

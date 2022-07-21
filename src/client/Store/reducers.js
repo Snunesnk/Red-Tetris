@@ -3,10 +3,11 @@ import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
 import { emitStartTetris } from "../Socket/Game/tetris";
-import { DEFAULT_MAP, NEXT_PIECES, HOLD_PIECE } from "../constants";
+import { DEFAULT_MAP, NEXT_PIECES, HOLD_PIECE, STATUS } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
 import { emitKickPlayerGame } from "../Socket/Game/kick";
 import { emitHostPlayerGame } from "../Socket/Game/host";
+import { emitRetryGame } from "../Socket/Game/retry";
 
 function roomName(state = "", action) {
   switch (action.type) {
@@ -34,6 +35,9 @@ function roomName(state = "", action) {
     case "game:hostPlayer":
       emitHostPlayerGame(action.playerId);
       return state;
+    case "game:retry":
+      emitRetryGame();
+      return state;
     default:
       return state;
   }
@@ -45,7 +49,7 @@ const defaultBoard = {
   pieceHold: JSON.parse(JSON.stringify(HOLD_PIECE)),
   score: 0,
   level: 0,
-}
+};
 function stateBoard(state = defaultBoard, action) {
   switch (action.type) {
     case "map:new":
@@ -55,8 +59,8 @@ function stateBoard(state = defaultBoard, action) {
         score: action.score,
         level: action.level,
         nextPieces: action.nextPieces,
-        pieceHold: action.pieceHold
-      }
+        pieceHold: action.pieceHold,
+      };
 
     default:
       return state;
@@ -95,7 +99,7 @@ function appState(state = defaultAppState, action) {
         ...state,
         isRoomSelected: false,
         room: null,
-      }
+      };
     case "state:roomSelected":
       return {
         ...state,
@@ -120,7 +124,13 @@ function appState(state = defaultAppState, action) {
     case "state:gameEdited":
       // If there's specters, remove the actual player's specter from list
       if (action.specters !== undefined) {
-        action.specters = action.specters.filter(specter => specter.id != state.socketId);
+        action.specters = action.specters.filter(
+          (specter) => specter.id != state.socketId
+        );
+      }
+      if (action.room !== undefined) {
+        action.isGameStarted = action.room.status !== STATUS.WAITING_ROOM;
+        if (!action.isGameStarted) action.isGameOver = false;
       }
       return {
         ...state,
@@ -129,7 +139,6 @@ function appState(state = defaultAppState, action) {
 
     case "state:gamesListed":
       if (JSON.stringify(state.roomList) !== JSON.stringify(action.roomList)) {
-        console.log(action.roomList);
         return {
           ...state,
           roomList: action.roomList,
