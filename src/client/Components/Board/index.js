@@ -73,7 +73,7 @@ export const BoardComponent = () => {
                 <SpecterComponent parity={true} />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} xl={6}>
                 <Grid container style={{ display: "flex", justifyContent: "center" }}>
                     <Grid item style={{ display: "flex", justifyContent: "end" }}>
                         <BoardInfosComponent score={stateBoard.score} color={color} />
