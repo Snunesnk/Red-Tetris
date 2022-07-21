@@ -88,16 +88,22 @@ describe("Tetris loop", () => {
 
         expect(player.currentPieceY).toBe(1);
     });
-    test("Erase previous piece", () => {
+    test("Erase previous pieces", () => {
         let game = new Game();
         let fakeSocket = new FakeSocket();
         let player = new Player(fakeSocket.id, "Roger");
 
-        player.needNewPiece = false;
-
+        // Add the new piece on the board
         handleGame(game, player, fakeSocket);
 
-        expect(player.currentPieceY).toBe(0);
+        const prevMap = JSON.parse(JSON.stringify(player.map));
+
+        //Force one gravity to draw the piece lower 
+        player.gravityInterval = -300;
+        handleGame(game, player, fakeSocket);
+
+        // Check that the map is correctly updated
+        expect(player.map).not.toMatchObject(prevMap);
     });
     test("Do a move", () => {
         let game = new Game();
