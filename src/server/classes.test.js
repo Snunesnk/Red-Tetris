@@ -1,24 +1,23 @@
 import Player from "./player";
 import Game from "./game";
-import FakeSocket from "./tetris/tetris.test"
 import { STATUS } from "./const"
 
 
 /// GAME ///
 describe("Game class", () => {
     test("Create new game", () => {
-        let game = new Game("MyGame");
+        let game = new Game("MyClassGame");
 
-        expect(game.name).toMatch("MyGame");
+        expect(game.name).toMatch("MyClassGame");
         expect(game.pieces.length).toBe(10);
         expect(game.players.length).toBe(0);
         expect(game.spectators.length).toBe(0);
         expect(game.isPublic).toBe(true);
     });
     test("Create non public game", () => {
-        let game = new Game("MyGame", false);
+        let game = new Game("MyPrivateClassGame", false);
 
-        expect(game.name).toMatch("MyGame");
+        expect(game.name).toMatch("MyPrivateClassGame");
         expect(game.pieces.length).toBe(10);
         expect(game.players.length).toBe(0);
         expect(game.spectators.length).toBe(0);

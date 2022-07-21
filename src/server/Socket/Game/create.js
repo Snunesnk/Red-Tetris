@@ -8,7 +8,6 @@ function createGame(payload, socket, io) {
   const found = findGameByName(payload.gameName);
 
   if (!found) {
-    console.log("Game found")
     const newGame = new Game(payload.gameName);
     Games.push(newGame);
 
