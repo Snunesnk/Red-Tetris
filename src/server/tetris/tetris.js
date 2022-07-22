@@ -27,6 +27,8 @@ async function tetris(game, player, socket, io) {
 function handleGame(game, player, socket) {
     if (player.needsUpdate) {
         player.needsUpdate = false;
+        draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+        erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         updateSpecter(game, player, socket);
     }
 

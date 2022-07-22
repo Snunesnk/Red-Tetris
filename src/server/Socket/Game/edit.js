@@ -8,7 +8,7 @@ function editGame(game, io) {
   for (i = 0; i < game.players.length; i++) {
     specters.push({
       id: game.players[i].socketId,
-      map: getSpecterMap(game, game.players[i])
+      map: getSpecterMap(game.players[i].map)
     });
   }
 

@@ -1,13 +1,10 @@
 const { draw, placeLine, eraseLine } = require("../../tetris/draw");
 
-function getSpecterMap(game, player) {
+function getSpecterMap(map) {
   let highestFound = [];
-  const piece = game.pieces[player.currentPiece];
 
   // Erase current piece for the specter map
-  draw(player.map, player.currentPieceX, player.currentPieceY, piece, eraseLine);
-  let specterMap = JSON.parse(JSON.stringify(player.map));
-  draw(player.map, player.currentPieceX, player.currentPieceY, piece, placeLine);
+  let specterMap = JSON.parse(JSON.stringify(map));
 
   for (let i = 0; i < specterMap.length; i++) {
     for (let j = 0; j < specterMap[i].length; j++) {
@@ -28,7 +25,7 @@ function getSpecterMap(game, player) {
 function updateSpecter(game, player, socket) {
   // Create the specter map.
   // For each column, find the highest piece, and then put everything under at 1
-  let specterMap = getSpecterMap(game, player);
+  let specterMap = getSpecterMap(player.map);
 
   socket
     .to(game.name)
