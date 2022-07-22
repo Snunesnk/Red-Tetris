@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, Box, Grid, Button } from "@mui/material";
-import { ModalStyle, CenteredContainer, ModalMessage } from "./styles";
+import { ModalStyle, CenteredContainer, ModalMessage, ModalMessageWin } from "./styles";
 import { amIHost } from "../../utils";
 import { STATUS } from "../../constants";
 
@@ -46,9 +46,14 @@ export const BoardModalComponent = () => {
               {message}
             </Grid>
           )}
-          {appState.isGameOver && (
+          {appState.isGameOver && !appState.isGameWon && (
             <Grid item xs={12} style={ModalMessage}>
               Game Over :(
+            </Grid>
+          )}
+          {appState.isGameOver && appState.isGameWon && (
+            <Grid item xs={12} style={ModalMessageWin}>
+              You win! :)
             </Grid>
           )}
           {appState.isGameOver &&

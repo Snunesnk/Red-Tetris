@@ -72,6 +72,7 @@ const defaultAppState = {
   isPseudoEntered: false,
   isRoomSelected: false,
   isGameOver: false,
+  isGameWon: false,
   playerName: "",
   roomName: "",
   roomList: [],
@@ -119,6 +120,13 @@ function appState(state = defaultAppState, action) {
       return {
         ...state,
         isGameOver: true,
+      };
+
+    case "state:gameWon":
+      return {
+        ...state,
+        isGameOver: true,
+        isGameWon: true,
       };
 
     case "state:gameEdited":

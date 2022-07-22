@@ -5,10 +5,9 @@ export const STATUS = {
 };
 
 export const MAIN_BACK_COLOR = "linear-gradient(#1A1A1D, #141e30) fixed";
-
 export const WHITE_COLOR = "rgb(232, 230, 227)";
-
 export const RED_COLOR = "#ea0e0e";
+export const GREEN_COLOR = "#03db02";
 
 // Default map to start with
 export const DEFAULT_MAP = [

@@ -5,7 +5,7 @@ import { onGamesListed } from "./Game/list";
 import { onGameStarted } from "./Game/start";
 import { onNewMap } from "./InGame/updateMap";
 import { onNewSpecter } from "./InGame/updateSpecter";
-import { onGameOver } from "./Game/tetris";
+import { onGameOver, onGameWon } from "./Game/tetris";
 import { onPlayerKicked } from "./Game/kick";
 
 export default function setListeners(socket, dispatch) {
@@ -31,4 +31,5 @@ export default function setListeners(socket, dispatch) {
   socket.on("game:playerKicked", () => onPlayerKicked(dispatch));
 
   socket.on("game:over", () => onGameOver(dispatch));
+  socket.on("game:won", () => onGameWon(dispatch));
 }
