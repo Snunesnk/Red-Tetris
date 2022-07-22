@@ -1,5 +1,6 @@
 import {
-    RED_COLOR
+    RED_COLOR,
+    OUTER_TETRIS_COLORS
 } from "../../constants";
 
 export const ModalStyle = {
@@ -23,6 +24,19 @@ export const ModalMessage = {
     paddingTop: "1em",
     paddingBottom: "1em",
     color: RED_COLOR,
+    lineHeight: "4.2rem",
+    paddingLeft: "1em",
+    paddingRight: "1em",
+}
+
+export const ModalMessageWin = {
+    textAlign: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
+    textShadow: "1px 1px 1px rgba(0, 0, 0, 0.45)",
+    fontSize: "3em",
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    color: OUTER_TETRIS_COLORS[6],
     lineHeight: "4.2rem",
     paddingLeft: "1em",
     paddingRight: "1em",

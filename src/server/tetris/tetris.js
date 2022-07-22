@@ -6,7 +6,7 @@ const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold } = req
 const { calculateScore, isTspin } = require("./score");
 const { addUnbreakableLines } = require("./unbreakableLines");
 const { hasHitBottom, drawPieceSpecter, erasePieceSpecter } = require("./tetris.utils");
-const editGame = require("../Socket/Game/edit");
+const gameOver = require("../Socket/InGame/gameOver");
 
 async function tetris(game, player, socket, io) {
     player.increaseLevel();
@@ -17,19 +17,8 @@ async function tetris(game, player, socket, io) {
         // 17 milliseconds waiting between each frames is approximately 60fps
         await await new Promise(resolve => setTimeout(resolve, 17));
     }
-    let i = 0;
-    while (i < game.players.length) {
-        if (!game.players[i].isOver)
-            break;
-        i++;
-    }
-    console.log(game.players.length, i);
-    if (i === game.players.length) { // all players losed (write little leaderboard on front ?)
-        game.status = consts.STATUS.END_GAME;
-        editGame(game, io);
-    }
 
-    socket.emit("game:over");
+    gameOver(game, socket, io);
 }
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
