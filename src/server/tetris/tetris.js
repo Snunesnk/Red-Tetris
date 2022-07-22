@@ -1,6 +1,6 @@
 const consts = require("../const");
 const updateMap = require("../Socket/InGame/updateMap");
-const updateSpecter = require("../Socket/InGame/updateSpecter");
+const { updateSpecter } = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
@@ -43,6 +43,8 @@ function handleGame(game, player, socket) {
         erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
     }
     else {
+        updateSpecter(game, player, socket);
+        // Tells the others players that a new piece has been placed
         handleNewPiece(player, game.pieces[player.currentPiece]);
     }
 
@@ -76,10 +78,6 @@ function handleGame(game, player, socket) {
     }
 
     updateMap(game, player, socket);
-
-    // Tells the others players that a new piece has been placed
-    if (player.needNewPiece)
-        updateSpecter(game, player, socket);
 
     if (game.pieces.length - player.currentPiece < 10)
         game.addPieces(10);
