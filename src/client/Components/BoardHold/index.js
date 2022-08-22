@@ -1,7 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { CenteredContainer, GridContainer, InfosContainer, CenteredTitleContainer } from './styles';
-import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from '../../constants';
+import {
+    CenteredContainer,
+    GridContainer,
+    InfosContainer,
+    CenteredTitleContainer,
+    ControlsTextContainer,
+    ControlHeaders
+} from './styles';
+import {
+    INNER_TETRIS_COLORS,
+    OUTER_TETRIS_COLORS,
+    WHITE_COLOR
+} from '../../constants';
 import { CellComponent } from '../Cell';
 
 
@@ -50,6 +61,14 @@ export const BoardHoldComponent = ({ color }) => {
         fontSize: "1.25vh"
     };
 
+    const controlsContainer = {
+        border: "7px solid " + color,
+        padding: "0.3em",
+        backgroundColor: "black",
+        fontSize: "0.85vh"
+    };
+
+
     return (
         <div>
             <div style={InfosContainer}>
@@ -64,14 +83,28 @@ export const BoardHoldComponent = ({ color }) => {
                     </div>
                 </div>
             </div >
-            <div>
-                <p>Left: Move left</p>
-                <p>Right: Move right</p>
-                <p>Up: Rotate clockwise</p>
-                <p>Z: Rotate counter-clockwise</p>
-                <p>Down: Soft drop</p>
-                <p>Space: Hard drop </p>
-                <p>C: Hold piece</p>
+
+            <div style={InfosContainer}>
+                <div style={controlsContainer}>
+                    <div style={ControlsTextContainer}>
+                        <p>
+                            <span><b style={ControlHeaders}>Left:</b> Move left</span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>Right:</b> Move right</span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>Up:</b> Rotate clockwise</span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>Z:</b> Rotate counter-clockwise</span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>Down:</b> Soft drop</span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>Space:</b> Hard drop </span><br /><br />
+                            <br />
+                            <span><b style={ControlHeaders}>C:</b> Hold piece</span>
+                            <br />
+                        </p>
+                    </div>
+                </div>
             </div >
         </div >
     );

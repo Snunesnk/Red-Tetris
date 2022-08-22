@@ -1,4 +1,4 @@
-import { RED_COLOR } from "../../constants"
+import { RED_COLOR, WHITE_COLOR } from "../../constants"
 
 export const InfosContainer = {
     display: "flex",
@@ -40,4 +40,16 @@ export const GridContainer = {
     gridTemplateRows: "repeat(4, 1fr)",
     width: "7vh",
     height: "7vh",
+}
+
+export const ControlsTextContainer = {
+    alignItems: "center",
+    textAlign: "start",
+    paddin: "0.5em",
+    color: WHITE_COLOR,
+}
+
+export const ControlHeaders = {
+    color: RED_COLOR,
+    fontSize: "0.95vh"
 }
