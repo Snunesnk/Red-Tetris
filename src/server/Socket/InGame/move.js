@@ -4,11 +4,12 @@ const { findPlayer } = require("../../players");
 
 function moveInGame(payload, socket) {
   const game = findGameBySocketIdPlayer(socket.id);
-  const player = findPlayer(game, socket.id);
+  if (game) {
+    const player = findPlayer(game, socket.id);
 
-  player.addMove(payload.move);
-
-  socket.emit("inGame:moved", { move: payload.move });
+    player.addMove(payload.move);
+    socket.emit("inGame:moved", { move: payload.move });
+  }
 }
 
 module.exports = moveInGame;

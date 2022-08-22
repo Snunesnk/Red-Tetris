@@ -13,7 +13,7 @@ function deletePlayer(socket, io) {
   if (game) {
     const player = findPlayer(game, socket.id);
     game.players.splice(game.players.indexOf(player), 1);
-    editGame(game, io)
+    editGame(game, io);
   }
 }
 
