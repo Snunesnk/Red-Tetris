@@ -111,6 +111,8 @@ function appState(state = defaultAppState, action) {
       return {
         ...state,
         isGameStarted: true,
+        isGameWon: false,
+        isGameOver: false
       };
 
     case "state:gameOver":
@@ -133,10 +135,12 @@ function appState(state = defaultAppState, action) {
           (specter) => specter.id != state.socketId
         );
       }
+
       if (action.room !== undefined) {
         action.isGameStarted = action.room.status !== STATUS.WAITING_ROOM;
         if (!action.isGameStarted) action.isGameOver = false;
       }
+
       return {
         ...state,
         ...action,
