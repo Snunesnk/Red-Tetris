@@ -26,10 +26,17 @@ export const LandingComponent = () => {
 
     if (my_url.hash != "") {
         // If there's a hash, assume that he is joining a room
-        // Remove the first '#' and the last ']', then separate the roomName and the playerName
-        const infos = my_url.hash.slice(1, -1).split('[');
-        destRoom = infos[0];
-        destPlayer = infos[1];
+        // If there's a '[' in the hash, then there's a pseudo to extract it
+        // If not, there's only the roomname, so extract this only
+        if (my_url.hash.indexOf("[") > -1) {
+            // Remove the first '#' and the last ']', then separate the roomName and the playerName
+            const infos = my_url.hash.slice(1, -1).split('[');
+            destRoom = infos[0];
+            destPlayer = infos[1];
+        }
+        else {
+            destRoom = my_url.hash.slice(1, my_url.hash.length);
+        }
     }
 
     return (
