@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Paper,
@@ -28,13 +28,12 @@ import {
   DialogBtnContainerStyle,
   ShareLinkButton,
 } from "./styles";
-import { amIHost } from "../../utils";
 import { RED_COLOR } from "../../constants";
 
 export const WaitingRoomComponent = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state) => state.appState);
-  const room = useSelector((state) => state.appState).room;
+  const { room, socketId } = useSelector((state) => state.appState);
   const HOST_TEXT = `This player will be the new game host and you'll lose your admins rights.`;
   const KICK_TEXT = `This player will be kick out of the game.`;
 
@@ -44,13 +43,20 @@ export const WaitingRoomComponent = () => {
   const [open, setOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
   const [concernedPlayer, setConcernedPlayer] = useState({});
-  const host = amIHost();
+  const [host, setHost] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(
+    () => {
+      setHost(room.players[0].socketId === socketId);
+    },
+    [room],
+    []
+  );
 
   return (
     <Grid container style={GridContainerStyle}>

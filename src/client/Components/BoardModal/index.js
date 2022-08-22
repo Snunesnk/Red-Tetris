@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, Box, Grid, Button } from "@mui/material";
-import { ModalStyle, CenteredContainer, ModalMessage, ModalMessageWin } from "./styles";
-import { amIHost } from "../../utils";
+import {
+  ModalStyle,
+  CenteredContainer,
+  ModalMessage,
+  ModalMessageWin,
+} from "./styles";
 import { STATUS } from "../../constants";
 
 export const BoardModalComponent = () => {
   const [open, setOpen] = useState(true);
   const [message, setMessage] = useState("");
   const appState = useSelector((state) => state.appState);
-  const host = amIHost();
+  const [host, setHost] = useState(false);
+  const { room, socketId } = useSelector((state) => state.appState);
 
   useEffect(() => {
     const baseTime = 1000;
@@ -28,6 +33,14 @@ export const BoardModalComponent = () => {
       dispatch({ type: "game:tetrisStart" });
     }, baseTime * 4);
   }, []);
+
+  useEffect(
+    () => {
+      setHost(room.players[0].socketId === socketId);
+    },
+    [room],
+    []
+  );
 
   const dispatch = useDispatch();
 
