@@ -1,12 +1,12 @@
-const { STATUS } = require("../../const");
+const { STATUS, MAX_PLAYER } = require("../../const");
 const { findGameByName, formatGameForClient } = require("../../games");
 const editGame = require("./edit");
 
 function joinGame(payload, socket, io) {
   const game = findGameByName(payload.gameName);
   if (game) {
-    if (game.status !== STATUS.WAITING_ROOM)
-      socket.emit("game:joined", { error: "This game has already started" });
+    if (game.status !== STATUS.WAITING_ROOM || game.players?.length >= MAX_PLAYER)
+      socket.emit("game:joined", { error: "This game has already started or is full" });
     else {
       let specters = [];
       // Get specter of all already existing players

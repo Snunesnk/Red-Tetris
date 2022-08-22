@@ -218,6 +218,7 @@ const DEAD_LOCK = 500;
 const PIECE_DREW = 0;
 const BOTTOM_EDGE_HIT = 1;
 const MOVE_NOT_PERMITTED = 2;
+const MAX_PLAYER = 8;
 
 // Convention: positive x rightward, positive y upward.
 // Mty functionment: positiv x rightward: positive y downward 
@@ -277,5 +278,6 @@ module.exports = {
   LEFT_NORMAL_ROTATION,
   I_ROTATION,
   LEFT_I_ROTATION,
-  DEAD_LOCK
+  DEAD_LOCK,
+  MAX_PLAYER
 };
