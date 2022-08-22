@@ -47,11 +47,7 @@ export const BoardModalComponent = () => {
   return (
     <Modal
       open={open || appState.isGameOver}
-      // onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
-      {/* // <div style={{ display: open || appState.isGameOver ? "block" : "none" }}> */}
       <Box style={ModalStyle}>
         <Grid container style={CenteredContainer}>
           {!appState.isGameOver && message.length > 0 && (
@@ -86,7 +82,6 @@ export const BoardModalComponent = () => {
             )}
         </Grid>
       </Box>
-      {/* // </div> */}
     </Modal>
   );
 };

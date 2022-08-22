@@ -35,9 +35,6 @@ function roomName(state = "", action) {
     case "game:hostPlayer":
       emitHostPlayerGame(action.playerId);
       return state;
-    case "game:retry":
-      emitRetryGame();
-      return state;
     default:
       return state;
   }
@@ -160,7 +157,17 @@ function appState(state = defaultAppState, action) {
           break;
         }
       }
-      return state;
+      return { ...state };
+
+    case "game:retry":
+      emitRetryGame();
+      return {
+        ...state,
+        isGameStarted: false,
+        isGameOver: false,
+        isGameWon: false,
+        specters: []
+      };
 
     default:
       return state;

@@ -10,6 +10,7 @@ import { SpecterComponent } from '../Specters';
 import { Grid } from '@mui/material';
 export const BoardComponent = () => {
     const stateBoard = useSelector(state => state.stateBoard);
+    let specters = useSelector(state => state.appState.specters);
     let y_pos = -1;
 
     const spanStyle = {
@@ -70,7 +71,8 @@ export const BoardComponent = () => {
             <BoardModalComponent />
 
             <Grid item xs={3}>
-                <SpecterComponent parity={true} />
+                {/* Even specters */}
+                <SpecterComponent specters={specters.filter((specter, i) => i % 2 == 0)} />
             </Grid>
 
             <Grid item xs={12} xl={6}>
@@ -90,7 +92,8 @@ export const BoardComponent = () => {
             </Grid>
 
             <Grid item xs={3}>
-                <SpecterComponent parity={false} />
+                {/* Odd specters */}
+                <SpecterComponent specters={specters.filter((specter, i) => i % 2 != 0)} />
             </Grid>
         </Grid>
     );

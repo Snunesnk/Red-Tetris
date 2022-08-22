@@ -5,20 +5,12 @@ import { GridContainer, PlayerPseudo, SpectersContainers } from './styles'
 import { INNER_TETRIS_COLORS, OUTER_TETRIS_COLORS, WHITE_COLOR } from "../../constants";
 import { Grid } from "@mui/material";
 
-export const SpecterComponent = ({ parity }) => {
-    let specters = useSelector(state => state.appState.specters);
+export const SpecterComponent = ({ specters }) => {
     const players = useSelector(state => state.appState.room.players);
-
-    // Keep only half of the specters
-    if (parity)
-        specters = specters.filter((specter, i) => i % 2 == 0);
-    else
-        specters = specters.filter((specter, i) => i % 2 != 0);
 
     let specterLength = specters.length;
 
     specters = specters.map((specter, i) => {
-
         let y_pos = -1;
 
         let specterMap = specter.map.map(y => {
