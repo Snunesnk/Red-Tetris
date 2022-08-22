@@ -13,7 +13,7 @@ describe("T-spin", () => {
         player.currentPiecX = 3;
 
         // Left rotation
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
         expect(isTspin(player, 5)).toBe(true);
     });
     test("Confirm a t-spin with right rotation", () => {
@@ -36,7 +36,7 @@ describe("T-spin", () => {
         player.currentPieceY = 17;
         player.currentPiecX = 3;
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
 
         // Add drops in move history
         player.moveHistory.push(" ");
@@ -56,7 +56,7 @@ describe("T-spin", () => {
         player.currentPieceY = 17;
         player.currentPiecX = 3;
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
 
         player.moveHistory.push("Non t-spin move");
 
@@ -70,7 +70,7 @@ describe("T-spin", () => {
         player.currentPieceY = 17;
         player.currentPiecX = 3;
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
         expect(isTspin(player, 5)).toBe(false);
     });
     test("Deny t-spin with a non T-piece", () => {
@@ -81,7 +81,7 @@ describe("T-spin", () => {
         player.currentPieceY = 17;
         player.currentPiecX = 3;
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
         expect(isTspin(player, 1)).toBe(false);
     });
     test("Deny t-spin with a piece that has not hit the bottom yet", () => {
@@ -95,7 +95,7 @@ describe("T-spin", () => {
         // Do as if the piece is not yet integrated
         player.needNewPiece = false;
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
         expect(isTspin(player, 5)).toBe(false);
     });
     test("Deny t-spin with only drops", () => {
@@ -119,7 +119,7 @@ describe("T-spin", () => {
         let player = new Player();
         player.loadMap(Maps.t_spin_double)
 
-        player.moveHistory.push("c");
+        player.moveHistory.push("z");
 
         player.currentPieceY = -17;
         player.currentPieceX = 3;

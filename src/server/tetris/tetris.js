@@ -160,11 +160,11 @@ function handleMove(player, move, piece) {
             rotateRight(player, piece, 0);
             break;
 
-        case "c":
+        case "z":
             rotateLeft(player, piece, 0);
             break;
 
-        case "z":
+        case "c":
             hold(player);
             break;
 

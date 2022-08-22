@@ -51,17 +51,28 @@ export const BoardHoldComponent = ({ color }) => {
     };
 
     return (
-        <div style={InfosContainer}>
-            <div style={containerStyle}>
-                <div style={CenteredTitleContainer}>
-                    Hold
-                </div>
-                <div style={CenteredContainer}>
-                    <div style={GridContainer}>
-                        {piece_hold}
+        <div>
+            <div style={InfosContainer}>
+                <div style={containerStyle}>
+                    <div style={CenteredTitleContainer}>
+                        Hold
+                    </div>
+                    <div style={CenteredContainer}>
+                        <div style={GridContainer}>
+                            {piece_hold}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div >
+            <div>
+                <p>Left: Move left</p>
+                <p>Right: Move right</p>
+                <p>Up: Rotate clockwise</p>
+                <p>Z: Rotate counter-clockwise</p>
+                <p>Down: Soft drop</p>
+                <p>Space: Hard drop </p>
+                <p>C: Hold piece</p>
+            </div >
         </div >
     );
 }

@@ -146,7 +146,7 @@ function hold(player) {
     // Put current piece in hold
     player.pieceHold = player.currentPiece;
     player.getNextPiece();
-    player.currentPieceY -= 1;
+    // player.currentPieceY -= 1;
 
 
     // if a piece was held, then put it back

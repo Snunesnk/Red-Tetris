@@ -286,7 +286,7 @@ describe("Handle move", () => {
         let player = new Player();
         let piece = new Piece();
 
-        handleMove(player, "c", piece);
+        handleMove(player, "z", piece);
 
         expect(player.currentPieceRotation).toBe(3);
     });
@@ -294,7 +294,7 @@ describe("Handle move", () => {
         let player = new Player();
         let piece = new Piece();
 
-        handleMove(player, "z", piece);
+        handleMove(player, "c", piece);
 
         expect(player.hasHeld).toBe(true);
     });

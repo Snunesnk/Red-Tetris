@@ -137,7 +137,7 @@ function isTspin(player, pieceType) {
                 continue;
 
             case "ArrowUp":
-            case "c":
+            case "z":
                 break;
 
             // Any movement that is not a drop nor a rotation make the t-spin fail
