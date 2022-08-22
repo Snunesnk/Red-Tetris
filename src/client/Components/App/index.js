@@ -21,10 +21,7 @@ function onKeyDown(e) {
 export function App() {
   appState = useSelector((state) => state.appState);
   useEffect(() => {
-    // Force focus to get all keys pressed
-    if (appState.isGameStarted) document.addEventListener("keydown", onKeyDown);
-    else document.removeEventListener("keydown", onKeyDown);
-
+    // Prepare music to play
     var audio = new Audio("korobeiniki.mp3");
     if (typeof audio.loop == "boolean") {
       audio.loop = true;
@@ -38,7 +35,14 @@ export function App() {
         false
       );
     }
-    audio.play();
+
+    // Force focus to get all keys pressed
+    if (appState.isGameStarted) {
+      document.addEventListener("keydown", onKeyDown);
+      audio.play();
+    }
+    else
+      document.removeEventListener("keydown", onKeyDown);
   }, [appState.isGameStarted]);
 
   return (
