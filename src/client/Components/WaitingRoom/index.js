@@ -26,6 +26,7 @@ import {
   ModerationButtonStyle,
   NamePlayerPaperStyle,
   DialogBtnContainerStyle,
+  ShareLinkButton,
 } from "./styles";
 import { amIHost } from "../../utils";
 import { RED_COLOR } from "../../constants";
@@ -38,6 +39,7 @@ export const WaitingRoomComponent = () => {
   const KICK_TEXT = `This player will be kick out of the game.`;
 
   location.href = "#" + room.name + "[" + appState.playerName + "]";
+  console.info(location);
 
   const [open, setOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
@@ -111,6 +113,21 @@ export const WaitingRoomComponent = () => {
       </Grid>
       <Grid item xs={1} md={3}></Grid>
 
+      <Grid item xs={1} md={4}></Grid>
+      <Grid item xs={10} md={4} style={CenteredContainer}>
+        <Button
+          variant="contained"
+          style={ShareLinkButton}
+          size="large"
+          fullWidth
+          onClick={() => {
+            navigator.clipboard.writeText(location.href.split("[")[0]);
+          }}
+        >
+          Copy sharing link
+        </Button>
+      </Grid>
+      <Grid item xs={1} md={4}></Grid>
       <Grid item xs={1} md={3}></Grid>
       <Grid item xs={10} md={6} style={CenteredContainer}>
         <Button
