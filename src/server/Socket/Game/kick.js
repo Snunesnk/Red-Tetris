@@ -12,7 +12,7 @@ function kickPlayer(payload, socket, io) {
       my_socket.leave(game.name);
       game.players.splice(game.players.indexOf(targetPlayer), 1);
       my_socket.emit("game:playerKicked");
-      editGame(game, socket, io);
+      editGame(game, io);
     }
   }
 }

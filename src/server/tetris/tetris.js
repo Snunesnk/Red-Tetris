@@ -1,13 +1,14 @@
 const consts = require("../const");
 const updateMap = require("../Socket/InGame/updateMap");
-const updateSpecter = require("../Socket/InGame/updateSpecter");
+const { updateSpecter } = require("../Socket/InGame/updateSpecter");
 const { draw, placeLine, eraseLine, testDraw } = require("./draw");
 const { moveLeft, moveRight, rotateRight, rotateLeft, putPieceDown, hold } = require("./moves");
 const { calculateScore, isTspin } = require("./score");
 const { addUnbreakableLines } = require("./unbreakableLines");
 const { hasHitBottom, drawPieceSpecter, erasePieceSpecter } = require("./tetris.utils");
+const gameOver = require("../Socket/InGame/gameOver");
 
-async function tetris(game, player, socket) {
+async function tetris(game, player, socket, io) {
     player.increaseLevel();
 
     // Calculate / handle one frame.
@@ -17,7 +18,7 @@ async function tetris(game, player, socket) {
         await new Promise(resolve => setTimeout(resolve, 17));
     }
 
-    socket.emit("game:over");
+    gameOver(game, socket, io);
 }
 
 // Maybe I can implement a move queue, as long as there are move this function is triggered, plus 
@@ -26,6 +27,8 @@ async function tetris(game, player, socket) {
 function handleGame(game, player, socket) {
     if (player.needsUpdate) {
         player.needsUpdate = false;
+        draw(player.map, player.currentPieceX, player.currentPieceY, game.pieces[player.currentPiece].content[player.currentPieceRotation], eraseLine);
+        erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
         updateSpecter(game, player, socket);
     }
 
@@ -43,6 +46,8 @@ function handleGame(game, player, socket) {
         erasePieceSpecter(player, game.pieces[player.currentPiece].content[player.currentPieceRotation]);
     }
     else {
+        updateSpecter(game, player, socket);
+        // Tells the others players that a new piece has been placed
         handleNewPiece(player, game.pieces[player.currentPiece]);
     }
 
@@ -76,10 +81,6 @@ function handleGame(game, player, socket) {
     }
 
     updateMap(game, player, socket);
-
-    // Tells the others players that a new piece has been placed
-    if (player.needNewPiece)
-        updateSpecter(game, player, socket);
 
     if (game.pieces.length - player.currentPiece < 10)
         game.addPieces(10);

@@ -3,3 +3,5 @@ bundle.js
 .vscode
 .nyc_output/
 coverage/
+.nyc_output
+coverage

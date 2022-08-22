@@ -1,4 +1,5 @@
 const { formatGameForClient } = require("../../games");
+const { getSpecterMap } = require("../InGame/updateSpecter");
 
 function editGame(game, io) {
   let specters = [];
@@ -7,7 +8,7 @@ function editGame(game, io) {
   for (let i = 0; i < game.players.length; i++) {
     specters.push({
       id: game.players[i].socketId,
-      map: game.players[i].map
+      map: getSpecterMap(game.players[i].map)
     });
   }
 

@@ -109,6 +109,7 @@ export const RoomSelectionComponent = () => {
               <Button
                 variant="contained"
                 style={JoinRoomBtnStyle}
+                disabled={!(row.status === STATUS.WAITING_ROOM)}
                 onClick={() => {
                   location.href = "#" + row.name + "[" + playerName + "]";
                   dispatch({

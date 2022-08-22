@@ -10,7 +10,7 @@ class Game {
     this.spectators = []; // game spectators
     this.isPublic = isPublic; // is this game public ? (available on homepage)
     this.status = STATUS.WAITING_ROOM;
-    this.addPieces(10)
+    this.addPieces(10);
   }
 
   addPieces(nb) {
@@ -25,9 +25,10 @@ class Game {
     return newPlayer;
   }
 
-  resetGame(status) {
+  reset(status) {
     this.pieces = [];
     this.status = status;
+    this.addPieces(10);
     this.players.map((player) => player.init());
     if (status === STATUS.WAITING_ROOM)
       return; // just move everyone to waiting room
