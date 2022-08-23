@@ -1,6 +1,8 @@
 const { Games } = require("./const");
+const Game = require("./game");
 const { findGameBySocketIdPlayer } = require("./games");
 const editGame = require("./Socket/Game/edit");
+const listGames = require("./Socket/Game/list");
 
 function findPlayer(game, socketId) {
   return game.players.find((player) => {
@@ -13,7 +15,12 @@ function deletePlayer(socket, io) {
   if (game) {
     const player = findPlayer(game, socket.id);
     game.players.splice(game.players.indexOf(player), 1);
-    editGame(game, io);
+    if (game.players.length < 1) {
+      Games.splice(Games.indexOf(game), 1);
+      listGames(null, io);
+    }
+    else
+      editGame(game, io);
   }
 }
 

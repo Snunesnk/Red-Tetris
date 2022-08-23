@@ -22,6 +22,7 @@ export const LandingComponent = () => {
     let destPlayer = "";
 
     // Check if the player came from a link or not
+    console.log()
     const my_url = new window.URL(location.href);
 
     if (my_url.hash != "") {
@@ -31,11 +32,11 @@ export const LandingComponent = () => {
         if (my_url.hash.indexOf("[") > -1) {
             // Remove the first '#' and the last ']', then separate the roomName and the playerName
             const infos = my_url.hash.slice(1, -1).split('[');
-            destRoom = infos[0];
-            destPlayer = infos[1];
+            destRoom = decodeURI(infos[0]);
+            destPlayer = decodeURI(infos[1]);
         }
         else {
-            destRoom = my_url.hash.slice(1, my_url.hash.length);
+            destRoom = decodeURI(my_url.hash.slice(1, my_url.hash.length));
         }
     }
 
