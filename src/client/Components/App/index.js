@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid } from "@mui/material";
+import { alertTitleClasses, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
@@ -18,31 +18,50 @@ function onKeyDown(e) {
   }
 }
 
+function stopAudio(audio) {
+  if (typeof audio.loop == "boolean") {
+    audio.loop = false;
+  } else {
+    audio.removeEventListener(
+      "ended",
+      function () {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    );
+  }
+
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+// Prepare music to be played
+var audio = new Audio("korobeiniki.mp3");
+if (typeof audio.loop == "boolean") {
+  audio.loop = true;
+} else {
+  audio.addEventListener(
+    "ended",
+    function () {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  );
+}
+
 export function App() {
   appState = useSelector((state) => state.appState);
-  useEffect(() => {
-    // Prepare music to play
-    var audio = new Audio("korobeiniki.mp3");
-    if (typeof audio.loop == "boolean") {
-      audio.loop = true;
-    } else {
-      audio.addEventListener(
-        "ended",
-        function () {
-          audio.currentTime = 0;
-          audio.play();
-        },
-        false
-      );
-    }
 
+  useEffect(() => {
     // Force focus to get all keys pressed
     if (appState.isGameStarted) {
       document.addEventListener("keydown", onKeyDown);
       audio.play();
     }
-    else
+    else {
       document.removeEventListener("keydown", onKeyDown);
+      stopAudio(audio);
+    }
   }, [appState.isGameStarted]);
 
   return (

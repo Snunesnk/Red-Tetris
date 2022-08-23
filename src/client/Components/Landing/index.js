@@ -22,7 +22,6 @@ export const LandingComponent = () => {
     let destPlayer = "";
 
     // Check if the player came from a link or not
-    console.log()
     const my_url = new window.URL(location.href);
 
     if (my_url.hash != "") {
