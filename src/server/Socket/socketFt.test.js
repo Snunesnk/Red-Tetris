@@ -126,7 +126,7 @@ describe("Game", () => {
     let socket = new FakeSocket();
     let io = new FakeSocket();
 
-    startTetris(socket); // Test with unexisting game
+    startTetris(socket, io); // Test with unexisting game
     expect(socket.msg.length).toBe(0);
     let payload = {
       gameName,
@@ -134,7 +134,7 @@ describe("Game", () => {
     };
     createGame(payload, socket, io);
 
-    startTetris(socket);
+    startTetris(socket, io);
     let game = findGameByName(gameName);
     setTimeout(() => {
       game.players[0].isOver = true;
