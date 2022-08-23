@@ -25,8 +25,8 @@ describe("Game", () => {
     expect(game.players[0].name).toMatch("MyPlayer");
 
     createGame(payload, socket, io);
-    expect(socket.msg[3]).toMatch("game:created");
-    expect(socket.msgObj[3].error).toMatch("Name already taken");
+    expect(socket.msg[2]).toMatch("game:created");
+    expect(socket.msgObj[2].error).toMatch("Name already taken");
     Games.pop();
   });
   test("Join a non existing game", () => {

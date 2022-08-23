@@ -46,9 +46,9 @@ describe("Game class", () => {
         michel.level = 18;
         michel.score = 4200000;
 
-        game.resetGame(STATUS.WAITING_ROOM);
+        game.reset(STATUS.WAITING_ROOM);
 
-        expect(game.pieces.length).toBe(0);
+        expect(game.pieces.length).toBe(10);
         expect(game.players.length).toBe(1);
         expect(game.status).toBe(STATUS.WAITING_ROOM);
         expect(game.spectators.length).toBe(0);
@@ -62,9 +62,9 @@ describe("Game class", () => {
         michel.level = 18;
         michel.score = 4200000;
 
-        game.resetGame(STATUS.IN_GAME);
+        game.reset(STATUS.IN_GAME);
 
-        expect(game.pieces.length).toBe(0);
+        expect(game.pieces.length).toBe(10);
         expect(game.players.length).toBe(1);
         expect(game.status).toBe(STATUS.IN_GAME);
         expect(game.spectators.length).toBe(0);
@@ -78,9 +78,9 @@ describe("Game class", () => {
         michel.level = 18;
         michel.score = 4200000;
 
-        game.resetGame("CC");
+        game.reset("CC");
 
-        expect(game.pieces.length).toBe(0);
+        expect(game.pieces.length).toBe(10);
         expect(game.players.length).toBe(1);
         expect(game.status).toBe("CC");
         expect(game.spectators.length).toBe(0);

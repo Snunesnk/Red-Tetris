@@ -3,7 +3,7 @@ import Game from "../game";
 import Maps from "../maps/maps";
 import { handleClearedLines, handleGame, handleGravity, handleMove, handleNewPiece, tetris } from "./tetris";
 import Piece from "../piece";
-import FakeSocket from "../Socket/socket.test"
+import FakeSocket from "../Socket/socket.test";
 
 jest.useFakeTimers();
 afterEach(() => {
@@ -16,31 +16,34 @@ describe("Tetris loop", () => {
     test("One game loop", () => {
         let game = new Game();
         let fakeSocket = new FakeSocket();
+        let fakeIO = new FakeSocket();
         let player = new Player(fakeSocket.id, "Roger");
 
-        tetris(game, player, fakeSocket);
+        tetris(game, player, fakeSocket, fakeIO);
 
         // wait for one frame before ending
         setTimeout(() => {
             player.isOver = true;
         }, 17);
 
-        expect(fakeSocket.msg[0]).toMatch("ingame:updateMap");
-        expect(fakeSocket.msgObj.length).toBe(1);
-        expect(fakeSocket.msgObj[0]).toMatchObject({
-            score: 0,
-            level: 1
-        });
+        expect(fakeSocket.msg).toStrictEqual(["ingame:updateSpecter", "ingame:updateMap"]);
+        expect(fakeSocket.msgObj[0]).toMatchObject(
+            {
+                index: fakeSocket.id,
+                map: Maps.empty,
+            }
+        );
         expect(player.map).not.toMatchObject(Maps.empty);
     });
     test("Instant game over", () => {
         let game = new Game();
         let fakeSocket = new FakeSocket();
+        let fakeIO = new FakeSocket();
         let player = new Player(fakeSocket.id, "Roger");
 
         player.isOver = true;
 
-        tetris(game, player, fakeSocket);
+        tetris(game, player, fakeSocket, fakeIO);
 
         expect(fakeSocket.msg[0]).toMatch("game:over");
         expect(player.map).toMatchObject(Maps.empty)
