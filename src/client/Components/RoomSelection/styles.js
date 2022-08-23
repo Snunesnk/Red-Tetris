@@ -3,6 +3,7 @@ import { RED_COLOR } from "../../constants"
 export const CenteredContainer = {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: "center"
 }
 
 export const StartContainer = {

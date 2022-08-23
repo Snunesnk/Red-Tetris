@@ -100,4 +100,5 @@ export const DialogBtnContainerStyle = {
 export const ShareLinkButton = {
   fontSize: "1em",
   marginTop: "5em",
+  backgroundColor: "rgba(234,14,14, 0.7)"
 };
