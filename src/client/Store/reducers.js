@@ -153,6 +153,7 @@ function appState(state = defaultAppState, action) {
           roomList: action.roomList,
         };
       }
+      break ;
 
     case "specters:new":
       for (let i = 0; i < state.specters.length; i++) {
