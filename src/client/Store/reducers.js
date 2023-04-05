@@ -112,7 +112,7 @@ function appState(state = defaultAppState, action) {
         ...state,
         isGameStarted: true,
         isGameWon: false,
-        isGameOver: false
+        isGameOver: false,
       };
 
     case "state:gameOver":
@@ -171,7 +171,7 @@ function appState(state = defaultAppState, action) {
         isGameStarted: false,
         isGameOver: false,
         isGameWon: false,
-        specters: []
+        specters: [],
       };
 
     default:

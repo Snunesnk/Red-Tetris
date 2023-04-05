@@ -22,13 +22,10 @@ function stopAudio(audio) {
   if (typeof audio.loop == "boolean") {
     audio.loop = false;
   } else {
-    audio.removeEventListener(
-      "ended",
-      function () {
-        audio.currentTime = 0;
-        audio.play();
-      }
-    );
+    audio.removeEventListener("ended", function () {
+      audio.currentTime = 0;
+      audio.play();
+    });
   }
 
   audio.pause();
@@ -40,13 +37,10 @@ var audio = new Audio("korobeiniki.mp3");
 if (typeof audio.loop == "boolean") {
   audio.loop = true;
 } else {
-  audio.addEventListener(
-    "ended",
-    function () {
-      audio.currentTime = 0;
-      audio.play();
-    }
-  );
+  audio.addEventListener("ended", function () {
+    audio.currentTime = 0;
+    audio.play();
+  });
 }
 
 export function App() {
@@ -57,8 +51,7 @@ export function App() {
     if (appState.isGameStarted) {
       document.addEventListener("keydown", onKeyDown);
       audio.play();
-    }
-    else {
+    } else {
       document.removeEventListener("keydown", onKeyDown);
       stopAudio(audio);
     }

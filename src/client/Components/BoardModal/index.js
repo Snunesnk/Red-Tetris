@@ -31,12 +31,13 @@ export const BoardModalComponent = () => {
     setTimeout(() => {
       setOpen(false);
       dispatch({ type: "game:tetrisStart" });
-    }, baseTime * 4);
+      // }, baseTime * 4);
+    }, baseTime * 0);
   }, []);
 
   useEffect(
     () => {
-      setHost(room.players[0].socketId === socketId);
+      setHost(room?.players[0].socketId === socketId);
     },
     [room],
     []
@@ -45,9 +46,7 @@ export const BoardModalComponent = () => {
   const dispatch = useDispatch();
 
   return (
-    <Modal
-      open={open || appState.isGameOver}
-    >
+    <Modal open={open || appState.isGameOver}>
       <Box style={ModalStyle}>
         <Grid container style={CenteredContainer}>
           {!appState.isGameOver && message.length > 0 && (
@@ -67,6 +66,7 @@ export const BoardModalComponent = () => {
           )}
           {appState.isGameOver &&
             host &&
+            appState.room &&
             appState.room.status === STATUS.END_GAME && (
               <Grid item xs={12} style={ModalMessage}>
                 <Button
