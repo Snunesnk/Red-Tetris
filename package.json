@@ -4,7 +4,7 @@
     "description": "my first socket.io app",
     "scripts": {
         "srv-dev": "nodemon src/server/index.js && webpack --watch",
-        "cli-dev": "webpack-dev-server --hot",
+        "cli-dev": "webpack-dev-server --hot --host 0.0.0.0",
         "srv-prod": "node src/server/index.js",
         "cli-prod": "npx webpack",
         "start": "node src/server/index.js",
@@ -38,9 +38,9 @@
         "socket.io-client": "^4.4.1",
         "style-loader": "^2.0.0",
         "styled-components": "^5.3.5",
-        "webpack": "^5.0",
+        "webpack": "^5.78.0",
         "webpack-cli": "^4.10.0",
-        "webpack-dev-server": "^4.7.3"
+        "webpack-dev-server": "^4.13.2"
     },
     "engines": {
         "node": "16.x",
