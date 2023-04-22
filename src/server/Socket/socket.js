@@ -10,8 +10,6 @@ const kickPlayer = require("./Game/kick");
 const hostPlayer = require("./Game/host");
 const retryGame = require("./Game/retry");
 
-const port = 3024;
-
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
@@ -21,6 +19,7 @@ function initSocket(httpServer) {
   });
 
   io.on("connection", (socket) => {
+    console.log("Client connected");
     socket.on("game:create", (payload) => {
       createGame(payload, socket, io);
     });
