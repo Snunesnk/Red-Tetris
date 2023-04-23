@@ -1,16 +1,10 @@
 const express = require("express");
 const { createServer } = require("http");
-
 const initSocket = require("./Socket/socket");
+let path = require("path");
 
 const app = express();
 const httpServer = createServer(app);
-
-let path = require("path");
-
-function f(value) {
-    console.log(value.content);
-}
 
 // On connexion to the page, returns the HTML code
 app.get("/", (req, res) => {
