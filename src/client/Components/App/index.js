@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { alertTitleClasses, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
-import { CenteredContainer, appDiv } from "./styles";
+import { appDiv } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
@@ -59,7 +59,7 @@ export function App() {
 
   return (
     <div id="app_div" style={appDiv}>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12}>
           <TitleComponent></TitleComponent>
         </Grid>

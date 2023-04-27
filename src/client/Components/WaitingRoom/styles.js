@@ -87,7 +87,7 @@ export const HostPlayersPaperStyle = {
   paddingTop: "0.5em",
   paddingBottom: "0.5em",
   marginTop: "0.5em",
-  border: "1px solid #ea0e0e",
+  border: "1px solid " + RED_COLOR,
   fontSize: "0.9em",
   textAlign: "center",
 };
@@ -100,5 +100,5 @@ export const DialogBtnContainerStyle = {
 export const ShareLinkButton = {
   fontSize: "1em",
   marginTop: "5em",
-  backgroundColor: "rgba(234,14,14, 0.7)"
+  backgroundColor: "rgba(234,14,14, 0.7)",
 };
