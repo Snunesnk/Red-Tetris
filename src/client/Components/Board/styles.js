@@ -1,3 +1,10 @@
+export const BoardContainer = {
+  display: "flex",
+  justifyContent: "center",
+  width: "100%",
+  marginTop: "25px",
+};
+
 export const LineStyle = {
   display: "flex",
   justifyContent: "center",

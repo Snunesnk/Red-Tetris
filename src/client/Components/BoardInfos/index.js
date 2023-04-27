@@ -64,7 +64,6 @@ export const BoardInfosComponent = ({ score, color }) => {
         </div>
         <div style={{ marginTop: "2em" }}>
           <div style={CenteredContainer}>Next</div>
-          <div style={CenteredContainer}>pieces</div>
           <div style={CenteredContainer}>
             <div style={GridContainer}>{next_pieces}</div>
           </div>

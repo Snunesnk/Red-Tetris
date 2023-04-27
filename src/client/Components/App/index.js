@@ -6,7 +6,7 @@ import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
-import { appDiv } from "./styles";
+import { appDiv, CenteredContainer } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
@@ -72,22 +72,20 @@ export function App() {
         {appState.isGameStarted == false &&
           appState.isPseudoEntered == true &&
           appState.isRoomSelected == false && (
-            <RoomSelectionComponent></RoomSelectionComponent>
+            <div style={CenteredContainer}>
+              <RoomSelectionComponent></RoomSelectionComponent>
+            </div>
           )}
 
         {appState.isGameStarted == false &&
           appState.isPseudoEntered == true &&
           appState.isRoomSelected == true && (
-            <Grid item xs={12}>
+            <div style={CenteredContainer}>
               <WaitingRoomComponent></WaitingRoomComponent>
-            </Grid>
+            </div>
           )}
 
-        {appState.isGameStarted === true && (
-          <Grid item xs={12}>
-            <BoardComponent></BoardComponent>
-          </Grid>
-        )}
+        {appState.isGameStarted === true && <BoardComponent></BoardComponent>}
 
         {appState.isPseudoEntered && (
           <PlayerPseudoComponent></PlayerPseudoComponent>

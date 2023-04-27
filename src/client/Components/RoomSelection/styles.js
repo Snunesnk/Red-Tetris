@@ -6,6 +6,7 @@ export const RoomSelectionContainer = {
   padding: "10px",
   textAlign: "center",
   marginTop: "150px",
+  maxWidth: "1000px",
 };
 
 export const CenteredContainer = {
@@ -86,4 +87,6 @@ export const CreateRoomBtn = {
 export const DialogBtnContainerStyle = {
   display: "flex",
   justifyContent: "space-between",
+  padding: "20px 24px",
+  paddingTop: "0",
 };
