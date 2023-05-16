@@ -10,7 +10,7 @@ import {
   scoreValue,
 } from "./styles";
 
-const API_URL = process.env.API_URL || "http://localhost:3042";
+const API_URL = process.env.API_URL;
 
 const ScoreList = () => {
   const [scores, setScores] = useState([]);
