@@ -9,6 +9,9 @@ export const WHITE_COLOR = "rgb(232, 230, 227)";
 // export const RED_COLOR = "#ea0e0e";
 export const RED_COLOR = "#EC008C";
 export const GREEN_COLOR = "#03db02";
+export const GOLD_COLOR = "#FFD700";
+export const SILVER_COLOR = "#C0C0C0";
+export const BRONZE_COLOR = "#cd7f32";
 
 // Default map to start with
 export const DEFAULT_MAP = [

@@ -24,6 +24,7 @@ import { STATUS } from "../../constants";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AddIcon from "@mui/icons-material/Add";
+import ScoreList from "../Scores";
 
 export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
@@ -42,13 +43,6 @@ export const RoomSelectionComponent = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const options = {
-      method: "GET",
-    };
-    fetch("http://localhost:3042/getTopTenScores", options);
-  }, []);
-
   const joinRoom = (roomName) => {
     location.href = "#" + roomName + "[" + playerName + "]";
     dispatch({
@@ -60,7 +54,7 @@ export const RoomSelectionComponent = () => {
 
   return (
     <div style={RoomSelectionContainer} className="room-selection-container">
-      {/* Table header */}
+      <ScoreList />
       <div style={StartContainer}>
         <span style={{ fontSize: "0.8rem" }}>Join or host a game</span>
         <div style={HeaderContainer} id="room-selection-header-container">

@@ -1,12 +1,10 @@
 export const RoomSelectionContainer = {
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "start",
   width: "100%",
   padding: "10px",
   textAlign: "center",
-  marginTop: "150px",
-  maxWidth: "1000px",
 };
 
 export const CenteredContainer = {
@@ -22,6 +20,9 @@ export const StartContainer = {
   width: "100%",
   padding: "10px",
   borderRadius: "4px",
+
+  marginTop: "150px",
+  maxWidth: "1000px",
 };
 
 export const HeaderContainer = {
