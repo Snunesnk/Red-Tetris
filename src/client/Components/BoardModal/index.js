@@ -15,6 +15,7 @@ export const BoardModalComponent = () => {
   const appState = useSelector((state) => state.appState);
   const [host, setHost] = useState(false);
   const { room, socketId } = useSelector((state) => state.appState);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const baseTime = 1000;
@@ -31,8 +32,7 @@ export const BoardModalComponent = () => {
     setTimeout(() => {
       setOpen(false);
       dispatch({ type: "game:tetrisStart" });
-      // }, baseTime * 4);
-    }, baseTime * 0);
+    }, baseTime * 4);
   }, []);
 
   useEffect(
@@ -42,8 +42,6 @@ export const BoardModalComponent = () => {
     [room],
     []
   );
-
-  const dispatch = useDispatch();
 
   return (
     <Modal open={open || appState.isGameOver}>

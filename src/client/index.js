@@ -8,7 +8,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#ea0e0e",
+      main: "#EC008C",
+      // main: "#ea0e0e",
     },
     secondary: {
       main: "rgb(232, 230, 227)",

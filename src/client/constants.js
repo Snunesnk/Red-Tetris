@@ -1,12 +1,13 @@
 export const STATUS = {
   WAITING_ROOM: 0,
   IN_GAME: 1,
-  END_GAME: 2
+  END_GAME: 2,
 };
 
 export const MAIN_BACK_COLOR = "linear-gradient(#1A1A1D, #141e30) fixed";
 export const WHITE_COLOR = "rgb(232, 230, 227)";
-export const RED_COLOR = "#ea0e0e";
+// export const RED_COLOR = "#ea0e0e";
+export const RED_COLOR = "#EC008C";
 export const GREEN_COLOR = "#03db02";
 
 // Default map to start with
@@ -64,7 +65,8 @@ export const OUTER_TETRIS_COLORS = [
   "#d9b328", // YELLOW => O cell - 4
   "#78c62b", // GREEN => S cell - 5
   "#b347db", // PURPLE => T cell - 6
-  "#ea0e0e", // RED => Z cell - 7
+  // "#ea0e0e", // RED => Z cell - 7
+  "#EC008C", // RED => Z cell - 7
 ];
 
 export const INNER_TETRIS_COLORS = [

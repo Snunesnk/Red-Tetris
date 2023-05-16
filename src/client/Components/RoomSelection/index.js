@@ -34,6 +34,15 @@ export const RoomSelectionComponent = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
+
+    fetch("http://localhost:3042/getTopTenScores", options);
+  }, []);
+
   dispatch({ type: "game:list" });
   let newRoomName = "";
   const playerName = useSelector((state) => state.appState).playerName;
