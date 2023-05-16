@@ -12,7 +12,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import StarIcon from "@mui/icons-material/Star";
-
 import {
   GridContainerStyle,
   PlayButtonStyle,
@@ -27,29 +26,34 @@ import {
   NamePlayerPaperStyle,
   DialogBtnContainerStyle,
   ShareLinkButton,
+  LinkCopiedContainer,
+  LinkCopied,
 } from "./styles";
 import { RED_COLOR } from "../../constants";
+import LinkIcon from "@mui/icons-material/Link";
+
+const HOST_TEXT = `This player will be the new game host and you'll lose your admins rights.`;
+const KICK_TEXT = `This player will be kick out of the game.`;
 
 export const WaitingRoomComponent = () => {
   const dispatch = useDispatch();
-  const appState = useSelector((state) => state.appState);
-  const { room, socketId } = useSelector((state) => state.appState);
-  const HOST_TEXT = `This player will be the new game host and you'll lose your admins rights.`;
-  const KICK_TEXT = `This player will be kick out of the game.`;
-
-  location.href = "#" + room.name + "[" + appState.playerName + "]";
-  console.info(location);
-
   const [open, setOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
+  const [linkCopied, setLinkCopied] = useState(false);
   const [concernedPlayer, setConcernedPlayer] = useState({});
   const [host, setHost] = useState(false);
+  const { room, socketId } = useSelector((state) => state.appState);
+  const appState = useSelector((state) => state.appState);
+
+  location.href = "#" + room.name + "[" + appState.playerName + "]";
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+
   useEffect(
     () => {
       setHost(room.players[0].socketId === socketId);
@@ -58,84 +62,70 @@ export const WaitingRoomComponent = () => {
     []
   );
 
+  const copyLink = () => {
+    navigator.clipboard.writeText(location.href.split("[")[0]);
+    setLinkCopied(true);
+    setTimeout(() => {
+      setLinkCopied(false);
+    }, 2000);
+  };
+
   return (
-    <Grid container style={GridContainerStyle}>
-      <Grid item xs={1} md={3}></Grid>
-      <Grid item xs={10} md={6} style={HeaderPaperContainer}>
+    <Grid style={GridContainerStyle}>
+      <div style={HeaderPaperContainer}>
         <Paper style={PlayersHeaderPaperStyle}>
-          <Grid container>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4} style={CenteredContainer}>
-              {room.name}
-            </Grid>
-            <Grid item xs={4} style={HeaderSpanContainer}>
-              {room.players.length}/8
-            </Grid>
-          </Grid>
+          <div style={ShareLinkButton}>
+            <Button onClick={copyLink}>
+              <LinkIcon />
+            </Button>
+          </div>
+          <div style={CenteredContainer}>{room.name}</div>
+          <div style={HeaderSpanContainer}>{room.players.length}/8</div>
         </Paper>
-      </Grid>
-      <Grid item xs={1} md={3}></Grid>
+      </div>
 
-      <Grid item xs={1} md={3}></Grid>
-      <Grid item xs={10} md={6}>
-        <Grid container style={CenteredContainer}>
-          <Grid item xs={8}>
-            {room.players.map((player, i) => (
-              <Paper
-                style={i == 0 ? HostPlayersPaperStyle : PlayersPaperStyle}
-                key={i}
-              >
-                <span style={NamePlayerPaperStyle}>{player.name}</span>
-                {host && i != 0 && (
-                  <span style={ModerationActionsStyle}>
-                    <Button
-                      onClick={() => {
-                        setDialogText(HOST_TEXT);
-                        setConcernedPlayer(player);
-                        handleClickOpen();
-                      }}
-                      style={ModerationButtonStyle}
-                    >
-                      <StarIcon sx={{ color: "gold", fontSize: 25 }}></StarIcon>
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setDialogText(KICK_TEXT);
-                        setConcernedPlayer(player);
-                        handleClickOpen();
-                      }}
-                      style={ModerationButtonStyle}
-                    >
-                      <CloseIcon
-                        sx={{ color: RED_COLOR, fontSize: 25 }}
-                      ></CloseIcon>
-                    </Button>
-                  </span>
-                )}
-              </Paper>
-            ))}
-          </Grid>
-        </Grid>
+      <Grid
+        item
+        xs={8}
+        style={{ ...CenteredContainer, flexDirection: "column" }}
+      >
+        {room.players.map((player, i) => (
+          <Paper
+            style={i == 0 ? HostPlayersPaperStyle : PlayersPaperStyle}
+            key={i}
+          >
+            <span style={NamePlayerPaperStyle}>{player.name}</span>
+            {host && i != 0 && (
+              <span style={ModerationActionsStyle}>
+                <Button
+                  onClick={() => {
+                    setDialogText(HOST_TEXT);
+                    setConcernedPlayer(player);
+                    handleClickOpen();
+                  }}
+                  style={ModerationButtonStyle}
+                >
+                  <StarIcon sx={{ color: "gold", fontSize: 25 }}></StarIcon>
+                </Button>
+                <Button
+                  onClick={() => {
+                    setDialogText(KICK_TEXT);
+                    setConcernedPlayer(player);
+                    handleClickOpen();
+                  }}
+                  style={ModerationButtonStyle}
+                >
+                  <CloseIcon
+                    sx={{ color: RED_COLOR, fontSize: 25 }}
+                  ></CloseIcon>
+                </Button>
+              </span>
+            )}
+          </Paper>
+        ))}
       </Grid>
-      <Grid item xs={1} md={3}></Grid>
 
-      <Grid item xs={1} md={4}></Grid>
-      <Grid item xs={10} md={4} style={CenteredContainer}>
-        <Button
-          variant="contained"
-          style={ShareLinkButton}
-          size="large"
-          fullWidth
-          onClick={() => {
-            navigator.clipboard.writeText(location.href.split("[")[0]);
-          }}
-        >
-          Copy sharing link
-        </Button>
-      </Grid>
-      <Grid item xs={1} md={4}></Grid>
-      <Grid item xs={1} md={3}></Grid>
-      <Grid item xs={10} md={6} style={CenteredContainer}>
+      <div style={CenteredContainer}>
         <Button
           variant="contained"
           style={PlayButtonStyle}
@@ -152,8 +142,7 @@ export const WaitingRoomComponent = () => {
         >
           {host ? "Start" : "Waiting for host"}
         </Button>
-      </Grid>
-      <Grid item xs={1} md={3}></Grid>
+      </div>
 
       <Dialog
         open={open}
@@ -190,6 +179,12 @@ export const WaitingRoomComponent = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {linkCopied && (
+        <div style={LinkCopiedContainer}>
+          <div style={LinkCopied}>Share link copied !</div>
+        </div>
+      )}
     </Grid>
   );
 };

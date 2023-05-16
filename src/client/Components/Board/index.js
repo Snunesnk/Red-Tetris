@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { GameContainer, GridContainer } from "./styles";
+import { BoardContainer, GridContainer, GameContainer } from "./styles";
 import { CellComponent } from "../Cell/index";
 import {
   OUTER_TETRIS_COLORS,
@@ -75,7 +75,7 @@ export const BoardComponent = () => {
   };
 
   return (
-    <Grid container style={{ marginTop: "2em" }}>
+    <Grid container style={BoardContainer}>
       <BoardModalComponent />
 
       {/* {specters !== null && specters.length > 0 && (

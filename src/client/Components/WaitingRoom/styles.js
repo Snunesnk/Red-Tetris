@@ -20,7 +20,13 @@ export const NamePlayerPaperStyle = {
 
 export const GridContainerStyle = {
   width: "100%",
-  marginTop: "1.5em",
+  marginTop: "25px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "40px",
+  maxWidth: "1000px",
 };
 
 export const PseudoPaperStyle = {
@@ -33,7 +39,7 @@ export const PseudoPaperStyle = {
 
 export const PlayButtonStyle = {
   marginTop: "1em",
-  fontSize: "1.8em",
+  fontSize: "1.6em",
 };
 
 export const CenteredContainer = {
@@ -48,16 +54,7 @@ export const HeaderPaperContainer = {
   alignContent: "center",
   marginTop: "1.7em",
   marginBottom: "1.7em",
-};
-
-export const HeaderSpanContainer = {
-  display: "flex",
-  justifyContent: "end",
-  alignContent: "center",
-  alignItems: "center",
-  fontSize: "0.8em",
-  paddingRight: "0.5em",
-  color: RED_COLOR,
+  width: "100%",
 };
 
 export const PlayersHeaderPaperStyle = {
@@ -67,7 +64,21 @@ export const PlayersHeaderPaperStyle = {
   lineHeight: "1.3em",
   textAlign: "center",
   width: "100%",
-  width: "90%",
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+export const HeaderSpanContainer = {
+  display: "flex",
+  justifyContent: "end",
+  alignContent: "center",
+  alignItems: "center",
+  fontSize: "0.8em",
+  position: "absolute",
+  right: "0.5em",
+  color: RED_COLOR,
 };
 
 export const PlayersPaperStyle = {
@@ -77,8 +88,9 @@ export const PlayersPaperStyle = {
   paddingBottom: "0.5em",
   marginTop: "0.7em",
   border: "1px solid black",
-  fontSize: "0.8em",
+  fontSize: "0.9em",
   textAlign: "center",
+  width: "100%",
 };
 
 export const HostPlayersPaperStyle = {
@@ -90,6 +102,7 @@ export const HostPlayersPaperStyle = {
   border: "1px solid " + RED_COLOR,
   fontSize: "0.9em",
   textAlign: "center",
+  width: "100%",
 };
 
 export const DialogBtnContainerStyle = {
@@ -99,6 +112,24 @@ export const DialogBtnContainerStyle = {
 
 export const ShareLinkButton = {
   fontSize: "1em",
-  marginTop: "5em",
-  backgroundColor: "rgba(234,14,14, 0.7)",
+  position: "absolute",
+  left: "0.5em",
+};
+
+export const LinkCopiedContainer = {
+  position: "absolute",
+  bottom: "0.5em",
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+export const LinkCopied = {
+  fontSize: "0.8em",
+  padding: "10px",
+  borderRadius: "4px",
+  color: "white",
+  backgroundColor: "#328731",
+  with: "fit-content",
 };

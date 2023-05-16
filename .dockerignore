@@ -1,2 +1,4 @@
-node_modules
-.github
+.github/
+.nyc_output/
+.vscode/
+node_modules/

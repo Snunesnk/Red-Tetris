@@ -6,6 +6,7 @@ import {
   CenteredContainer,
   ModalMessage,
   ModalMessageWin,
+  ScoreModalMessage,
 } from "./styles";
 import { STATUS } from "../../constants";
 
@@ -16,6 +17,7 @@ export const BoardModalComponent = () => {
   const [host, setHost] = useState(false);
   const { room, socketId } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
+  const score = useSelector((state) => state.stateBoard.score);
 
   useEffect(() => {
     const baseTime = 1000;
@@ -57,9 +59,14 @@ export const BoardModalComponent = () => {
               Game Over :(
             </Grid>
           )}
-          {appState.isGameOver && appState.isGameWon && (
+          {!appState.isGameOver && appState.isGameWon && (
             <Grid item xs={12} style={ModalMessageWin}>
               You win! :)
+            </Grid>
+          )}
+          {(appState.isGameOver || appState.isGameWon) && (
+            <Grid item xs={12} style={ScoreModalMessage}>
+              Your score: {score}
             </Grid>
           )}
           {appState.isGameOver &&

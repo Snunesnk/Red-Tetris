@@ -4,7 +4,7 @@ export const STATUS = {
   END_GAME: 2,
 };
 
-export const MAIN_BACK_COLOR = "linear-gradient(#1A1A1D, #141e30) fixed";
+// export const WHITE_COLOR = "#FBED00";
 export const WHITE_COLOR = "rgb(232, 230, 227)";
 // export const RED_COLOR = "#ea0e0e";
 export const RED_COLOR = "#EC008C";

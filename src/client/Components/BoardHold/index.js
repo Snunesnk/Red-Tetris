@@ -63,7 +63,7 @@ export const BoardHoldComponent = ({ color }) => {
 
   const controlsContainer = {
     border: "7px solid " + color,
-    padding: "10px",
+    paddingLeft: "10px",
     backgroundColor: "black",
     fontSize: "0.55rem",
     boxShadow:
@@ -97,27 +97,21 @@ export const BoardHoldComponent = ({ color }) => {
               <span>
                 <b style={ControlHeaders}>Left:</b> Move left
               </span>
-              <br />
               <span>
                 <b style={ControlHeaders}>Right:</b> Move right
               </span>
-              <br />
               <span>
                 <b style={ControlHeaders}>Up:</b> Rotate clockwise
               </span>
-              <br />
               <span>
                 <b style={ControlHeaders}>Z:</b> Rotate counter-clockwise
               </span>
-              <br />
               <span>
                 <b style={ControlHeaders}>Down:</b> Soft drop
               </span>
-              <br />
               <span>
-                <b style={ControlHeaders}>Space:</b> Hard drop{" "}
+                <b style={ControlHeaders}>Space:</b> Hard drop
               </span>
-              <br />
               <span>
                 <b style={ControlHeaders}>C:</b> Hold piece
               </span>

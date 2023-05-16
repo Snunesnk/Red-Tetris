@@ -1,5 +1,13 @@
-import { height } from "@mui/system";
-import { RED_COLOR } from "../../constants";
+export const RoomSelectionContainer = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "start",
+  width: "100%",
+  padding: "10px",
+  textAlign: "center",
+  marginTop: "150px",
+  maxWidth: "1000px",
+};
 
 export const CenteredContainer = {
   display: "flex",
@@ -10,61 +18,75 @@ export const CenteredContainer = {
 export const StartContainer = {
   display: "flex",
   justifyContent: "start",
-  marginTop: "5em",
-  marginBottom: "0.2em",
-};
-
-export const JoinButtonContainer = {
-  display: "flex",
-  justifyContent: "start",
-  alignContent: "center",
+  flexDirection: "column",
+  width: "100%",
+  padding: "10px",
+  borderRadius: "4px",
 };
 
 export const HeaderContainer = {
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
+  alignItems: "center",
   marginBottom: "1.5em",
+  width: "100%",
+  height: "40px",
 };
 
 export const PaperHeaderRowStyle = {
-  fontSize: "1.1em",
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  justifyContent: "center",
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
   alignItems: "center",
+  fontSize: "1em",
+  width: "100%",
   minHeight: "100%",
+  backgroundColor: "white",
+  borderRadius: "4px",
+  border: "1px solid black",
+};
+
+export const RowsContainer = {
+  display: "flex",
+  flexDirection: "column",
+};
+
+export const BodyContainer = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  height: "30px",
+  marginBottom: "15px",
 };
 
 export const PaperRowStyle = {
-  border: "1px solid black",
-  fontSize: "0.8em",
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  alignItems: "center",
+  fontSize: "0.75em",
   width: "100%",
-  height: "94%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-export const GridRow = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: "1em",
+  padding: "2px",
 };
 
 export const JoinRoomBtnStyle = {
-  fontSize: "0.5em",
-  marginLeft: "4em",
+  marginLeft: "15px",
+  minWidth: "fit-content",
+  height: "30px",
+  width: "60px",
+  padding: "0px",
 };
 
 export const CreateRoomBtn = {
-  marginLeft: "2em",
-  fontSize: "0.9em",
+  marginLeft: "15px",
   minWidth: "fit-content",
+  height: "40px",
+  width: "60px",
+  padding: "0px",
 };
 
 export const DialogBtnContainerStyle = {
   display: "flex",
   justifyContent: "space-between",
+  padding: "20px 24px",
+  paddingTop: "0",
 };

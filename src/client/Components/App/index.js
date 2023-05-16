@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { alertTitleClasses, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { TitleComponent } from "../Title/index";
 import { BoardComponent } from "../Board/index";
 import { LandingComponent } from "../Landing";
 import { RoomSelectionComponent } from "../RoomSelection";
 import { WaitingRoomComponent } from "../WaitingRoom";
-import { CenteredContainer, appDiv } from "./styles";
+import { appDiv, CenteredContainer } from "./styles";
 import { emitMoveInGame } from "../../Socket/InGame/move";
 import { PlayerPseudoComponent } from "../PlayerPseudo";
 
@@ -59,7 +59,7 @@ export function App() {
 
   return (
     <div id="app_div" style={appDiv}>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12}>
           <TitleComponent></TitleComponent>
         </Grid>
@@ -72,22 +72,20 @@ export function App() {
         {appState.isGameStarted == false &&
           appState.isPseudoEntered == true &&
           appState.isRoomSelected == false && (
-            <RoomSelectionComponent></RoomSelectionComponent>
+            <div style={CenteredContainer}>
+              <RoomSelectionComponent></RoomSelectionComponent>
+            </div>
           )}
 
         {appState.isGameStarted == false &&
           appState.isPseudoEntered == true &&
           appState.isRoomSelected == true && (
-            <Grid item xs={12}>
+            <div style={CenteredContainer}>
               <WaitingRoomComponent></WaitingRoomComponent>
-            </Grid>
+            </div>
           )}
 
-        {appState.isGameStarted === true && (
-          <Grid item xs={12}>
-            <BoardComponent></BoardComponent>
-          </Grid>
-        )}
+        {appState.isGameStarted === true && <BoardComponent></BoardComponent>}
 
         {appState.isPseudoEntered && (
           <PlayerPseudoComponent></PlayerPseudoComponent>

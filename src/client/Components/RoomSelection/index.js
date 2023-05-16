@@ -7,25 +7,32 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  RoomSelectionContainer,
   CenteredContainer,
   JoinRoomBtnStyle,
   PaperHeaderRowStyle,
   PaperRowStyle,
   DialogBtnContainerStyle,
-  JoinButtonContainer,
-  GridRow,
   CreateRoomBtn,
   HeaderContainer,
   StartContainer,
+  RowsContainer,
+  BodyContainer,
 } from "./styles";
 import { LandingInputStyle } from "../Landing/styles";
 import { STATUS } from "../../constants";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import AddIcon from "@mui/icons-material/Add";
 
 export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
   const rows = useSelector((state) => state.appState).roomList;
   const dispatch = useDispatch();
+  let newRoomName = "";
+  const playerName = useSelector((state) => state.appState).playerName;
+
+  dispatch({ type: "game:list" });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,69 +46,56 @@ export const RoomSelectionComponent = () => {
     const options = {
       method: "GET",
     };
-
     fetch("http://localhost:3042/getTopTenScores", options);
   }, []);
 
-  dispatch({ type: "game:list" });
-  let newRoomName = "";
-  const playerName = useSelector((state) => state.appState).playerName;
+  const joinRoom = (roomName) => {
+    location.href = "#" + roomName + "[" + playerName + "]";
+    dispatch({
+      type: "game:join",
+      roomName: roomName,
+      playerName: playerName,
+    });
+  };
 
   return (
-    <Grid container style={CenteredContainer}>
+    <div style={RoomSelectionContainer} className="room-selection-container">
       {/* Table header */}
-      <Grid item xs={10} md={8} xl={7} style={StartContainer}>
-        <span>Available rooms</span>
-      </Grid>
-      <Grid item xs={10} md={8} xl={7} style={HeaderContainer}>
-        <Grid container>
-          <Grid item xs={10}>
-            <Paper style={PaperHeaderRowStyle}>
-              <Grid container>
-                <Grid item xs={3} style={CenteredContainer}>
-                  Name
-                </Grid>
-                <Grid item xs={3} style={CenteredContainer}>
-                  Host
-                </Grid>
-                <Grid item xs={3} style={CenteredContainer}>
-                  Players
-                </Grid>
-                <Grid item xs={3} style={CenteredContainer}>
-                  Status
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-          <Grid item xs={2} style={JoinButtonContainer}>
-            <Button
-              variant="contained"
-              onClick={handleClickOpen}
-              style={CreateRoomBtn}
-            >
-              Create Room
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+      <div style={StartContainer}>
+        <span style={{ fontSize: "0.8rem" }}>Join or host a game</span>
+        <div style={HeaderContainer} id="room-selection-header-container">
+          <div style={PaperHeaderRowStyle} id="room-selection-paper-header">
+            <div style={CenteredContainer}>Name</div>
+            <div style={CenteredContainer}>Host</div>
+            <div style={CenteredContainer}>Players</div>
+            <div style={CenteredContainer}>Status</div>
+          </div>
+          <Button
+            variant="contained"
+            onClick={handleClickOpen}
+            style={CreateRoomBtn}
+          >
+            <AddIcon style={{ fontSize: "2.5rem" }} />
+          </Button>
+        </div>
 
-      {/* Table rows */}
-      {rows.map((row, i) => (
-        <Grid item xs={10} md={8} xl={7} style={GridRow} key={i}>
-          <Grid container>
-            <Grid item xs={10}>
-              <Paper style={PaperRowStyle} elevation={2}>
-                <Grid container>
-                  <Grid item xs={3} style={CenteredContainer}>
-                    {row.name}
-                  </Grid>
-                  <Grid item xs={3} style={CenteredContainer}>
+        {rows.length === 0 && (
+          <div style={{ color: "#EC008C", fontSize: "0.8rem" }}>
+            No game to join
+          </div>
+        )}
+        {rows.length > 0 && (
+          <div style={RowsContainer}>
+            {/* Table rows */}
+            {rows.map((row, i) => (
+              <div style={BodyContainer} key={i}>
+                <Paper style={PaperRowStyle} elevation={2}>
+                  <div style={CenteredContainer}>{row.name}</div>
+                  <div style={CenteredContainer}>
                     {row.players.length > 0 && row.players[0].name}
-                  </Grid>
-                  <Grid item xs={3} style={CenteredContainer}>
-                    {row.players.length}
-                  </Grid>
-                  <Grid item xs={3} style={CenteredContainer}>
+                  </div>
+                  <div style={CenteredContainer}>{row.players.length}</div>
+                  <div style={CenteredContainer}>
                     <FiberManualRecordIcon
                       sx={{
                         color:
@@ -109,31 +103,24 @@ export const RoomSelectionComponent = () => {
                         fontSize: 25,
                       }}
                     ></FiberManualRecordIcon>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
+                  </div>
+                </Paper>
 
-            <Grid item xs={2} style={JoinButtonContainer}>
-              <Button
-                variant="contained"
-                style={JoinRoomBtnStyle}
-                disabled={!(row.status === STATUS.WAITING_ROOM)}
-                onClick={() => {
-                  location.href = "#" + row.name + "[" + playerName + "]";
-                  dispatch({
-                    type: "game:join",
-                    roomName: row.name,
-                    playerName: playerName,
-                  });
-                }}
-              >
-                Join
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      ))}
+                <Button
+                  variant="contained"
+                  style={JoinRoomBtnStyle}
+                  disabled={!(row.status === STATUS.WAITING_ROOM)}
+                  onClick={() => {
+                    joinRoom(row.name);
+                  }}
+                >
+                  <ArrowForwardIosIcon style={{ fontSize: "1.2rem" }} />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogContent>
@@ -171,6 +158,6 @@ export const RoomSelectionComponent = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Grid>
+    </div>
   );
 };

@@ -4,12 +4,12 @@ import { Provider } from "react-redux";
 import { App } from "./Components/App/index";
 import store from "./Store/store";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { RED_COLOR } from "./constants";
 
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#EC008C",
-      // main: "#ea0e0e",
+      main: RED_COLOR,
     },
     secondary: {
       main: "rgb(232, 230, 227)",
