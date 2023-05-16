@@ -10,6 +10,8 @@ import {
   scoreValue,
 } from "./styles";
 
+const API_URL = process.env.API_URL || "http://localhost:3042";
+
 const ScoreList = () => {
   const [scores, setScores] = useState([]);
 
@@ -18,7 +20,7 @@ const ScoreList = () => {
     const options = {
       method: "GET",
     };
-    fetch("http://localhost:3042/getTopTenScores", options)
+    fetch(API_URL + "/getTopTenScores", options)
       .then((response) => response.json())
       .then((data) => setScores(data))
       .catch((error) => console.error("Error fetching scores:", error));
