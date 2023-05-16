@@ -10,19 +10,22 @@ let config = {
     // publicPath: '/public/'
   },
   module: {
-    rules: [{
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: "react-hot-loader/webpack"
-    }, {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }, {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: "babel-loader"
-    }
-    ]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "react-hot-loader/webpack",
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      },
+    ],
   },
   devServer: {
     compress: true,
@@ -32,11 +35,12 @@ let config = {
     new webpack.DefinePlugin({
       process: {
         env: {
-          PORT: process.env.PORT || 3042
-        }
-      }
-    })
-  ]
-}
+          PORT: process.env.PORT || 3042,
+          API_URL: process.env.API_URL || "http://localhost:3042",
+        },
+      },
+    }),
+  ],
+};
 
 module.exports = config;
