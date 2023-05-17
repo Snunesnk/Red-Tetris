@@ -25,7 +25,6 @@
 .m-scroll__title > div {
   display: flex;
   animation: scrollText 10s infinite linear;
-  animation-play-state: paused;
 }
 .m-scroll__title h1 {
   margin: 0;
