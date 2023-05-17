@@ -16,22 +16,7 @@ const checkIfUsernameTooBig = (scoreDetailsWidth, scoreUsernameWidth) =>
   scoreUsernameWidth > scoreDetailsWidth;
 
 const ScoreList = () => {
-  const [scores, setScores] = useState([
-    {
-      _id: "64636a10b01541807c273dca",
-      username: "dhdsgjhgjhgdshew",
-      user_score: 9145,
-    },
-    { _id: "64636a97b01541807c273dcf", username: "fd", user_score: 270 },
-    { _id: "64636a7ab01541807c273dcb", username: "fd", user_score: 260 },
-    { _id: "64636a89b01541807c273dcd", username: "fd", user_score: 252 },
-    { _id: "64636ab1b01541807c273dd3", username: "fd", user_score: 250 },
-    { _id: "64636aaab01541807c273dd2", username: "fd", user_score: 246 },
-    { _id: "6463672a777f5d10bf938239", username: "df", user_score: 246 },
-    { _id: "64636aa4b01541807c273dd1", username: "fd", user_score: 240 },
-    { _id: "64636a9db01541807c273dd0", username: "fd", user_score: 238 },
-    { _id: "64636a81b01541807c273dcc", username: "fd", user_score: 216 },
-  ]);
+  const [scores, setScores] = useState([]);
 
   // Fetch the top 10 scores from the API endpoint
   useEffect(() => {
@@ -86,11 +71,6 @@ const ScoreList = () => {
             scoreUsernameWidth
           );
 
-          console.log(
-            "username " + score.username + " too big ?",
-            usernameTooBig
-          );
-
           const animationPlayState = usernameTooBig ? "running" : "paused";
 
           return (
@@ -103,12 +83,10 @@ const ScoreList = () => {
                   <div className="m-scroll">
                     <div className="m-scroll__title">
                       <div style={{ animationPlayState: animationPlayState }}>
-                        <div ref={scoreUsernameRef}>
-                          {score.username}
-                          &nbsp; &nbsp; &nbsp;
-                        </div>
+                        <div ref={scoreUsernameRef}>{score.username}</div>
                         {usernameTooBig && (
                           <div>
+                            &nbsp; &nbsp; &nbsp;
                             {score.username}
                             &nbsp; &nbsp; &nbsp;
                           </div>
