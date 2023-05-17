@@ -10,6 +10,7 @@ import {
   scoreValue,
 } from "./styles";
 import "./styles.css";
+import { use } from "../../../server";
 
 const DEFAULT_RESULTS = [
   {
@@ -67,17 +68,19 @@ const DEFAULT_RESULTS = [
 const checkIfUsernameTooBig = (scoreDetailsWidth, scoreUsernameWidth) =>
   scoreUsernameWidth > scoreDetailsWidth;
 
-const ScoreList = async () => {
+const ScoreList = () => {
   const [scores, setScores] = useState(DEFAULT_RESULTS);
 
   // Fetch the top 10 scores from the API endpoint
-  const options = {
-    method: "GET",
-  };
-  await fetch(`/getTopTenScores`, options)
-    .then((response) => response.json())
-    .then((data) => setScores(data))
-    .catch((error) => console.error("Error fetching scores:", error));
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
+    fetch(`/getTopTenScores`, options)
+      .then((response) => response.json())
+      .then((data) => setScores(data))
+      .catch((error) => console.error("Error fetching scores:", error));
+  }, []);
 
   return (
     <div style={scoreList}>
@@ -114,7 +117,7 @@ const ScoreList = async () => {
           useEffect(() => {
             setScoreDetailsWidth(scoreDetailsRef.current.offsetWidth);
             setScoreUsernameWidth(scoreUsernameRef.current.offsetWidth);
-          }, []);
+          }, [scores]);
 
           const usernameTooBig = checkIfUsernameTooBig(
             scoreDetailsWidth,
