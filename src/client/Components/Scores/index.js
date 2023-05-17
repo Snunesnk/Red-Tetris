@@ -14,7 +14,7 @@ import "./styles.css";
 const DEFAULT_RESULTS = [
   {
     _id: 0,
-    username: "",
+    username: "dkjhdjkhkjdhkjdhkdjhxjhdkh",
     user_score: 0,
   },
   {
@@ -89,8 +89,8 @@ const ScoreList = () => {
           // Change colors for podium
           const scoreRankContainerUpdated = { ...scoreRankContainer };
           const scoreDetailsUpdated = { ...scoreDetails };
-          const scoreDetailsRef = React.createRef();
-          const scoreUsernameRef = React.createRef();
+          const scoreDetailsRef = React.useRef(null);
+          const scoreUsernameRef = React.useRef(null);
           const [scoreDetailsWidth, setScoreDetailsWidth] = useState(0);
           const [scoreUsernameWidth, setScoreUsernameWidth] = useState(0);
 
@@ -122,6 +122,9 @@ const ScoreList = () => {
             scoreDetailsWidth,
             scoreUsernameWidth
           );
+
+            console.log("Username: " + score.username + " too big?", usernameTooBig);
+            console.log(scoreDetailsWidth, scoreUsernameWidth)
 
           const animationPlayState = usernameTooBig ? "running" : "paused";
 
