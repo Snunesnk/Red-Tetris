@@ -67,19 +67,17 @@ const DEFAULT_RESULTS = [
 const checkIfUsernameTooBig = (scoreDetailsWidth, scoreUsernameWidth) =>
   scoreUsernameWidth > scoreDetailsWidth;
 
-const ScoreList = () => {
+const ScoreList = async () => {
   const [scores, setScores] = useState(DEFAULT_RESULTS);
 
   // Fetch the top 10 scores from the API endpoint
-  useEffect(() => {
-    const options = {
-      method: "GET",
-    };
-    fetch(`/getTopTenScores`, options)
-      .then((response) => response.json())
-      .then((data) => setScores(data))
-      .catch((error) => console.error("Error fetching scores:", error));
-  }, []);
+  const options = {
+    method: "GET",
+  };
+  await fetch(`/getTopTenScores`, options)
+    .then((response) => response.json())
+    .then((data) => setScores(data))
+    .catch((error) => console.error("Error fetching scores:", error));
 
   return (
     <div style={scoreList}>
