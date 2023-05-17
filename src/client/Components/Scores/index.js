@@ -37,8 +37,8 @@ const ScoreList = () => {
           // Change colors for podium
           const scoreRankContainerUpdated = { ...scoreRankContainer };
           const scoreDetailsUpdated = { ...scoreDetails };
-          const scoreDetailsRef = React.useRef(null);
-          const scoreUsernameRef = React.useRef(null);
+          const scoreDetailsRef = React.createRef();
+          const scoreUsernameRef = React.createRef();
           const [scoreDetailsWidth, setScoreDetailsWidth] = useState(0);
           const [scoreUsernameWidth, setScoreUsernameWidth] = useState(0);
 
