@@ -13,9 +13,54 @@ import "./styles.css";
 
 const DEFAULT_RESULTS = [
   {
-    _id: 1,
+    _id: 0,
     username: "Loukoulouc",
     user_score: 100000,
+  },
+  {
+    _id: 1,
+    username: "Loukoulouc",
+    user_score: 10000,
+  },
+  {
+    _id: 2,
+    username: "Loukoulouc",
+    user_score: 1000,
+  },
+  {
+    _id: 3,
+    username: "Loukoulouc",
+    user_score: 100,
+  },
+  {
+    _id: 4,
+    username: "Loukoulouc",
+    user_score: 10,
+  },
+  {
+    _id: 5,
+    username: "Loukoulouc",
+    user_score: 1,
+  },
+  {
+    _id: 6,
+    username: "Loukoulouc",
+    user_score: 0,
+  },
+  {
+    _id: 7,
+    username: "Loukoulouc",
+    user_score: 0,
+  },
+  {
+    _id: 8,
+    username: "Loukoulouc",
+    user_score: 0,
+  },
+  {
+    _id: 9,
+    username: "Loukoulouc",
+    user_score: 0,
   },
 ];
 
