@@ -8,15 +8,22 @@ import {
   scoreRankContainer,
   scoreUsername,
   scoreValue,
-  getUsernameStyle,
 } from "./styles";
 import "./styles.css";
+
+const DEFAULT_RESULTS = [
+  {
+    _id: 1,
+    username: "Loukoulouc",
+    user_score: 100000,
+  },
+];
 
 const checkIfUsernameTooBig = (scoreDetailsWidth, scoreUsernameWidth) =>
   scoreUsernameWidth > scoreDetailsWidth;
 
 const ScoreList = () => {
-  const [scores, setScores] = useState([]);
+  const [scores, setScores] = useState(DEFAULT_RESULTS);
 
   // Fetch the top 10 scores from the API endpoint
   useEffect(() => {
