@@ -5,7 +5,7 @@ export const RoomSelectionContainer = {
   width: "100%",
   padding: "10px",
   textAlign: "center",
-  paddingTop: "75px",
+  paddingTop: "42px",
 };
 
 export const CenteredContainer = {
