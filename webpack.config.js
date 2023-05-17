@@ -36,7 +36,6 @@ let config = {
       process: {
         env: {
           PORT: process.env.PORT || 3042,
-          API_URL: process.env.API_URL,
         },
       },
     }),
