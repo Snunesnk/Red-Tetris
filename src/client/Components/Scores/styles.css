@@ -1,0 +1,53 @@
+.m-scroll {
+  display: flex;
+  position: relative;
+  width: 95%;
+  height: 40px;
+  margin: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.m-scroll__title {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: flex-start;
+  width: 95%;
+  height: 100%;
+  white-space: nowrap;
+  transition: all 1s ease;
+  overflow: hidden;
+}
+
+.m-scroll__title > div {
+  display: flex;
+  animation: scrollText 10s infinite linear;
+  animation-play-state: paused;
+}
+.m-scroll__title h1 {
+  margin: 0;
+  transition: all 2s ease;
+}
+.m-scroll__title a {
+  text-decoration: none;
+  color: white;
+}
+.m-scroll__title a:hover {
+  color: transparent;
+}
+
+div:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes scrollText {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

@@ -45,9 +45,15 @@ export const scoreDetails = {
   color: "white",
   padding: "7px",
   height: "26px",
+  overflow: "hidden",
 };
 
-export const scoreUsername = {};
+export const scoreUsername = {
+  whiteSpace: "nowrap",
+  width: "150px",
+  //   overflow: "hidden",
+  //   textOverflow: "ellipsis",
+};
 
 export const scoreValue = {
   fontWeight: "bold",
