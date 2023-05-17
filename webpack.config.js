@@ -13,7 +13,10 @@ let config = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [
+          path.resolve(__dirname, "./node_modules/"),
+          path.resolve(__dirname, "./src/server/"),
+        ],
         loader: "react-hot-loader/webpack",
       },
       {
@@ -22,7 +25,10 @@ let config = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [
+          path.resolve(__dirname, "./node_modules/"),
+          path.resolve(__dirname, "./src/server/"),
+        ],
         loader: "babel-loader",
       },
     ],

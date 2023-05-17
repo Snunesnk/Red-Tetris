@@ -10,7 +10,6 @@ import {
   scoreValue,
 } from "./styles";
 import "./styles.css";
-import { use } from "../../../server";
 
 const DEFAULT_RESULTS = [
   {
@@ -124,8 +123,11 @@ const ScoreList = () => {
             scoreUsernameWidth
           );
 
-            console.log("Username: " + score.username + " too big?", usernameTooBig);
-            console.log(scoreDetailsWidth, scoreUsernameWidth)
+          console.log(
+            "Username: " + score.username + " too big?",
+            usernameTooBig
+          );
+          console.log(scoreDetailsWidth, scoreUsernameWidth);
 
           const animationPlayState = usernameTooBig ? "running" : "paused";
 
