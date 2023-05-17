@@ -59,7 +59,7 @@ export const BoardModalComponent = () => {
               Game Over :(
             </Grid>
           )}
-          {!appState.isGameOver && appState.isGameWon && (
+          {appState.isGameOver && appState.isGameWon && (
             <Grid item xs={12} style={ModalMessageWin}>
               You win! :)
             </Grid>
