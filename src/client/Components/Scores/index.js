@@ -130,27 +130,25 @@ const ScoreList = () => {
               <div style={scoreRankContainerUpdated}>
                 <span style={scoreRank}>{index + 1}</span>
               </div>
-              {score.username !== "" && (
-                <div style={scoreDetailsUpdated} ref={scoreDetailsRef}>
-                  <div style={scoreUsername}>
-                    <div className="m-scroll">
-                      <div className="m-scroll__title">
-                        <div style={{ animationPlayState: animationPlayState }}>
-                          <div ref={scoreUsernameRef}>{score.username}</div>
-                          {usernameTooBig && (
-                            <div>
-                              &nbsp; &nbsp; &nbsp;
-                              {score.username}
-                              &nbsp; &nbsp; &nbsp;
-                            </div>
-                          )}
-                        </div>
+              <div style={scoreDetailsUpdated} ref={scoreDetailsRef}>
+                <div style={scoreUsername}>
+                  <div className="m-scroll">
+                    <div className="m-scroll__title">
+                      <div style={{ animationPlayState: animationPlayState }}>
+                        <div ref={scoreUsernameRef}>{score.username}</div>
+                        {usernameTooBig && (
+                          <div>
+                            &nbsp; &nbsp; &nbsp;
+                            {score.username}
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div style={scoreValue}>{score.user_score}</div>
                 </div>
-              )}
+                <div style={scoreValue}>{score.user_score}</div>
+              </div>
             </div>
           );
         })}
