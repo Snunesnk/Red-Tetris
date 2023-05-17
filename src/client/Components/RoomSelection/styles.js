@@ -1,10 +1,11 @@
 export const RoomSelectionContainer = {
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-around",
   alignItems: "start",
   width: "100%",
   padding: "10px",
   textAlign: "center",
+  paddingTop: "75px",
 };
 
 export const CenteredContainer = {
@@ -19,9 +20,8 @@ export const StartContainer = {
   flexDirection: "column",
   width: "100%",
   padding: "10px",
+  paddingTop: "0",
   borderRadius: "4px",
-
-  marginTop: "150px",
   maxWidth: "1000px",
 };
 
@@ -31,7 +31,6 @@ export const HeaderContainer = {
   alignItems: "center",
   marginBottom: "1.5em",
   width: "100%",
-  height: "40px",
 };
 
 export const PaperHeaderRowStyle = {
@@ -44,6 +43,7 @@ export const PaperHeaderRowStyle = {
   backgroundColor: "white",
   borderRadius: "4px",
   border: "1px solid black",
+  padding: "15px",
 };
 
 export const RowsContainer = {
@@ -80,7 +80,7 @@ export const JoinRoomBtnStyle = {
 export const CreateRoomBtn = {
   marginLeft: "15px",
   minWidth: "fit-content",
-  height: "40px",
+  height: "56px",
   width: "60px",
   padding: "0px",
 };

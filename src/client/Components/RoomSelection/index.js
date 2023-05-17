@@ -56,7 +56,6 @@ export const RoomSelectionComponent = () => {
     <div style={RoomSelectionContainer} className="room-selection-container">
       <ScoreList />
       <div style={StartContainer}>
-        <span style={{ fontSize: "0.8rem" }}>Join or host a game</span>
         <div style={HeaderContainer} id="room-selection-header-container">
           <div style={PaperHeaderRowStyle} id="room-selection-paper-header">
             <div style={CenteredContainer}>Name</div>
