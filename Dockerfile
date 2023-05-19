@@ -4,6 +4,8 @@ FROM node:18
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
+ENV NODE_ENV=production
+
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
@@ -15,8 +17,6 @@ COPY . .
 
 # Expose the port on which your Node.js app is listening
 EXPOSE 3042
-
-RUN npm run cli-prod
 
 # Set the command to run your Node.js app
 CMD ["npm", "run", "srv-prod"]
