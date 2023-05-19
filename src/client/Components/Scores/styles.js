@@ -50,7 +50,8 @@ export const scoreDetails = {
 
 export const scoreUsername = {
   whiteSpace: "nowrap",
-  width: "150px",
+  width: "200px",
+  textAlign: "left",
   //   overflow: "hidden",
   //   textOverflow: "ellipsis",
 };
