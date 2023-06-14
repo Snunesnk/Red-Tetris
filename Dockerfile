@@ -12,6 +12,8 @@ COPY package*.json ./
 # Install the dependencies
 RUN npm ci
 
+RUN echo "Front is not compiled, pleasen compile it beforehand using 'npm run cli-prod'"
+
 # Copy the entire application to the container
 COPY . .
 

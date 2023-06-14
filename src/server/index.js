@@ -7,10 +7,10 @@ const connectDB = require("./db/db");
 let path = require("path");
 const { getTopTenScores } = require("./db/queries");
 
-// connectDB().then((client) => {
-//   console.log("Connected to MongoDB");
-//   client.close();
-// });
+connectDB().then((client) => {
+  console.log("Connected to MongoDB");
+  client.close();
+});
 
 // On connexion to the page, returns the HTML code
 app.get("/", (req, res) => {
@@ -32,7 +32,7 @@ app.get("/BarcadeBrawl.ttf", (req, res) => {
 
 // DATABASE
 app.get("/getTopTenScores", (req, res) => {
-  // getTopTenScores(res);
+  getTopTenScores(res);
 });
 
 // Catch eevery thing else
