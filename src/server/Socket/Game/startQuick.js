@@ -8,6 +8,7 @@ function startQuickGame(payload, socket, io) {
 
   // Create and join a new game
   const newGame = new Game(uuid);
+  newGame.isQuick = true;
   Games.push(newGame);
   listGames(null, io);
   newGame.addPlayer(payload.playerName, socket.id);

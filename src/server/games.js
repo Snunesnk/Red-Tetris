@@ -9,13 +9,11 @@ function findGameByName(name) {
 function findGameBySocketIdPlayer(socketId) {
   return Games.find((game) => {
     let player = game.players.find((player) => {
-      if (player.socketId === socketId)
-        return true;
+      if (player.socketId === socketId) return true;
       return false;
     });
-    if (player)
-      return true;
-    return false
+    if (player) return true;
+    return false;
   });
 }
 
@@ -34,9 +32,13 @@ function formatGameForClient(game) {
 }
 
 function formatGamesForClient() {
-  return Games.map((game) => {
-    return formatGameForClient(game);
+  const games = [];
+  Games.map((game) => {
+    if (game.isQuick) return;
+    games.push(formatGameForClient(game));
   });
+
+  return games;
 }
 
 module.exports = {
