@@ -3,6 +3,7 @@ import { onGameEdited } from "./Game/edit";
 import { onGameJoined } from "./Game/join";
 import { onGamesListed } from "./Game/list";
 import { onGameStarted } from "./Game/start";
+import { onGameQuickStarted } from "./Game/startQuick";
 import { onNewMap } from "./InGame/updateMap";
 import { onNewSpecter } from "./InGame/updateSpecter";
 import { onGameOver, onGameWon } from "./Game/tetris";
@@ -21,6 +22,10 @@ export default function setListeners(socket, dispatch) {
   socket.on("game:listed", (payload) => onGamesListed(dispatch, payload));
 
   socket.on("game:started", (payload) => onGameStarted(dispatch, payload));
+
+  socket.on("game:startedQuick", (payload) =>
+    onGameQuickStarted(dispatch, payload)
+  );
 
   socket.on("ingame:updateMap", (payload) => onNewMap(dispatch, payload));
 

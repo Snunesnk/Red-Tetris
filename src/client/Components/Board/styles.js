@@ -22,3 +22,10 @@ export const GameContainer = {
   display: "flex",
   justifyContent: "center",
 };
+
+export const BoardContainerStyle = {
+  display: "flex",
+  justifyContent: "start",
+  border: "8px solid #141e30",
+  position: "relative",
+};

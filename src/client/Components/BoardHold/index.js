@@ -73,10 +73,11 @@ export const BoardHoldComponent = ({ color }) => {
   const BoardHoldContainer = {
     position: "absolute",
     top: "-8px",
-    left: "37vh",
+    left: "calc(35vh + 5px)",
     display: "flex",
-    alignItems: "start",
     flexDirection: "column",
+    height: "calc(70vh + 16px)",
+    justifyContent: "space-between",
   };
 
   return (

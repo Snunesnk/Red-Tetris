@@ -1,4 +1,4 @@
-import { RED_COLOR } from "../../constants";
+import { RED_COLOR, WHITE_COLOR } from "../../constants";
 
 export const InfosContainer = {
   display: "flex",
@@ -10,7 +10,7 @@ export const InfosContainer = {
   marginRight: "0.7em",
   color: RED_COLOR,
   position: "absolute",
-  top: "-8px",
+  bottom: "-16px",
   right: "calc(35vh + 5px)",
 };
 export const CenteredContainer = {
@@ -30,4 +30,9 @@ export const GridContainer = {
   gridTemplateRows: "repeat(12, 1fr)",
   width: "7vh",
   height: "21vh",
+};
+
+export const TimerInfos = {
+  color: WHITE_COLOR,
+  fontSize: "15px",
 };

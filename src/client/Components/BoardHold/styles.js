@@ -5,7 +5,6 @@ export const InfosContainer = {
   justifyContent: "center",
   alignItems: "start",
   textAlign: "center",
-  paddingBottom: "0.5em",
   marginTop: "0",
   marginLeft: "0.7em",
   color: RED_COLOR,

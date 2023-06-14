@@ -25,6 +25,7 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AddIcon from "@mui/icons-material/Add";
 import ScoreList from "../Scores";
+import QuickGame from "../QuickGame";
 
 export const RoomSelectionComponent = () => {
   const [open, setOpen] = useState(false);
@@ -56,6 +57,7 @@ export const RoomSelectionComponent = () => {
     <div style={RoomSelectionContainer} className="room-selection-container">
       <ScoreList />
       <div style={StartContainer}>
+        <QuickGame />
         <div style={HeaderContainer} id="room-selection-header-container">
           <div style={PaperHeaderRowStyle} id="room-selection-paper-header">
             <div style={CenteredContainer}>Name</div>
@@ -136,7 +138,6 @@ export const RoomSelectionComponent = () => {
           </Button>
           <Button
             variant="contained"
-            // type="submit"
             onClick={() => {
               handleClose();
               location.href = "#" + newRoomName + "[" + playerName + "]";

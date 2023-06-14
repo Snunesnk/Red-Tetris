@@ -9,6 +9,8 @@ const { deletePlayer } = require("../players");
 const kickPlayer = require("./Game/kick");
 const hostPlayer = require("./Game/host");
 const retryGame = require("./Game/retry");
+const startQuickGame = require("./Game/startQuick");
+const stopGame = require("./Game/stop");
 
 function initSocket(httpServer) {
   const io = new Server(httpServer, {
@@ -32,6 +34,9 @@ function initSocket(httpServer) {
     socket.on("game:start", () => {
       startGame(socket, io);
     });
+    socket.on("game:startQuick", (payload) => {
+      startQuickGame(payload, socket, io);
+    });
     socket.on("game:tetrisStart", () => {
       startTetris(socket, io);
     });
@@ -48,6 +53,9 @@ function initSocket(httpServer) {
       hostPlayer(payload, socket, io);
     });
     socket.on("game:retry", () => retryGame(socket, io));
+    socket.on("game:timeOver", (payload) => {
+      stopGame(payload, socket, io);
+    });
   });
   return io;
 }

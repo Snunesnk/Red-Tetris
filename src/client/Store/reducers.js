@@ -2,12 +2,14 @@ import { combineReducers, createNextState } from "@reduxjs/toolkit";
 import { emitJoinGame } from "../Socket/Game/join";
 import { emitCreateGame } from "../Socket/Game/create";
 import { emitStartGame } from "../Socket/Game/start";
+import { emitStartGameQuick } from "../Socket/Game/startQuick";
 import { emitStartTetris } from "../Socket/Game/tetris";
 import { DEFAULT_MAP, NEXT_PIECES, HOLD_PIECE, STATUS } from "../constants";
 import { emitListGames } from "../Socket/Game/list";
 import { emitKickPlayerGame } from "../Socket/Game/kick";
 import { emitHostPlayerGame } from "../Socket/Game/host";
 import { emitRetryGame } from "../Socket/Game/retry";
+import { emitTimeOver } from "../Socket/Game/timeOver";
 
 function roomName(state = "", action) {
   switch (action.type) {
@@ -21,6 +23,10 @@ function roomName(state = "", action) {
 
     case "game:start":
       emitStartGame();
+      return state;
+
+    case "game:startQuick":
+      emitStartGameQuick(action.playerName, action.gameDuration);
       return state;
 
     case "game:tetrisStart":
@@ -111,6 +117,16 @@ function appState(state = defaultAppState, action) {
       return {
         ...state,
         isGameStarted: true,
+        isGameQuick: false,
+        isGameWon: false,
+        isGameOver: false,
+      };
+
+    case "state:gameQuickStarted":
+      return {
+        ...state,
+        isGameStarted: true,
+        isGameQuick: true,
         isGameWon: false,
         isGameOver: false,
       };
@@ -163,6 +179,10 @@ function appState(state = defaultAppState, action) {
         }
       }
       return { ...state };
+
+    case "state:timeOver":
+      emitTimeOver(action.playerName);
+      return { ...state, isGameOver: true };
 
     case "game:retry":
       emitRetryGame();

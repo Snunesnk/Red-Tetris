@@ -10,32 +10,12 @@ import {
 } from "./styles";
 import { STATUS } from "../../constants";
 
-export const BoardModalComponent = () => {
-  const [open, setOpen] = useState(true);
-  const [message, setMessage] = useState("");
+export const BoardModalComponent = ({ open, message }) => {
   const appState = useSelector((state) => state.appState);
   const [host, setHost] = useState(false);
   const { room, socketId } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
   const score = useSelector((state) => state.stateBoard.score);
-
-  useEffect(() => {
-    const baseTime = 1000;
-
-    setTimeout(() => {
-      setMessage("Ready ?");
-    }, baseTime);
-    setTimeout(() => {
-      setMessage("Steady ?");
-    }, baseTime * 2);
-    setTimeout(() => {
-      setMessage("Go !!");
-    }, baseTime * 3);
-    setTimeout(() => {
-      setOpen(false);
-      dispatch({ type: "game:tetrisStart" });
-    }, baseTime * 4);
-  }, []);
 
   useEffect(
     () => {

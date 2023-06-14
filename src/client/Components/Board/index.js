@@ -1,6 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { BoardContainer, GridContainer, GameContainer } from "./styles";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  BoardContainer,
+  GridContainer,
+  GameContainer,
+  BoardContainerStyle,
+} from "./styles";
 import { CellComponent } from "../Cell/index";
 import {
   OUTER_TETRIS_COLORS,
@@ -12,10 +17,19 @@ import { BoardInfosComponent } from "../BoardInfos";
 import { BoardHoldComponent } from "../BoardHold";
 import { SpecterComponent } from "../Specters";
 import { Grid } from "@mui/material";
+import BoardClock from "../BoardClock";
+
 export const BoardComponent = () => {
+  const appState = useSelector((state) => state.appState);
   const stateBoard = useSelector((state) => state.stateBoard);
   let specters = useSelector((state) => state.appState?.specters);
+  const [open, setOpen] = useState(true);
+  const [message, setMessage] = useState("");
+  const [clockStart, setClockStart] = useState(false);
+  const dispatch = useDispatch();
   let y_pos = -1;
+
+  const timer = localStorage.getItem("gameDuration");
 
   const spanStyle = {
     color:
@@ -67,16 +81,29 @@ export const BoardComponent = () => {
       : OUTER_TETRIS_COLORS[
           stateBoard.level - (1 % OUTER_TETRIS_COLORS.length)
         ];
-  const BoardContainerStyle = {
-    display: "flex",
-    justifyContent: "start",
-    border: "8px solid #141e30",
-    position: "relative",
-  };
+
+  useEffect(() => {
+    const baseTime = 1000;
+
+    setTimeout(() => {
+      setMessage("Ready ?");
+    }, baseTime);
+    setTimeout(() => {
+      setMessage("Steady ?");
+    }, baseTime * 2);
+    setTimeout(() => {
+      setMessage("Go !!");
+    }, baseTime * 3);
+    setTimeout(() => {
+      setOpen(false);
+      setClockStart(true);
+      dispatch({ type: "game:tetrisStart" });
+    }, baseTime * 4);
+  }, []);
 
   return (
     <Grid container style={BoardContainer}>
-      <BoardModalComponent />
+      <BoardModalComponent open={open} message={message} />
 
       {/* {specters !== null && specters.length > 0 && (
         <Grid item xs={3}>
@@ -88,20 +115,17 @@ export const BoardComponent = () => {
       )} */}
 
       <Grid item xs={12} xl={6}>
-        {/* <Grid container style={{ display: "flex", justifyContent: "center" }}> */}
-        {/* <Grid item style={{ display: "flex", justifyContent: "end" }}> */}
         <div id="game-container" style={GameContainer}>
           <Grid item style={BoardContainerStyle} id="board-container">
             <BoardInfosComponent score={stateBoard.score} color={color} />
-            {/* </Grid> */}
+            {appState.isGameQuick && timer > -1 && (
+              <BoardClock color={color} clockStart={clockStart} timer={timer} />
+            )}
             <div style={GridContainer}>{board}</div>
             <BoardHoldComponent color={color} />
           </Grid>
-          {/* <Grid item style={{ display: "flex", justifyContent: "start" }}> */}
         </div>
-        {/* </Grid> */}
       </Grid>
-      {/* </Grid> */}
 
       {/* <Grid item xs={3}>
         Odd specters
