@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { InfosContainer, TimerInfos } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 
+let startTime;
+let duration = 0;
+let stop = false;
+
+let containerStyle = {
+  padding: "10px",
+  backgroundColor: "black",
+  width: "10vh",
+  fontSize: "1.25vh",
+  boxShadow:
+    "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+};
+
 const BoardClock = ({ color, clockStart, timer }) => {
-  let startTime;
-  let duration = 0;
-  let stop = false;
   const appState = useSelector((state) => state.appState);
   const [minutes, setMinutes] = useState(timer);
   const [seconds, setSeconds] = useState(0);
   const dispatch = useDispatch();
-  const containerStyle = {
-    border: "7px solid " + color,
-    padding: "10px",
-    backgroundColor: "black",
-    width: "10vh",
-    fontSize: "1.25vh",
-    boxShadow:
-      "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-  };
+
+  containerStyle = { ...containerStyle, border: "7px solid " + color };
 
   const iteration = () => {
     if (stop) return;
@@ -43,8 +46,9 @@ const BoardClock = ({ color, clockStart, timer }) => {
     if (clockStart) {
       startTime = Date.now();
       duration = timer * 60 * 1000;
-      window.requestAnimationFrame(iteration);
-    } else duration = 0;
+      stop = false;
+      iteration();
+    }
   }, [clockStart]);
 
   const timeStyle =

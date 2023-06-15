@@ -34,5 +34,5 @@ export const GridContainer = {
 
 export const TimerInfos = {
   color: WHITE_COLOR,
-  fontSize: "15px",
+  fontSize: "20px",
 };
